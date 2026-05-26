@@ -1,0 +1,32 @@
+{
+  "_comment": "This file is generated. Please edit .homeycompose/app.json instead.",
+  "id": "us.jamisonbennett.apps.cooldown-manager",
+  "version": "0.0.1",
+  "compatibility": ">=12.4.0",
+  "sdk": 3,
+  "runtime": "nodejs",
+  "platforms": [
+    "local"
+  ],
+  "name": {
+    "en": "Cooldown Manager"
+  },
+  "description": {
+    "en": "Prevent automations from firing too often"
+  },
+  "category": [
+    "tools"
+  ],
+  "permissions": [],
+  "images": {
+    "small": "/assets/images/small.png",
+    "large": "/assets/images/large.png",
+    "xlarge": "/assets/images/xlarge.png"
+  },
+  "author": {
+    "name": "Jamison Bennett",
+    "email": ""
+  },
+  "brandColor": "#4F8CFF",
+  "support": "https://github.com/jamisonbennett/homey-cooldown-manager"
+}

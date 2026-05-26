@@ -1,0 +1,5 @@
+{
+  "0.0.1": {
+    "en": "Initial release of the cooldown manager. Prevents automations from firing too often."
+  }
+}

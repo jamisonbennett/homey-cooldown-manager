@@ -1,0 +1,62 @@
+{
+  "name": "us.jamisonbennett.apps.cooldown-manager",
+  "version": "0.0.1",
+  "license": "MIT",
+  "author": "Jamison Bennett",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jamisonbennett/homey-cooldown-manager.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jamisonbennett/homey-cooldown-manager/issues"
+  },
+  "homepage": "https://github.com/jamisonbennett/homey-cooldown-manager#readme",
+  "main": "app.ts",
+  "description": "A Homey app for preventing automations from firing too often",
+  "scripts": {
+    "compose": "node -e \"require('./node_modules/homey/lib/HomeyCompose.js').buildIfUsed(require('./node_modules/homey/lib/App.js'), process.cwd()).catch(e=>{console.error(e);process.exit(1)})\"",
+    "build": "npm run compose && npm run lint && tsc",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint --ext .js,.ts --ignore-path .gitignore .",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@jest/globals": "^30.3.0",
+    "@tsconfig/node22": "^22.0.5",
+    "@types/homey": "npm:homey-apps-sdk-v3-types@^0.3.12",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^25.9.1",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "eslint": "^7.32.0",
+    "eslint-config-athom": "^3.1.5",
+    "eslint-import-resolver-typescript": "3.6.1",
+    "eslint-plugin-homey-app": "^1.0.2",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-mocha": "^6.3.0",
+    "eslint-plugin-node": "^11.1.0",
+    "homey": "^4.2.3",
+    "jest": "^30.3.0",
+    "ts-jest": "^29.4.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3"
+  },
+  "keywords": [
+    "homey",
+    "tp-link",
+    "switch",
+    "smart home"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "overrides": {
+    "@typescript-eslint/typescript-estree": {
+      "minimatch": "^9.0.7"
+    },
+    "got": "^11.8.5",
+    "parseuri": "^3.0.2",
+    "tmp": "^0.2.5",
+    "uuid": "^11.1.1"
+  }
+}
