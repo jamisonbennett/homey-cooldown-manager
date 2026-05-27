@@ -16,9 +16,23 @@ export default function normalizeKey(value: unknown): string | null {
     return trimmed.length > 0 ? canonicalKey(trimmed) : null;
   }
 
-  if (value !== null && typeof value === 'object' && 'name' in value) {
-    const name = String((value as { name: unknown }).name).trim();
-    return name.length > 0 ? canonicalKey(name) : null;
+  if (value !== null && typeof value === 'object') {
+    if ('name' in value) {
+      const name = String((value as { name: unknown }).name).trim();
+      if (name.length > 0) {
+        return canonicalKey(name);
+      }
+    }
+
+    if ('id' in value) {
+      const { id } = value as { id: unknown };
+      if (typeof id === 'string') {
+        const trimmed = id.trim();
+        if (trimmed.length > 0) {
+          return canonicalKey(trimmed);
+        }
+      }
+    }
   }
 
   return null;

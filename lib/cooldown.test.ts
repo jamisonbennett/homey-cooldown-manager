@@ -29,13 +29,27 @@ describe('normalizeKey', () => {
     expect(normalizeKey('   ')).toBeNull();
   });
 
-  it('reads autocomplete objects', () => {
+  it('reads autocomplete objects by name', () => {
     expect(normalizeKey({ name: 'Door_Alert' })).toBe('door_alert');
+  });
+
+  it('reads autocomplete objects by id when name is absent', () => {
+    expect(normalizeKey({ id: 'Hall_Motion_Alert' })).toBe('hall_motion_alert');
+  });
+
+  it('prefers name over id when both are present', () => {
+    expect(normalizeKey({ name: 'Door_Alert', id: 'other_key' })).toBe('door_alert');
+  });
+
+  it('falls back to id when name is empty', () => {
+    expect(normalizeKey({ name: '', id: 'my_key' })).toBe('my_key');
   });
 
   it('returns null for invalid values', () => {
     expect(normalizeKey(null)).toBeNull();
     expect(normalizeKey(42)).toBeNull();
+    expect(normalizeKey({ id: '   ' })).toBeNull();
+    expect(normalizeKey({ id: 42 })).toBeNull();
   });
 });
 
