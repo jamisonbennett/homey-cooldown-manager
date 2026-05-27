@@ -65,7 +65,8 @@ export class CooldownManager {
   }
 
   /**
-   * Remove keys that are no longer referenced by any Flow card.
+   * Drop keys no longer used in Flows and ensure every used key exists in state
+   * (with `lastRunAt: null` when it has never triggered).
    */
   cleanup(usedKeys: ReadonlySet<string>): void {
     const state = this.store.getState();
@@ -74,6 +75,13 @@ export class CooldownManager {
     for (const key of Object.keys(state)) {
       if (!usedKeys.has(key)) {
         delete state[key];
+        changed = true;
+      }
+    }
+
+    for (const key of usedKeys) {
+      if (!state[key]) {
+        state[key] = { lastRunAt: null };
         changed = true;
       }
     }

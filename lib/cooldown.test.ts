@@ -122,11 +122,29 @@ describe('CooldownManager', () => {
     expect(manager.getEntry('unused_key')).toBeUndefined();
   });
 
+  it('cleanup adds flow keys that have never run', () => {
+    manager.cleanup(new Set(['new_flow_key']));
+
+    expect(manager.getKeys()).toEqual(['new_flow_key']);
+    expect(manager.getEntry('new_flow_key')).toEqual({ lastRunAt: null });
+  });
+
+  it('cleanup does not overwrite existing entries when adding flow keys', () => {
+    manager.tryAllow('used_key', 600_000, 1_000);
+
+    manager.cleanup(new Set(['used_key', 'new_flow_key']));
+
+    expect(manager.getEntry('used_key')).toEqual({ lastRunAt: 1_000 });
+    expect(manager.getEntry('new_flow_key')).toEqual({ lastRunAt: null });
+  });
+
   it('cleanup removes never-run keys that are no longer referenced', () => {
     manager.reset('orphaned_key');
 
     manager.cleanup(new Set(['active_key']));
 
-    expect(manager.getKeys()).toEqual([]);
+    expect(manager.getKeys()).toEqual(['active_key']);
+    expect(manager.getEntry('active_key')).toEqual({ lastRunAt: null });
+    expect(manager.getEntry('orphaned_key')).toBeUndefined();
   });
 });

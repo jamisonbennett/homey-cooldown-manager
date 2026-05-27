@@ -53,5 +53,9 @@
     "create_key": "Create new key",
     "never_run": "Never run",
     "last_run": "Last run: __time__"
+  },
+  "settings": {
+    "empty": "No cooldown keys yet. Add a key in a Flow card to see it here.",
+    "never_run": "Never triggered"
   }
 }

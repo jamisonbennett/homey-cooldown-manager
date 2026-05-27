@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script
+      type="text/javascript"
+      src="/homey.js"
+      data-origin="settings"
+    ></script>
+    <style>
+      .trigger-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .trigger-list-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        padding-block: 0.3rem;
+        line-height: 1.25;
+      }
+
+      .trigger-key {
+        flex: 1 1 auto;
+        min-width: 0;
+        font-weight: 500;
+        overflow-wrap: anywhere;
+      }
+
+      .trigger-time {
+        flex: 0 0 auto;
+        text-align: end;
+        color: var(--homey-color-text-secondary, #6b7280);
+        font-size: 0.875rem;
+      }
+
+      .trigger-empty {
+        margin: 0;
+        color: var(--homey-color-text-secondary, #6b7280);
+      }
+    </style>
+  </head>
+  <body>
+    <p id="trigger-empty" class="trigger-empty" hidden data-i18n="settings.empty"></p>
+    <ul id="trigger-list" class="trigger-list" hidden></ul>
+
+    <script type="text/javascript">
+      var COOLDOWN_SETTINGS_KEY = 'cooldownState';
+
+      function onHomeyReady(Homey) {
+        var listElement = document.getElementById('trigger-list');
+        var emptyElement = document.getElementById('trigger-empty');
+        var hasShown = false;
+
+        function showView() {
+          if (!hasShown) {
+            hasShown = true;
+            Homey.ready();
+          }
+        }
+
+        function formatLastRun(timestampMs) {
+          return new Intl.DateTimeFormat(undefined, {
+            dateStyle: 'short',
+            timeStyle: 'short',
+          }).format(new Date(timestampMs));
+        }
+
+        function describeLastRun(entry) {
+          if (!entry || entry.lastRunAt === null || entry.lastRunAt === undefined) {
+            return Homey.__('settings.never_run');
+          }
+
+          if (typeof entry.lastRunAt !== 'number' || !Number.isFinite(entry.lastRunAt)) {
+            return Homey.__('settings.never_run');
+          }
+
+          return formatLastRun(entry.lastRunAt);
+        }
+
+        function triggersFromState(state) {
+          if (!state || typeof state !== 'object' || Array.isArray(state)) {
+            return [];
+          }
+
+          return Object.keys(state).sort().map(function (key) {
+            return {
+              key: key,
+              lastRunLabel: describeLastRun(state[key]),
+            };
+          });
+        }
+
+        function renderTriggers(triggers) {
+          listElement.innerHTML = '';
+
+          if (!triggers.length) {
+            listElement.hidden = true;
+            emptyElement.hidden = false;
+            showView();
+            return;
+          }
+
+          emptyElement.hidden = true;
+          listElement.hidden = false;
+
+          triggers.forEach(function (trigger) {
+            var item = document.createElement('li');
+            item.className = 'trigger-list-item';
+
+            var key = document.createElement('span');
+            key.className = 'trigger-key';
+            key.textContent = trigger.key;
+
+            var time = document.createElement('span');
+            time.className = 'trigger-time';
+            time.textContent = trigger.lastRunLabel;
+
+            item.appendChild(key);
+            item.appendChild(time);
+            listElement.appendChild(item);
+          });
+
+          showView();
+        }
+
+        function loadTriggers() {
+          Homey.get(COOLDOWN_SETTINGS_KEY, function (err, state) {
+            if (err) {
+              Homey.alert(err.message || String(err));
+              showView();
+              return;
+            }
+
+            renderTriggers(triggersFromState(state));
+          });
+        }
+
+        Homey.on('settings.set', function (data) {
+          if (!data || data.name === COOLDOWN_SETTINGS_KEY) {
+            loadTriggers();
+          }
+        });
+
+        Homey.on('settings.unset', function (data) {
+          if (!data || data.name === COOLDOWN_SETTINGS_KEY) {
+            loadTriggers();
+          }
+        });
+
+        loadTriggers();
+      }
+    </script>
+  </body>
+</html>
