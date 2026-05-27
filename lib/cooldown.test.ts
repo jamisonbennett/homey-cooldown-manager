@@ -130,6 +130,15 @@ describe('CooldownManager', () => {
     expect(manager.getEntry('hall_motion_alert')).toEqual({ lastRunAt: 5_000 });
   });
 
+  it('cleanup is a no-op when no flow keys are known', () => {
+    manager.tryAllow('stored_key', 600_000, 1_000);
+
+    manager.cleanup(new Set());
+
+    expect(manager.getKeys()).toEqual(['stored_key']);
+    expect(manager.getEntry('stored_key')).toEqual({ lastRunAt: 1_000 });
+  });
+
   it('cleanup matches used keys case-insensitively', () => {
     manager.tryAllow('Used_Key', 600_000, 1_000);
     manager.tryAllow('unused_key', 600_000, 1_000);

@@ -80,8 +80,6 @@ module.exports = class CooldownManagerApp extends Homey.App {
     allowOnceCard.on('update', cleanup);
     resetCooldownCard.on('update', cleanup);
     suspendCooldownCard.on('update', cleanup);
-
-    await this.cleanupUnusedKeys();
   }
 
   private requireKey(value: unknown): string {
