@@ -1,30 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<svg width="960" height="960" viewBox="85 83 342 342" xmlns="http://www.w3.org/2000/svg">
-  <!-- centered timer top line -->
-  <line x1="205" y1="100" x2="307" y2="100"
-        stroke="black" stroke-width="36"
-        stroke-linecap="round"/>
-
-  <!-- 3/4 circle, missing bottom right quadrant -->
-  <path d="M384 280
-         A128 128 0 1 0 256 408"
-        fill="none"
-        stroke="black"
-        stroke-width="36"
-        stroke-linecap="round"
-        stroke-linejoin="round"/>
-
-  <!-- hour hand pointing to 12 o'clock -->
-  <line x1="256" y1="280"
-        x2="256" y2="205"
-        stroke="black" stroke-width="36"
-        stroke-linecap="round"/>
-
-  <!-- pause button in bottom right quadrant -->
-  <line x1="324" y1="344" x2="324" y2="408"
-        stroke="black" stroke-width="36"
-        stroke-linecap="round"/>
-  <line x1="384" y1="344" x2="384" y2="408"
-        stroke="black" stroke-width="36"
-        stroke-linecap="round"/>
+<svg width="960" height="960" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <line
+    x1="192"
+    y1="31"
+    x2="320"
+    y2="31"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="45"
+    stroke-linecap="round"
+  />
+  <path
+    d="M416 256 A160 160 0 1 0 256 416"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="45"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <line
+    x1="256"
+    y1="256"
+    x2="256"
+    y2="162"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="45"
+    stroke-linecap="round"
+  />
+  <line
+    x1="341"
+    y1="336"
+    x2="341"
+    y2="416"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="45"
+    stroke-linecap="round"
+  />
+  <line
+    x1="416"
+    y1="336"
+    x2="416"
+    y2="416"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="45"
+    stroke-linecap="round"
+  />
 </svg>
