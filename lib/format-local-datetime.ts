@@ -5,9 +5,25 @@ export default function formatLocalDateTime(
   timezone: string,
   language: string,
 ): string {
-  return new Intl.DateTimeFormat(language, {
+  const date = new Date(timestampMs);
+  const baseOptions: Intl.DateTimeFormatOptions = {
     dateStyle: 'short',
     timeStyle: 'short',
-    timeZone: timezone,
-  }).format(new Date(timestampMs));
+  };
+  const attempts: [string | undefined, Intl.DateTimeFormatOptions][] = [
+    [language, { ...baseOptions, timeZone: timezone }],
+    [language, baseOptions],
+    [undefined, { ...baseOptions, timeZone: timezone }],
+    [undefined, baseOptions],
+  ];
+
+  for (const [locale, options] of attempts) {
+    try {
+      return new Intl.DateTimeFormat(locale, options).format(date);
+    } catch {
+      // Invalid language and/or timezone — try a safer combination.
+    }
+  }
+
+  return date.toISOString();
 }
