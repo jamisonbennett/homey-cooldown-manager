@@ -1,5 +1,5 @@
-# Test and tooling sources are not part of the published app package.
-# Keeps eslint-plugin-node publish checks aligned with what ships to users.
+# Test sources only — keeps eslint publish checks aligned with runtime code.
+# Homey App Store packaging uses .homeyignore, not this file.
 jest.config.ts
 **/*.test.ts
 **/*.test.tsx
@@ -8,3 +8,13 @@ jest.config.ts
 **/tests/
 **/__tests__/
 **/__mocks__/
+
+.env
+
+# OS metadata
+.DS_Store
+**/.DS_Store
+._*
+**/._*
+Thumbs.db
+desktop.ini

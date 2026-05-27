@@ -9,16 +9,24 @@ node_modules/
 # Ignore IDE specific files and directories
 .vscode/
 .idea/
+.cursor/
 
-# Ignore OS specific files
+# Ignore OS-specific metadata (any directory)
 .DS_Store
+**/.DS_Store
+._*
+**/._*
 Thumbs.db
+desktop.ini
 
 # Ignore test files and directories
 test/
 tests/
+**/__tests__/
+**/__mocks__/
 *.test.ts
 *.spec.ts
+jest.config.ts
 
 # Ignore Git and version control specific files
 .git/
@@ -30,4 +38,8 @@ tests/
 .eslintrc.json
 package-lock.json
 tsconfig.json
+tsconfig.*.json
 
+# Repo documentation (store listing uses README.txt)
+README.md
+.npmignore

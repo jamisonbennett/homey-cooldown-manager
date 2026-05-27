@@ -1,5 +1,15 @@
 /env.json
 /node_modules/
 /.homeybuild/
+
+# Editor / swap files
 *.swp
+*~
+
+# macOS / Windows metadata
 .DS_Store
+**/.DS_Store
+._*
+**/._*
+Thumbs.db
+desktop.ini
