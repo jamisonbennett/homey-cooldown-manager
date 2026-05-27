@@ -1,0 +1,24 @@
+{
+  "id": "reset_cooldown",
+  "title": {
+    "en": "Reset cooldown for [[key]]"
+  },
+  "titleFormatted": {
+    "en": "Reset cooldown for [[key]]"
+  },
+  "hint": {
+    "en": "Clears the cooldown for the selected key so it can trigger again immediately."
+  },
+  "args": [
+    {
+      "type": "autocomplete",
+      "name": "key",
+      "title": {
+        "en": "Key"
+      },
+      "placeholder": {
+        "en": "Select or create key"
+      }
+    }
+  ]
+}

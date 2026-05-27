@@ -1,0 +1,70 @@
+{
+  "id": "allow_once",
+  "highlight": true,
+  "title": {
+    "en": "Allow [[key]] once every [[duration]] [[duration_unit]]"
+  },
+  "titleFormatted": {
+    "en": "Allow [[key]] once every [[duration]] [[duration_unit]]"
+  },
+  "hint": {
+    "en": "Checks whether the cooldown is active, atomically activates it if allowed, and returns true to continue the Flow or false to stop it."
+  },
+  "args": [
+    {
+      "type": "autocomplete",
+      "name": "key",
+      "title": {
+        "en": "Key"
+      },
+      "placeholder": {
+        "en": "Select or create key"
+      }
+    },
+    {
+      "type": "number",
+      "name": "duration",
+      "title": {
+        "en": "Duration"
+      },
+      "placeholder": {
+        "en": "10"
+      },
+      "min": 1,
+      "step": 1
+    },
+    {
+      "type": "dropdown",
+      "name": "duration_unit",
+      "title": {
+        "en": "Unit"
+      },
+      "values": [
+        {
+          "id": "seconds",
+          "label": {
+            "en": "seconds"
+          }
+        },
+        {
+          "id": "minutes",
+          "label": {
+            "en": "minutes"
+          }
+        },
+        {
+          "id": "hours",
+          "label": {
+            "en": "hours"
+          }
+        },
+        {
+          "id": "days",
+          "label": {
+            "en": "days"
+          }
+        }
+      ]
+    }
+  ]
+}

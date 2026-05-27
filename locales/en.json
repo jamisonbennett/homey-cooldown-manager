@@ -1,1 +1,57 @@
-{}
+{
+  "flow": {
+    "conditions": {
+      "allow_once": {
+        "title": "Allow [[key]] once every [[duration]] [[duration_unit]]",
+        "titleFormatted": "Allow [[key]] once every [[duration]] [[duration_unit]]",
+        "hint": "Checks whether the cooldown is active, atomically activates it if allowed, and returns true to continue the Flow or false to stop it.",
+        "args": {
+          "key": {
+            "title": "Key",
+            "placeholder": "Select or create key"
+          },
+          "duration": {
+            "title": "Duration",
+            "placeholder": "10"
+          },
+          "duration_unit": {
+            "title": "Unit"
+          }
+        }
+      }
+    },
+    "actions": {
+      "reset_cooldown": {
+        "title": "Reset cooldown for [[key]]",
+        "titleFormatted": "Reset cooldown for [[key]]",
+        "hint": "Clears the cooldown for the selected key so it can trigger again immediately.",
+        "args": {
+          "key": {
+            "title": "Key",
+            "placeholder": "Select or create key"
+          }
+        }
+      },
+      "suspend_cooldown": {
+        "title": "Suspend cooldown for [[key]]",
+        "titleFormatted": "Suspend cooldown for [[key]]",
+        "hint": "Registers the cooldown as if it just ran, blocking further triggers until the duration defined in the Allow condition has elapsed.",
+        "args": {
+          "key": {
+            "title": "Key",
+            "placeholder": "Select or create key"
+          }
+        }
+      }
+    }
+  },
+  "errors": {
+    "key_required": "A cooldown key is required.",
+    "duration_required": "A cooldown duration is required."
+  },
+  "autocomplete": {
+    "create_key": "Create new key",
+    "never_run": "Never run",
+    "last_run": "Last run: __time__"
+  }
+}

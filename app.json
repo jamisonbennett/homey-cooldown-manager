@@ -28,5 +28,129 @@
     "email": ""
   },
   "brandColor": "#4F8CFF",
-  "support": "https://github.com/jamisonbennett/homey-cooldown-manager"
+  "support": "https://github.com/jamisonbennett/homey-cooldown-manager",
+  "flow": {
+    "conditions": [
+      {
+        "id": "allow_once",
+        "highlight": true,
+        "title": {
+          "en": "Allow [[key]] once every [[duration]] [[duration_unit]]"
+        },
+        "titleFormatted": {
+          "en": "Allow [[key]] once every [[duration]] [[duration_unit]]"
+        },
+        "hint": {
+          "en": "Checks whether the cooldown is active, atomically activates it if allowed, and returns true to continue the Flow or false to stop it."
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "key",
+            "title": {
+              "en": "Key"
+            },
+            "placeholder": {
+              "en": "Select or create key"
+            }
+          },
+          {
+            "type": "number",
+            "name": "duration",
+            "title": {
+              "en": "Duration"
+            },
+            "placeholder": {
+              "en": "10"
+            },
+            "min": 1,
+            "step": 1
+          },
+          {
+            "type": "dropdown",
+            "name": "duration_unit",
+            "title": {
+              "en": "Unit"
+            },
+            "values": [
+              {
+                "id": "seconds",
+                "label": {
+                  "en": "seconds"
+                }
+              },
+              {
+                "id": "minutes",
+                "label": {
+                  "en": "minutes"
+                }
+              },
+              {
+                "id": "hours",
+                "label": {
+                  "en": "hours"
+                }
+              },
+              {
+                "id": "days",
+                "label": {
+                  "en": "days"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "actions": [
+      {
+        "id": "reset_cooldown",
+        "title": {
+          "en": "Reset cooldown for [[key]]"
+        },
+        "titleFormatted": {
+          "en": "Reset cooldown for [[key]]"
+        },
+        "hint": {
+          "en": "Clears the cooldown for the selected key so it can trigger again immediately."
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "key",
+            "title": {
+              "en": "Key"
+            },
+            "placeholder": {
+              "en": "Select or create key"
+            }
+          }
+        ]
+      },
+      {
+        "id": "suspend_cooldown",
+        "title": {
+          "en": "Suspend cooldown for [[key]]"
+        },
+        "titleFormatted": {
+          "en": "Suspend cooldown for [[key]]"
+        },
+        "hint": {
+          "en": "Registers the cooldown as if it just ran, blocking further triggers until the duration defined in the Allow condition has elapsed."
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "key",
+            "title": {
+              "en": "Key"
+            },
+            "placeholder": {
+              "en": "Select or create key"
+            }
+          }
+        ]
+      }
+    ]
+  }
 }

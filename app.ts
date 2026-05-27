@@ -1,14 +1,176 @@
 'use strict';
 
 import Homey from 'homey';
+import {
+  COOLDOWN_SETTINGS_KEY,
+  CooldownManager,
+  loadCooldownState,
+  type CooldownStore,
+} from './lib/cooldown';
+import { durationToMs } from './lib/duration';
+import formatLocalDateTime from './lib/format-local-datetime';
+import normalizeKey from './lib/flow-key';
 
-module.exports = class MyApp extends Homey.App {
+const FLOW_CARD_IDS = {
+  allowOnce: 'allow_once',
+  resetCooldown: 'reset_cooldown',
+  suspendCooldown: 'suspend_cooldown',
+} as const;
+
+module.exports = class CooldownManagerApp extends Homey.App {
+  private cooldownManager!: CooldownManager;
+
+  private timezone = 'UTC';
 
   /**
    * onInit is called when the app is initialized.
    */
   async onInit() {
-    this.log('MyApp has been initialized');
+    this.timezone = await this.homey.clock.getTimezone();
+    this.homey.clock.on('timezoneChange', (timezone: string) => {
+      this.timezone = timezone;
+    });
+
+    this.cooldownManager = new CooldownManager(this.createSettingsStore());
+    await this.registerFlowCards();
+    this.log('Cooldown Manager has been initialized');
   }
 
+  private createSettingsStore(): CooldownStore {
+    return {
+      getState: () => loadCooldownState(this.homey.settings.get(COOLDOWN_SETTINGS_KEY)),
+      setState: (state) => {
+        this.homey.settings.set(COOLDOWN_SETTINGS_KEY, state);
+      },
+    };
+  }
+
+  private async registerFlowCards() {
+    const allowOnceCard = this.homey.flow.getConditionCard(FLOW_CARD_IDS.allowOnce);
+    const resetCooldownCard = this.homey.flow.getActionCard(FLOW_CARD_IDS.resetCooldown);
+    const suspendCooldownCard = this.homey.flow.getActionCard(FLOW_CARD_IDS.suspendCooldown);
+
+    const keyAutocomplete = async (query: string) => this.autocompleteKeys(query);
+
+    allowOnceCard.registerArgumentAutocompleteListener('key', keyAutocomplete);
+    resetCooldownCard.registerArgumentAutocompleteListener('key', keyAutocomplete);
+    suspendCooldownCard.registerArgumentAutocompleteListener('key', keyAutocomplete);
+
+    allowOnceCard.registerRunListener(async (args) => {
+      const key = this.requireKey(args.key);
+      const durationMs = this.requireDurationMs(args.duration, args.duration_unit);
+
+      return this.cooldownManager.tryAllow(key, durationMs, Date.now());
+    });
+
+    resetCooldownCard.registerRunListener(async (args) => {
+      const key = this.requireKey(args.key);
+      this.cooldownManager.reset(key);
+    });
+
+    suspendCooldownCard.registerRunListener(async (args) => {
+      const key = this.requireKey(args.key);
+      this.cooldownManager.suspend(key, Date.now());
+    });
+
+    const cleanup = () => {
+      this.cleanupUnusedKeys().catch(this.error);
+    };
+
+    allowOnceCard.on('update', cleanup);
+    resetCooldownCard.on('update', cleanup);
+    suspendCooldownCard.on('update', cleanup);
+
+    await this.cleanupUnusedKeys();
+  }
+
+  private requireKey(value: unknown): string {
+    const key = normalizeKey(value);
+    if (!key) {
+      throw new Error(this.homey.__('errors.key_required'));
+    }
+    return key;
+  }
+
+  private requireDurationMs(duration: unknown, unit: unknown): number {
+    const durationMs = durationToMs(duration, unit);
+
+    if (durationMs === null) {
+      throw new Error(this.homey.__('errors.duration_required'));
+    }
+
+    return durationMs;
+  }
+
+  private async autocompleteKeys(query: string) {
+    const usedKeys = await this.collectUsedKeys();
+    const storedKeys = this.cooldownManager.getKeys();
+    const allKeys = new Set([...usedKeys, ...storedKeys]);
+    const normalizedQuery = query.trim().toLowerCase();
+
+    const results = [...allKeys]
+      .filter((key) => key.toLowerCase().includes(normalizedQuery))
+      .sort()
+      .map((key) => ({
+        name: key,
+        id: key,
+        description: this.describeKey(key),
+      }));
+
+    const trimmedQuery = query.trim();
+    if (
+      trimmedQuery.length > 0
+      && !allKeys.has(trimmedQuery)
+      && trimmedQuery.toLowerCase().includes(normalizedQuery)
+    ) {
+      results.unshift({
+        name: trimmedQuery,
+        id: trimmedQuery,
+        description: this.homey.__('autocomplete.create_key'),
+      });
+    }
+
+    return results;
+  }
+
+  private describeKey(key: string): string {
+    const entry = this.cooldownManager.getEntry(key);
+    if (!entry || entry.lastRunAt === null) {
+      return this.homey.__('autocomplete.never_run');
+    }
+
+    return this.homey.__('autocomplete.last_run', {
+      time: formatLocalDateTime(
+        entry.lastRunAt,
+        this.timezone,
+        this.homey.i18n.getLanguage(),
+      ),
+    });
+  }
+
+  private async collectUsedKeys(): Promise<Set<string>> {
+    const keys = new Set<string>();
+    const cards = [
+      this.homey.flow.getConditionCard(FLOW_CARD_IDS.allowOnce),
+      this.homey.flow.getActionCard(FLOW_CARD_IDS.resetCooldown),
+      this.homey.flow.getActionCard(FLOW_CARD_IDS.suspendCooldown),
+    ];
+
+    for (const card of cards) {
+      const argumentValues = await card.getArgumentValues();
+      for (const valueSet of argumentValues) {
+        const key = normalizeKey(valueSet.key);
+        if (key) {
+          keys.add(key);
+        }
+      }
+    }
+
+    return keys;
+  }
+
+  private async cleanupUnusedKeys() {
+    const usedKeys = await this.collectUsedKeys();
+    this.cooldownManager.cleanup(usedKeys);
+  }
 };

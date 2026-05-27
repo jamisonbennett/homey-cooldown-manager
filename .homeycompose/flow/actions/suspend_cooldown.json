@@ -1,0 +1,24 @@
+{
+  "id": "suspend_cooldown",
+  "title": {
+    "en": "Suspend cooldown for [[key]]"
+  },
+  "titleFormatted": {
+    "en": "Suspend cooldown for [[key]]"
+  },
+  "hint": {
+    "en": "Registers the cooldown as if it just ran, blocking further triggers until the duration defined in the Allow condition has elapsed."
+  },
+  "args": [
+    {
+      "type": "autocomplete",
+      "name": "key",
+      "title": {
+        "en": "Key"
+      },
+      "placeholder": {
+        "en": "Select or create key"
+      }
+    }
+  ]
+}
