@@ -90,6 +90,23 @@ describe('loadCooldownState', () => {
       hall: { lastRunAt: null },
     });
   });
+
+  it('clamps corrupt lastRunAt values', () => {
+    const now = 1_700_000_000_000;
+    jest.useFakeTimers().setSystemTime(now);
+
+    expect(loadCooldownState({
+      negative: { lastRunAt: -1 },
+      future: { lastRunAt: now + 86_400_000 },
+      valid: { lastRunAt: now - 60_000 },
+    })).toEqual({
+      negative: { lastRunAt: null },
+      future: { lastRunAt: now },
+      valid: { lastRunAt: now - 60_000 },
+    });
+
+    jest.useRealTimers();
+  });
 });
 
 describe('CooldownManager', () => {

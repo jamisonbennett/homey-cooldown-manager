@@ -14,6 +14,18 @@ function mergeCooldownEntries(a, b) {
   return { lastRunAt: Math.max(a.lastRunAt, b.lastRunAt) };
 }
 
+/** Reject hand-edited or corrupt timestamps that would block or allow incorrectly. */
+function sanitizeLastRunAt(lastRunAt) {
+  if (lastRunAt < 0) {
+    return null;
+  }
+  const now = Date.now();
+  if (lastRunAt > now) {
+    return now;
+  }
+  return lastRunAt;
+}
+
 function loadCooldownState(raw) {
   if (raw === null || typeof raw !== 'object' || Array.isArray(raw)) {
     return {};
@@ -38,7 +50,7 @@ function loadCooldownState(raw) {
     if (lastRunAt === null) {
       entry = { lastRunAt: null };
     } else if (typeof lastRunAt === 'number' && Number.isFinite(lastRunAt)) {
-      entry = { lastRunAt };
+      entry = { lastRunAt: sanitizeLastRunAt(lastRunAt) };
     }
 
     if (!entry) {
