@@ -7,6 +7,7 @@
     "app.ts",
     "drivers/**/*.ts",
     "lib/**/*.ts",
+    "settings/load-cooldown-state.js",
     "jest.config.ts",
     "**/*.test.ts",
     "**/*.test.js"

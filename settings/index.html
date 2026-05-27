@@ -48,6 +48,7 @@
     <p id="trigger-empty" class="trigger-empty" hidden data-i18n="settings.empty"></p>
     <ul id="trigger-list" class="trigger-list" hidden></ul>
 
+    <script type="text/javascript" src="load-cooldown-state.js"></script>
     <script type="text/javascript">
       var COOLDOWN_SETTINGS_KEY = 'cooldownState';
 
@@ -71,21 +72,15 @@
         }
 
         function describeLastRun(entry) {
-          if (!entry || entry.lastRunAt === null || entry.lastRunAt === undefined) {
-            return Homey.__('settings.never_run');
-          }
-
-          if (typeof entry.lastRunAt !== 'number' || !Number.isFinite(entry.lastRunAt)) {
+          if (entry.lastRunAt === null) {
             return Homey.__('settings.never_run');
           }
 
           return formatLastRun(entry.lastRunAt);
         }
 
-        function triggersFromState(state) {
-          if (!state || typeof state !== 'object' || Array.isArray(state)) {
-            return [];
-          }
+        function triggersFromState(raw) {
+          var state = loadCooldownState(raw);
 
           return Object.keys(state).sort().map(function (key) {
             return {
