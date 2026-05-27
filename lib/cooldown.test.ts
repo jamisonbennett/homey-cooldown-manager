@@ -2,6 +2,7 @@
 
 import {
   CooldownManager,
+  InvalidCooldownDurationError,
   loadCooldownState,
   type CooldownState,
   type CooldownStore,
@@ -126,10 +127,10 @@ describe('CooldownManager', () => {
 
   it('rejects invalid durations', async () => {
     await expect(manager.tryAllow('hall_motion_alert', 0, 1_000)).rejects.toThrow(
-      'Cooldown duration must be greater than 0',
+      InvalidCooldownDurationError,
     );
     await expect(manager.tryAllow('hall_motion_alert', -1, 1_000)).rejects.toThrow(
-      'Cooldown duration must be greater than 0',
+      InvalidCooldownDurationError,
     );
     expect(manager.getEntry('hall_motion_alert')).toBeUndefined();
   });

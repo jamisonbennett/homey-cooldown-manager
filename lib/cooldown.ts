@@ -11,6 +11,13 @@ export interface CooldownEntry {
 
 export type CooldownState = Record<string, CooldownEntry>;
 
+export class InvalidCooldownDurationError extends Error {
+  constructor() {
+    super('InvalidCooldownDurationError');
+    this.name = 'InvalidCooldownDurationError';
+  }
+}
+
 export interface CooldownStore {
   getState(): CooldownState;
   setState(state: CooldownState): void;
@@ -43,7 +50,7 @@ export class CooldownManager {
 
   private tryAllowUnlocked(key: string, durationMs: number, now: number): boolean {
     if (durationMs <= 0) {
-      throw new Error('Cooldown duration must be greater than 0');
+      throw new InvalidCooldownDurationError();
     }
 
     const normalizedKey = canonicalKey(key);

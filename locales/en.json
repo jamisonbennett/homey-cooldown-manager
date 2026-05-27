@@ -47,7 +47,8 @@
   },
   "errors": {
     "key_required": "A cooldown key is required.",
-    "duration_required": "A cooldown duration is required."
+    "duration_required": "A cooldown duration is required.",
+    "duration_invalid": "Cooldown duration must be greater than 0."
   },
   "autocomplete": {
     "create_key": "Create new key",

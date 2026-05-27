@@ -4,6 +4,7 @@ import Homey from 'homey';
 import {
   COOLDOWN_SETTINGS_KEY,
   CooldownManager,
+  InvalidCooldownDurationError,
   loadCooldownState,
   type CooldownStore,
 } from './lib/cooldown';
@@ -60,7 +61,14 @@ module.exports = class CooldownManagerApp extends Homey.App {
       const key = this.requireKey(args.key);
       const durationMs = this.requireDurationMs(args.duration, args.duration_unit);
 
-      return await this.cooldownManager.tryAllow(key, durationMs, Date.now());
+      try {
+        return await this.cooldownManager.tryAllow(key, durationMs, Date.now());
+      } catch (error) {
+        if (error instanceof InvalidCooldownDurationError) {
+          throw new Error(this.homey.__('errors.duration_invalid'));
+        }
+        throw error;
+      }
     });
 
     resetCooldownCard.registerRunListener(async (args) => {
