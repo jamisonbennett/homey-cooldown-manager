@@ -11,7 +11,7 @@ type CooldownManagerApp = Homey.App & {
   getDisplayContext(): DisplayContext;
 };
 
-module.exports = {
+export = {
   async getDisplayContext({ homey }: { homey: { app: CooldownManagerApp } }) {
     return homey.app.getDisplayContext();
   },

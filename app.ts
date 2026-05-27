@@ -18,7 +18,7 @@ const FLOW_CARD_IDS = {
   suspendCooldown: 'suspend_cooldown',
 } as const;
 
-module.exports = class CooldownManagerApp extends Homey.App {
+class CooldownManagerApp extends Homey.App {
   private cooldownManager!: CooldownManager;
 
   private timezone = 'UTC';
@@ -224,4 +224,6 @@ module.exports = class CooldownManagerApp extends Homey.App {
     const usedKeys = await this.collectUsedKeys();
     await this.cooldownManager.cleanup(usedKeys);
   }
-};
+}
+
+export = CooldownManagerApp;
