@@ -160,13 +160,15 @@ describe('CooldownManager', () => {
     expect(manager.getEntry('burst_sensor')).toEqual({ lastRunAt: 1_000 });
   });
 
-  it('cleanup is a no-op when no flow keys are known', async () => {
+  it('cleanup removes all keys when no flow keys are known', async () => {
     await manager.tryAllow('stored_key', 600_000, 1_000);
+    await manager.reset('never_run_key');
 
     await manager.cleanup(new Set());
 
-    expect(manager.getKeys()).toEqual(['stored_key']);
-    expect(manager.getEntry('stored_key')).toEqual({ lastRunAt: 1_000 });
+    expect(manager.getKeys()).toEqual([]);
+    expect(manager.getEntry('stored_key')).toBeUndefined();
+    expect(manager.getEntry('never_run_key')).toBeUndefined();
   });
 
   it('cleanup matches used keys case-insensitively', async () => {

@@ -83,10 +83,6 @@ export class CooldownManager {
    * (with `lastRunAt: null` when it has never triggered).
    */
   cleanup(usedKeys: ReadonlySet<string>): Promise<void> {
-    if (usedKeys.size === 0) {
-      return Promise.resolve();
-    }
-
     return this.stateMutex.runExclusive(() => {
       const normalizedUsedKeys = new Set([...usedKeys].map(canonicalKey));
       const state = this.store.getState();
