@@ -1,0 +1,33 @@
+# Ignore node_modules directory as dependencies are handled by Homey app store
+node_modules/
+
+# Ignore logs and temporary files
+*.log
+*.tmp
+*.swp
+
+# Ignore IDE specific files and directories
+.vscode/
+.idea/
+
+# Ignore OS specific files
+.DS_Store
+Thumbs.db
+
+# Ignore test files and directories
+test/
+tests/
+*.test.ts
+*.spec.ts
+
+# Ignore Git and version control specific files
+.git/
+.gitignore
+.gitattributes
+
+# Build and configuration files
+.env
+.eslintrc.json
+package-lock.json
+tsconfig.json
+
