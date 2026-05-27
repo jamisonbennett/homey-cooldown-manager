@@ -28,7 +28,7 @@ The app focuses on one simple idea:
 ## Installation
 
 1. Install **Cooldown Manager** from the [Homey App Store](https://homey.app) (or run from source; see [Building](#building)).
-2. In the Homey mobile app, add a device and choose **Cooldown Manager**
+2. In a Flow, add cards from **Cooldown Manager** — for example the **Allow … once every …** condition, plus **Reset cooldown** or **Suspend cooldown** actions when you need them.
 
 ---
 
@@ -56,7 +56,7 @@ This app is written in TypeScript. Run lint with `npm run lint` and use `npm run
 
 ### Homey Compose
 
-Metadata and drivers are merged from **Homey Compose** sources under [`.homeycompose/`](./.homeycompose/) and [`drivers/cooldown-manager/driver.*.compose.json`](./drivers/cooldown-manager/). The root [`app.json`](./app.json) is **regenerated** when you use the CLI (for example `homey app run` or `homey app build`); edit the compose files, not `app.json`, by hand.
+Flow card metadata is merged from **Homey Compose** sources under [`.homeycompose/`](./.homeycompose/). The root [`app.json`](./app.json) is **regenerated** when you use the CLI (for example `homey app run` or `homey app build`); edit the compose files, not `app.json`, by hand.
 
 ### Translate
 
