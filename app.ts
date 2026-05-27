@@ -60,17 +60,17 @@ module.exports = class CooldownManagerApp extends Homey.App {
       const key = this.requireKey(args.key);
       const durationMs = this.requireDurationMs(args.duration, args.duration_unit);
 
-      return this.cooldownManager.tryAllow(key, durationMs, Date.now());
+      return await this.cooldownManager.tryAllow(key, durationMs, Date.now());
     });
 
     resetCooldownCard.registerRunListener(async (args) => {
       const key = this.requireKey(args.key);
-      this.cooldownManager.reset(key);
+      await this.cooldownManager.reset(key);
     });
 
     suspendCooldownCard.registerRunListener(async (args) => {
       const key = this.requireKey(args.key);
-      this.cooldownManager.suspend(key, Date.now());
+      await this.cooldownManager.suspend(key, Date.now());
     });
 
     const cleanup = () => {
@@ -172,6 +172,6 @@ module.exports = class CooldownManagerApp extends Homey.App {
 
   private async cleanupUnusedKeys() {
     const usedKeys = await this.collectUsedKeys();
-    this.cooldownManager.cleanup(usedKeys);
+    await this.cooldownManager.cleanup(usedKeys);
   }
 };

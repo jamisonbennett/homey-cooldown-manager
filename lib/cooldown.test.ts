@@ -98,107 +98,118 @@ describe('CooldownManager', () => {
     manager = new CooldownManager(new MemoryCooldownStore());
   });
 
-  it('allows the first execution and records the timestamp', () => {
-    expect(manager.tryAllow('hall_motion_alert', 600_000, 1_000)).toBe(true);
+  it('allows the first execution and records the timestamp', async () => {
+    await expect(manager.tryAllow('hall_motion_alert', 600_000, 1_000)).resolves.toBe(true);
     expect(manager.getEntry('hall_motion_alert')).toEqual({ lastRunAt: 1_000 });
   });
 
-  it('treats keys as case-insensitive', () => {
-    manager.tryAllow('Door', 600_000, 1_000);
+  it('treats keys as case-insensitive', async () => {
+    await manager.tryAllow('Door', 600_000, 1_000);
 
-    expect(manager.tryAllow('door', 600_000, 1_001)).toBe(false);
+    await expect(manager.tryAllow('door', 600_000, 1_001)).resolves.toBe(false);
     expect(manager.getEntry('DOOR')).toEqual({ lastRunAt: 1_000 });
   });
 
-  it('blocks execution while the cooldown is active', () => {
-    manager.tryAllow('hall_motion_alert', 600_000, 1_000);
+  it('blocks execution while the cooldown is active', async () => {
+    await manager.tryAllow('hall_motion_alert', 600_000, 1_000);
 
-    expect(manager.tryAllow('hall_motion_alert', 600_000, 600_999)).toBe(false);
+    await expect(manager.tryAllow('hall_motion_alert', 600_000, 600_999)).resolves.toBe(false);
     expect(manager.getEntry('hall_motion_alert')).toEqual({ lastRunAt: 1_000 });
   });
 
-  it('allows execution after the cooldown duration has elapsed', () => {
-    manager.tryAllow('hall_motion_alert', 600_000, 1_000);
+  it('allows execution after the cooldown duration has elapsed', async () => {
+    await manager.tryAllow('hall_motion_alert', 600_000, 1_000);
 
-    expect(manager.tryAllow('hall_motion_alert', 600_000, 601_001)).toBe(true);
+    await expect(manager.tryAllow('hall_motion_alert', 600_000, 601_001)).resolves.toBe(true);
     expect(manager.getEntry('hall_motion_alert')).toEqual({ lastRunAt: 601_001 });
   });
 
-  it('rejects invalid durations', () => {
-    expect(() => manager.tryAllow('hall_motion_alert', 0, 1_000)).toThrow(
+  it('rejects invalid durations', async () => {
+    await expect(manager.tryAllow('hall_motion_alert', 0, 1_000)).rejects.toThrow(
       'Cooldown duration must be greater than 0',
     );
-    expect(() => manager.tryAllow('hall_motion_alert', -1, 1_000)).toThrow(
+    await expect(manager.tryAllow('hall_motion_alert', -1, 1_000)).rejects.toThrow(
       'Cooldown duration must be greater than 0',
     );
     expect(manager.getEntry('hall_motion_alert')).toBeUndefined();
   });
 
-  it('reset clears the cooldown immediately', () => {
-    manager.tryAllow('hall_motion_alert', 600_000, 1_000);
-    manager.reset('hall_motion_alert');
+  it('reset clears the cooldown immediately', async () => {
+    await manager.tryAllow('hall_motion_alert', 600_000, 1_000);
+    await manager.reset('hall_motion_alert');
 
     expect(manager.getEntry('hall_motion_alert')).toEqual({ lastRunAt: null });
-    expect(manager.tryAllow('hall_motion_alert', 600_000, 1_001)).toBe(true);
+    await expect(manager.tryAllow('hall_motion_alert', 600_000, 1_001)).resolves.toBe(true);
   });
 
-  it('suspend marks the cooldown as active without allowing execution', () => {
-    manager.suspend('hall_motion_alert', 5_000);
+  it('suspend marks the cooldown as active without allowing execution', async () => {
+    await manager.suspend('hall_motion_alert', 5_000);
 
-    expect(manager.tryAllow('hall_motion_alert', 600_000, 5_001)).toBe(false);
+    await expect(manager.tryAllow('hall_motion_alert', 600_000, 5_001)).resolves.toBe(false);
     expect(manager.getEntry('hall_motion_alert')).toEqual({ lastRunAt: 5_000 });
   });
 
-  it('cleanup is a no-op when no flow keys are known', () => {
-    manager.tryAllow('stored_key', 600_000, 1_000);
+  it('allows only one concurrent tryAllow for the same key', async () => {
+    const results = await Promise.all([
+      manager.tryAllow('burst_sensor', 60_000, 1_000),
+      manager.tryAllow('burst_sensor', 60_000, 1_000),
+      manager.tryAllow('burst_sensor', 60_000, 1_000),
+    ]);
 
-    manager.cleanup(new Set());
+    expect(results.filter(Boolean)).toHaveLength(1);
+    expect(manager.getEntry('burst_sensor')).toEqual({ lastRunAt: 1_000 });
+  });
+
+  it('cleanup is a no-op when no flow keys are known', async () => {
+    await manager.tryAllow('stored_key', 600_000, 1_000);
+
+    await manager.cleanup(new Set());
 
     expect(manager.getKeys()).toEqual(['stored_key']);
     expect(manager.getEntry('stored_key')).toEqual({ lastRunAt: 1_000 });
   });
 
-  it('cleanup matches used keys case-insensitively', () => {
-    manager.tryAllow('Used_Key', 600_000, 1_000);
-    manager.tryAllow('unused_key', 600_000, 1_000);
+  it('cleanup matches used keys case-insensitively', async () => {
+    await manager.tryAllow('Used_Key', 600_000, 1_000);
+    await manager.tryAllow('unused_key', 600_000, 1_000);
 
-    manager.cleanup(new Set(['used_key']));
+    await manager.cleanup(new Set(['used_key']));
 
     expect(manager.getKeys()).toEqual(['used_key']);
     expect(manager.getEntry('USED_KEY')).toEqual({ lastRunAt: 1_000 });
     expect(manager.getEntry('unused_key')).toBeUndefined();
   });
 
-  it('cleanup removes keys that are not used in any Flow', () => {
-    manager.tryAllow('used_key', 600_000, 1_000);
-    manager.tryAllow('unused_key', 600_000, 1_000);
+  it('cleanup removes keys that are not used in any Flow', async () => {
+    await manager.tryAllow('used_key', 600_000, 1_000);
+    await manager.tryAllow('unused_key', 600_000, 1_000);
 
-    manager.cleanup(new Set(['used_key']));
+    await manager.cleanup(new Set(['used_key']));
 
     expect(manager.getKeys()).toEqual(['used_key']);
     expect(manager.getEntry('unused_key')).toBeUndefined();
   });
 
-  it('cleanup adds flow keys that have never run', () => {
-    manager.cleanup(new Set(['new_flow_key']));
+  it('cleanup adds flow keys that have never run', async () => {
+    await manager.cleanup(new Set(['new_flow_key']));
 
     expect(manager.getKeys()).toEqual(['new_flow_key']);
     expect(manager.getEntry('new_flow_key')).toEqual({ lastRunAt: null });
   });
 
-  it('cleanup does not overwrite existing entries when adding flow keys', () => {
-    manager.tryAllow('used_key', 600_000, 1_000);
+  it('cleanup does not overwrite existing entries when adding flow keys', async () => {
+    await manager.tryAllow('used_key', 600_000, 1_000);
 
-    manager.cleanup(new Set(['used_key', 'new_flow_key']));
+    await manager.cleanup(new Set(['used_key', 'new_flow_key']));
 
     expect(manager.getEntry('used_key')).toEqual({ lastRunAt: 1_000 });
     expect(manager.getEntry('new_flow_key')).toEqual({ lastRunAt: null });
   });
 
-  it('cleanup removes never-run keys that are no longer referenced', () => {
-    manager.reset('orphaned_key');
+  it('cleanup removes never-run keys that are no longer referenced', async () => {
+    await manager.reset('orphaned_key');
 
-    manager.cleanup(new Set(['active_key']));
+    await manager.cleanup(new Set(['active_key']));
 
     expect(manager.getKeys()).toEqual(['active_key']);
     expect(manager.getEntry('active_key')).toEqual({ lastRunAt: null });
