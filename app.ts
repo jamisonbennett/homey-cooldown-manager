@@ -23,6 +23,8 @@ module.exports = class CooldownManagerApp extends Homey.App {
 
   private timezone = 'UTC';
 
+  private flowCardsCleanup?: () => void;
+
   /**
    * onInit is called when the app is initialized.
    */
@@ -34,7 +36,20 @@ module.exports = class CooldownManagerApp extends Homey.App {
 
     this.cooldownManager = new CooldownManager(this.createSettingsStore());
     await this.registerFlowCards();
+
+    // onUninit is not always called on dev reload; unload is more reliable.
+    this.homey.on('unload', () => {
+      this.onUninit().catch(this.error);
+    });
+
     this.log('Cooldown Manager has been initialized');
+  }
+
+  /**
+   * onUninit is called when the app is destroyed.
+   */
+  async onUninit() {
+    this.unregisterFlowCards();
   }
 
   private createSettingsStore(): CooldownStore {
@@ -84,10 +99,30 @@ module.exports = class CooldownManagerApp extends Homey.App {
     const cleanup = () => {
       this.cleanupUnusedKeys().catch(this.error);
     };
+    this.flowCardsCleanup = cleanup;
 
     allowOnceCard.on('update', cleanup);
     resetCooldownCard.on('update', cleanup);
     suspendCooldownCard.on('update', cleanup);
+  }
+
+  private unregisterFlowCards() {
+    const cleanup = this.flowCardsCleanup;
+    if (!cleanup) {
+      return;
+    }
+
+    const cards = [
+      this.homey.flow.getConditionCard(FLOW_CARD_IDS.allowOnce),
+      this.homey.flow.getActionCard(FLOW_CARD_IDS.resetCooldown),
+      this.homey.flow.getActionCard(FLOW_CARD_IDS.suspendCooldown),
+    ];
+
+    for (const card of cards) {
+      card.off('update', cleanup);
+    }
+
+    this.flowCardsCleanup = undefined;
   }
 
   private requireKey(value: unknown): string {
