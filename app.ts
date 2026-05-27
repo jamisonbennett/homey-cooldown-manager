@@ -9,7 +9,7 @@ import {
 } from './lib/cooldown';
 import { durationToMs } from './lib/duration';
 import formatLocalDateTime from './lib/format-local-datetime';
-import normalizeKey from './lib/flow-key';
+import normalizeKey, { canonicalKey } from './lib/flow-key';
 
 const FLOW_CARD_IDS = {
   allowOnce: 'allow_once',
@@ -105,11 +105,13 @@ module.exports = class CooldownManagerApp extends Homey.App {
   private async autocompleteKeys(query: string) {
     const usedKeys = await this.collectUsedKeys();
     const storedKeys = this.cooldownManager.getKeys();
-    const allKeys = new Set([...usedKeys, ...storedKeys]);
+    const allKeys = new Set(
+      [...usedKeys, ...storedKeys].map((key) => canonicalKey(key)),
+    );
     const normalizedQuery = query.trim().toLowerCase();
 
     const results = [...allKeys]
-      .filter((key) => key.toLowerCase().includes(normalizedQuery))
+      .filter((key) => key.includes(normalizedQuery))
       .sort()
       .map((key) => ({
         name: key,
@@ -120,12 +122,13 @@ module.exports = class CooldownManagerApp extends Homey.App {
     const trimmedQuery = query.trim();
     if (
       trimmedQuery.length > 0
-      && !allKeys.has(trimmedQuery)
+      && !allKeys.has(canonicalKey(trimmedQuery))
       && trimmedQuery.toLowerCase().includes(normalizedQuery)
     ) {
+      const newKey = canonicalKey(trimmedQuery);
       results.unshift({
-        name: trimmedQuery,
-        id: trimmedQuery,
+        name: newKey,
+        id: newKey,
         description: this.homey.__('autocomplete.create_key'),
       });
     }

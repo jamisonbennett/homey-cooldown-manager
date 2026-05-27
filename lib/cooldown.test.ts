@@ -21,8 +21,8 @@ class MemoryCooldownStore implements CooldownStore {
 }
 
 describe('normalizeKey', () => {
-  it('returns trimmed strings', () => {
-    expect(normalizeKey('  hall_motion_alert  ')).toBe('hall_motion_alert');
+  it('returns trimmed lowercase strings', () => {
+    expect(normalizeKey('  Hall_Motion_Alert  ')).toBe('hall_motion_alert');
   });
 
   it('returns null for empty strings', () => {
@@ -30,7 +30,7 @@ describe('normalizeKey', () => {
   });
 
   it('reads autocomplete objects', () => {
-    expect(normalizeKey({ name: 'door_alert' })).toBe('door_alert');
+    expect(normalizeKey({ name: 'Door_Alert' })).toBe('door_alert');
   });
 
   it('returns null for invalid values', () => {
@@ -64,6 +64,17 @@ describe('loadCooldownState', () => {
     expect(loadCooldownState(null)).toEqual({});
     expect(loadCooldownState([])).toEqual({});
   });
+
+  it('canonicalizes keys and merges case-insensitive duplicates', () => {
+    expect(loadCooldownState({
+      Door: { lastRunAt: 1_000 },
+      door: { lastRunAt: 2_000 },
+      '  Hall  ': { lastRunAt: null },
+    })).toEqual({
+      door: { lastRunAt: 2_000 },
+      hall: { lastRunAt: null },
+    });
+  });
 });
 
 describe('CooldownManager', () => {
@@ -76,6 +87,13 @@ describe('CooldownManager', () => {
   it('allows the first execution and records the timestamp', () => {
     expect(manager.tryAllow('hall_motion_alert', 600_000, 1_000)).toBe(true);
     expect(manager.getEntry('hall_motion_alert')).toEqual({ lastRunAt: 1_000 });
+  });
+
+  it('treats keys as case-insensitive', () => {
+    manager.tryAllow('Door', 600_000, 1_000);
+
+    expect(manager.tryAllow('door', 600_000, 1_001)).toBe(false);
+    expect(manager.getEntry('DOOR')).toEqual({ lastRunAt: 1_000 });
   });
 
   it('blocks execution while the cooldown is active', () => {
@@ -110,6 +128,17 @@ describe('CooldownManager', () => {
 
     expect(manager.tryAllow('hall_motion_alert', 600_000, 5_001)).toBe(false);
     expect(manager.getEntry('hall_motion_alert')).toEqual({ lastRunAt: 5_000 });
+  });
+
+  it('cleanup matches used keys case-insensitively', () => {
+    manager.tryAllow('Used_Key', 600_000, 1_000);
+    manager.tryAllow('unused_key', 600_000, 1_000);
+
+    manager.cleanup(new Set(['used_key']));
+
+    expect(manager.getKeys()).toEqual(['used_key']);
+    expect(manager.getEntry('USED_KEY')).toEqual({ lastRunAt: 1_000 });
+    expect(manager.getEntry('unused_key')).toBeUndefined();
   });
 
   it('cleanup removes keys that are not used in any Flow', () => {

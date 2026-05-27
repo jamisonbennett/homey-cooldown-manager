@@ -1,5 +1,7 @@
 'use strict';
 
+import { canonicalKey } from './flow-key';
+
 export const COOLDOWN_SETTINGS_KEY = 'cooldownState';
 
 export interface CooldownEntry {
@@ -25,7 +27,7 @@ export class CooldownManager {
   }
 
   getEntry(key: string): CooldownEntry | undefined {
-    return this.store.getState()[key];
+    return this.store.getState()[canonicalKey(key)];
   }
 
   /**
@@ -37,11 +39,12 @@ export class CooldownManager {
       return false;
     }
 
+    const normalizedKey = canonicalKey(key);
     const state = this.store.getState();
-    const entry = state[key] ?? { lastRunAt: null };
+    const entry = state[normalizedKey] ?? { lastRunAt: null };
 
     if (entry.lastRunAt === null || (now - entry.lastRunAt) >= durationMs) {
-      state[key] = { lastRunAt: now };
+      state[normalizedKey] = { lastRunAt: now };
       this.store.setState(state);
       return true;
     }
@@ -51,7 +54,7 @@ export class CooldownManager {
 
   reset(key: string): void {
     const state = this.store.getState();
-    state[key] = { lastRunAt: null };
+    state[canonicalKey(key)] = { lastRunAt: null };
     this.store.setState(state);
   }
 
@@ -60,7 +63,7 @@ export class CooldownManager {
    */
   suspend(key: string, now: number): void {
     const state = this.store.getState();
-    state[key] = { lastRunAt: now };
+    state[canonicalKey(key)] = { lastRunAt: now };
     this.store.setState(state);
   }
 
@@ -69,17 +72,18 @@ export class CooldownManager {
    * (with `lastRunAt: null` when it has never triggered).
    */
   cleanup(usedKeys: ReadonlySet<string>): void {
+    const normalizedUsedKeys = new Set([...usedKeys].map(canonicalKey));
     const state = this.store.getState();
     let changed = false;
 
     for (const key of Object.keys(state)) {
-      if (!usedKeys.has(key)) {
+      if (!normalizedUsedKeys.has(key)) {
         delete state[key];
         changed = true;
       }
     }
 
-    for (const key of usedKeys) {
+    for (const key of normalizedUsedKeys) {
       if (!state[key]) {
         state[key] = { lastRunAt: null };
         changed = true;
@@ -90,6 +94,16 @@ export class CooldownManager {
       this.store.setState(state);
     }
   }
+}
+
+function mergeCooldownEntries(a: CooldownEntry, b: CooldownEntry): CooldownEntry {
+  if (a.lastRunAt === null) {
+    return b;
+  }
+  if (b.lastRunAt === null) {
+    return a;
+  }
+  return { lastRunAt: Math.max(a.lastRunAt, b.lastRunAt) };
 }
 
 export function loadCooldownState(raw: unknown): CooldownState {
@@ -104,12 +118,27 @@ export function loadCooldownState(raw: unknown): CooldownState {
       continue;
     }
 
+    const trimmed = key.trim();
+    if (trimmed.length === 0) {
+      continue;
+    }
+
+    const normalizedKey = canonicalKey(trimmed);
+    let entry: CooldownEntry | undefined;
+
     const { lastRunAt } = value as { lastRunAt?: unknown };
     if (lastRunAt === null) {
-      state[key] = { lastRunAt: null };
+      entry = { lastRunAt: null };
     } else if (typeof lastRunAt === 'number' && Number.isFinite(lastRunAt)) {
-      state[key] = { lastRunAt };
+      entry = { lastRunAt };
     }
+
+    if (!entry) {
+      continue;
+    }
+
+    const existing = state[normalizedKey];
+    state[normalizedKey] = existing ? mergeCooldownEntries(existing, entry) : entry;
   }
 
   return state;
