@@ -1,21 +1,21 @@
 'use strict';
 
 function formatLocalDateTime(timestampMs, timezone, language) {
-  var date = new Date(timestampMs);
-  var baseOptions = {
+  const date = new Date(timestampMs);
+  const baseOptions = {
     dateStyle: 'short',
     timeStyle: 'short',
   };
-  var attempts = [
-    [language, Object.assign({}, baseOptions, { timeZone: timezone })],
+  const attempts = [
+    [language, { ...baseOptions, timeZone: timezone }],
     [language, baseOptions],
-    [undefined, Object.assign({}, baseOptions, { timeZone: timezone })],
+    [undefined, { ...baseOptions, timeZone: timezone }],
     [undefined, baseOptions],
   ];
 
-  for (var i = 0; i < attempts.length; i += 1) {
-    var locale = attempts[i][0];
-    var options = attempts[i][1];
+  for (let i = 0; i < attempts.length; i += 1) {
+    const locale = attempts[i][0];
+    const options = attempts[i][1];
 
     try {
       return new Intl.DateTimeFormat(locale, options).format(date);

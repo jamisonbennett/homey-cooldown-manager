@@ -5,7 +5,7 @@
  * Used to make read–modify–write on shared cooldown state atomic under
  * concurrent Flow handlers.
  */
-export class Mutex {
+export default class Mutex {
   private tail: Promise<void> = Promise.resolve();
 
   runExclusive<T>(fn: () => T | Promise<T>): Promise<T> {

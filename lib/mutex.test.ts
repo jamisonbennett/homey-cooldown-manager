@@ -1,6 +1,6 @@
 'use strict';
 
-import { Mutex } from './mutex';
+import Mutex from './mutex';
 
 describe('Mutex', () => {
   it('serializes concurrent runners', async () => {

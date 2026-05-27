@@ -4,6 +4,7 @@
     "noEmit": true
   },
   "include": [
+    "api.ts",
     "app.ts",
     "drivers/**/*.ts",
     "lib/**/*.ts",

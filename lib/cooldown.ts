@@ -1,7 +1,10 @@
 'use strict';
 
 import { canonicalKey } from './flow-key';
-import { Mutex } from './mutex';
+import InvalidCooldownDurationError from './invalid-cooldown-duration-error';
+import Mutex from './mutex';
+
+export { default as InvalidCooldownDurationError } from './invalid-cooldown-duration-error';
 
 export const COOLDOWN_SETTINGS_KEY = 'cooldownState';
 
@@ -10,13 +13,6 @@ export interface CooldownEntry {
 }
 
 export type CooldownState = Record<string, CooldownEntry>;
-
-export class InvalidCooldownDurationError extends Error {
-  constructor() {
-    super('InvalidCooldownDurationError');
-    this.name = 'InvalidCooldownDurationError';
-  }
-}
 
 export interface CooldownStore {
   getState(): CooldownState;
