@@ -49,6 +49,7 @@
     <ul id="trigger-list" class="trigger-list" hidden></ul>
 
     <script type="text/javascript" src="load-cooldown-state.js"></script>
+    <script type="text/javascript" src="format-local-datetime.js"></script>
     <script type="text/javascript">
       var COOLDOWN_SETTINGS_KEY = 'cooldownState';
 
@@ -56,6 +57,7 @@
         var listElement = document.getElementById('trigger-list');
         var emptyElement = document.getElementById('trigger-empty');
         var hasShown = false;
+        var displayContext = null;
 
         function showView() {
           if (!hasShown) {
@@ -65,6 +67,14 @@
         }
 
         function formatLastRun(timestampMs) {
+          if (displayContext) {
+            return formatLocalDateTime(
+              timestampMs,
+              displayContext.timezone,
+              displayContext.language,
+            );
+          }
+
           return new Intl.DateTimeFormat(undefined, {
             dateStyle: 'short',
             timeStyle: 'short',
@@ -147,7 +157,13 @@
           }
         });
 
-        loadTriggers();
+        Homey.api('GET', '/display-context', null, function (err, context) {
+          if (!err && context) {
+            displayContext = context;
+          }
+
+          loadTriggers();
+        });
       }
     </script>
   </body>

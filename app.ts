@@ -52,6 +52,13 @@ module.exports = class CooldownManagerApp extends Homey.App {
     this.unregisterFlowCards();
   }
 
+  getDisplayContext(): { timezone: string; language: string } {
+    return {
+      timezone: this.timezone,
+      language: this.homey.i18n.getLanguage(),
+    };
+  }
+
   private createSettingsStore(): CooldownStore {
     return {
       getState: () => loadCooldownState(this.homey.settings.get(COOLDOWN_SETTINGS_KEY)),

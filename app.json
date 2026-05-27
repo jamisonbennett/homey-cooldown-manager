@@ -29,6 +29,12 @@
   },
   "brandColor": "#4F8CFF",
   "support": "https://github.com/jamisonbennett/homey-cooldown-manager",
+  "api": {
+    "getDisplayContext": {
+      "method": "GET",
+      "path": "/display-context"
+    }
+  },
   "flow": {
     "conditions": [
       {

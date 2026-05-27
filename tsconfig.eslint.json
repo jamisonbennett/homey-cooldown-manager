@@ -8,6 +8,7 @@
     "drivers/**/*.ts",
     "lib/**/*.ts",
     "settings/load-cooldown-state.js",
+    "settings/format-local-datetime.js",
     "jest.config.ts",
     "**/*.test.ts",
     "**/*.test.js"
