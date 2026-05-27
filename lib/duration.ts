@@ -9,6 +9,9 @@ const DURATION_MULTIPLIERS_MS: Record<DurationUnit, number> = {
   days: 86_400_000,
 };
 
+/** Matches the Flow duration number arg `max` in app.json / compose. */
+export const MAX_DURATION_INPUT = 999_999_999;
+
 function normalizeDurationUnit(unit: unknown): DurationUnit | null {
   if (
     unit === 'seconds'
@@ -38,9 +41,21 @@ export function durationToMs(duration: unknown, unit: unknown): number | null {
   const value = typeof duration === 'number' ? duration : Number(duration);
   const normalizedUnit = normalizeDurationUnit(unit);
 
-  if (!Number.isFinite(value) || value <= 0 || normalizedUnit === null) {
+  if (
+    !Number.isFinite(value)
+    || !Number.isInteger(value)
+    || value <= 0
+    || value > MAX_DURATION_INPUT
+    || normalizedUnit === null
+  ) {
     return null;
   }
 
-  return value * DURATION_MULTIPLIERS_MS[normalizedUnit];
+  const durationMs = value * DURATION_MULTIPLIERS_MS[normalizedUnit];
+
+  if (!Number.isSafeInteger(durationMs)) {
+    return null;
+  }
+
+  return durationMs;
 }

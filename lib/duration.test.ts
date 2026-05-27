@@ -32,4 +32,17 @@ describe('durationToMs', () => {
     expect(durationToMs(10, 'weeks')).toBeNull();
     expect(durationToMs('abc', 'seconds')).toBeNull();
   });
+
+  it('rejects fractional durations', () => {
+    expect(durationToMs(1.5, 'minutes')).toBeNull();
+    expect(durationToMs('2.5', 'hours')).toBeNull();
+  });
+
+  it('rejects durations above the Flow max', () => {
+    expect(durationToMs(1_000_000_000, 'seconds')).toBeNull();
+  });
+
+  it('rejects durations whose ms product is not a safe integer', () => {
+    expect(durationToMs(999_999_999, 'days')).toBeNull();
+  });
 });
