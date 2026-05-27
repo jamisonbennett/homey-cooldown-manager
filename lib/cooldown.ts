@@ -36,7 +36,7 @@ export class CooldownManager {
    */
   tryAllow(key: string, durationMs: number, now: number): boolean {
     if (durationMs <= 0) {
-      return false;
+      throw new Error('Cooldown duration must be greater than 0');
     }
 
     const normalizedKey = canonicalKey(key);

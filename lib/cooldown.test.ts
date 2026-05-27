@@ -125,7 +125,12 @@ describe('CooldownManager', () => {
   });
 
   it('rejects invalid durations', () => {
-    expect(manager.tryAllow('hall_motion_alert', 0, 1_000)).toBe(false);
+    expect(() => manager.tryAllow('hall_motion_alert', 0, 1_000)).toThrow(
+      'Cooldown duration must be greater than 0',
+    );
+    expect(() => manager.tryAllow('hall_motion_alert', -1, 1_000)).toThrow(
+      'Cooldown duration must be greater than 0',
+    );
     expect(manager.getEntry('hall_motion_alert')).toBeUndefined();
   });
 
