@@ -11,6 +11,7 @@
     "app.ts",
     "drivers/**/*.ts",
     "lib/**/*.ts",
+    "lib/last-run-at.js",
     "settings/load-cooldown-state.js",
     "settings/format-local-datetime.js"
   ],

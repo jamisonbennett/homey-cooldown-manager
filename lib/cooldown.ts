@@ -2,6 +2,7 @@
 
 import { canonicalKey } from './flow-key';
 import InvalidCooldownDurationError from './invalid-cooldown-duration-error';
+import normalizeLastRunAt from './last-run-at.js';
 import Mutex from './mutex';
 
 export { default as InvalidCooldownDurationError } from './invalid-cooldown-duration-error';
@@ -52,8 +53,14 @@ export class CooldownManager {
     const normalizedKey = canonicalKey(key);
     const state = this.store.getState();
     const entry = state[normalizedKey] ?? { lastRunAt: null };
+    const effectiveLastRunAt = normalizeLastRunAt(entry.lastRunAt, now);
 
-    if (entry.lastRunAt === null || (now - entry.lastRunAt) >= durationMs) {
+    if (effectiveLastRunAt !== entry.lastRunAt) {
+      state[normalizedKey] = { lastRunAt: effectiveLastRunAt };
+      this.store.setState(state);
+    }
+
+    if (effectiveLastRunAt === null || (now - effectiveLastRunAt) >= durationMs) {
       state[normalizedKey] = { lastRunAt: now };
       this.store.setState(state);
       return true;

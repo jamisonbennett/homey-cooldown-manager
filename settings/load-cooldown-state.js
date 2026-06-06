@@ -1,5 +1,9 @@
 'use strict';
 
+// Runtime require targets compiled JS; eslint import resolver prefers the .d.ts source.
+// eslint-disable-next-line import/extensions
+const normalizeLastRunAt = require('../lib/last-run-at');
+
 function canonicalKey(value) {
   return value.trim().toLowerCase();
 }
@@ -14,23 +18,12 @@ function mergeCooldownEntries(a, b) {
   return { lastRunAt: Math.max(a.lastRunAt, b.lastRunAt) };
 }
 
-/** Reject hand-edited or corrupt timestamps that would block or allow incorrectly. */
-function sanitizeLastRunAt(lastRunAt) {
-  if (lastRunAt < 0) {
-    return null;
-  }
-  const now = Date.now();
-  if (lastRunAt > now) {
-    return now;
-  }
-  return lastRunAt;
-}
-
 function loadCooldownState(raw) {
   if (raw === null || typeof raw !== 'object' || Array.isArray(raw)) {
     return {};
   }
 
+  const now = Date.now();
   const state = {};
 
   for (const [key, value] of Object.entries(raw)) {
@@ -50,7 +43,7 @@ function loadCooldownState(raw) {
     if (lastRunAt === null) {
       entry = { lastRunAt: null };
     } else if (typeof lastRunAt === 'number' && Number.isFinite(lastRunAt)) {
-      entry = { lastRunAt: sanitizeLastRunAt(lastRunAt) };
+      entry = { lastRunAt: normalizeLastRunAt(lastRunAt, now) };
     }
 
     if (!entry) {

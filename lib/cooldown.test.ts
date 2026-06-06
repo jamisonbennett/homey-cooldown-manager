@@ -128,6 +128,25 @@ describe('CooldownManager', () => {
     expect(manager.getEntry('DOOR')).toEqual({ lastRunAt: 1_000 });
   });
 
+  it('clamps future lastRunAt on tryAllow and persists the correction', async () => {
+    const store = new MemoryCooldownStore();
+    store.setState({ hall_motion_alert: { lastRunAt: 10_000 } });
+    manager = new CooldownManager(store);
+
+    await expect(manager.tryAllow('hall_motion_alert', 600_000, 5_000)).resolves.toBe(false);
+    expect(manager.getEntry('hall_motion_alert')).toEqual({ lastRunAt: 5_000 });
+  });
+
+  it('allows after cooldown once a clock-skewed lastRunAt is corrected', async () => {
+    const store = new MemoryCooldownStore();
+    store.setState({ hall_motion_alert: { lastRunAt: 10_000 } });
+    manager = new CooldownManager(store);
+
+    await expect(manager.tryAllow('hall_motion_alert', 600_000, 5_000)).resolves.toBe(false);
+    await expect(manager.tryAllow('hall_motion_alert', 600_000, 605_000)).resolves.toBe(true);
+    expect(manager.getEntry('hall_motion_alert')).toEqual({ lastRunAt: 605_000 });
+  });
+
   it('blocks execution while the cooldown is active', async () => {
     await manager.tryAllow('hall_motion_alert', 600_000, 1_000);
 
