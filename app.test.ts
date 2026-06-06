@@ -16,7 +16,11 @@ type FlowCardMock = {
   registerRunListener: jest.Mock;
   on: jest.Mock;
   off: jest.Mock;
-  runListener?: (args: Record<string, unknown>) => Promise<unknown>;
+  trigger?: jest.Mock<Promise<void>, [Record<string, unknown>, Record<string, unknown>]>;
+  runListener?: (
+    args: Record<string, unknown>,
+    state?: Record<string, unknown>,
+  ) => Promise<unknown>;
   autocompleteListener?: (query: string) => Promise<unknown>;
 };
 
@@ -26,7 +30,8 @@ type HomeyMockOptions = {
   allowCards?: FlowCardArgumentValues;
   resetCards?: FlowCardArgumentValues;
   suspendCards?: FlowCardArgumentValues;
-  persistedState?: Record<string, { lastRunAt: number | null }>;
+  triggerCards?: FlowCardArgumentValues;
+  persistedState?: Record<string, { lastRunAt: number | null; blockCount?: number }>;
 };
 
 type TimezoneChangeListener = (timezone: string) => void;
@@ -60,6 +65,8 @@ function createHomeyMock(options: HomeyMockOptions = {}) {
   const allowOnceCard = createFlowCardMock(options.allowCards ?? []);
   const resetCooldownCard = createFlowCardMock(options.resetCards ?? []);
   const suspendCooldownCard = createFlowCardMock(options.suspendCards ?? []);
+  const blockedCountCard = createFlowCardMock(options.triggerCards ?? []);
+  blockedCountCard.trigger = jest.fn().mockResolvedValue(undefined);
 
   const timezoneListeners = new Map<string, TimezoneChangeListener>();
   const homeyListeners = new Map<string, UnloadListener>();
@@ -102,6 +109,12 @@ function createHomeyMock(options: HomeyMockOptions = {}) {
         }
         throw new Error(`Unknown action card: ${id}`);
       }),
+      getTriggerCard: jest.fn((id: string) => {
+        if (id === 'blocked_count_reached') {
+          return blockedCountCard;
+        }
+        throw new Error(`Unknown trigger card: ${id}`);
+      }),
     },
     i18n: {
       getLanguage: jest.fn().mockReturnValue(options.language ?? 'en'),
@@ -125,6 +138,7 @@ function createHomeyMock(options: HomeyMockOptions = {}) {
     allowOnceCard,
     resetCooldownCard,
     suspendCooldownCard,
+    blockedCountCard,
     settings,
     timezoneListeners,
     homeyListeners,
@@ -154,12 +168,14 @@ describe('CooldownManagerApp', () => {
       allowOnceCard,
       resetCooldownCard,
       suspendCooldownCard,
+      blockedCountCard,
     } = await createInitializedApp({
       timezone: 'Europe/Oslo',
       language: 'en',
     });
 
     expect(allowOnceCard.registerRunListener).toHaveBeenCalledTimes(1);
+    expect(blockedCountCard.registerRunListener).toHaveBeenCalledTimes(1);
     expect(allowOnceCard.registerArgumentAutocompleteListener).toHaveBeenCalledWith(
       'key',
       expect.any(Function),
@@ -186,15 +202,15 @@ describe('CooldownManagerApp', () => {
       resetCards: [{ key: 'window' }],
       suspendCards: [{ key: 'garage' }],
       persistedState: {
-        door: { lastRunAt: 1_000 },
+        door: { lastRunAt: 1_000, blockCount: 2 },
         window: { lastRunAt: null },
       },
     });
 
     await expect(app.getTriggers()).resolves.toEqual([
-      { key: 'door', lastRunAt: 1_000 },
-      { key: 'garage', lastRunAt: null },
-      { key: 'window', lastRunAt: null },
+      { key: 'door', lastRunAt: 1_000, blockCount: 2 },
+      { key: 'garage', lastRunAt: null, blockCount: 0 },
+      { key: 'window', lastRunAt: null, blockCount: 0 },
     ]);
   });
 
@@ -225,8 +241,14 @@ describe('CooldownManagerApp', () => {
   });
 
   it('runs the allow-once condition through the cooldown manager', async () => {
-    const { app, allowOnceCard, settings } = await createInitializedApp({
+    const {
+      app,
+      allowOnceCard,
+      blockedCountCard,
+      settings,
+    } = await createInitializedApp({
       allowCards: [{ key: 'door', duration: 5, duration_unit: 'minutes' }],
+      triggerCards: [{ key: 'door', count: 2 }],
     });
 
     const runAllowOnce = allowOnceCard.runListener!;
@@ -235,16 +257,39 @@ describe('CooldownManagerApp', () => {
     await expect(runAllowOnce(args)).resolves.toBe(true);
     await expect(runAllowOnce(args)).resolves.toBe(false);
     await expect(runAllowOnce(args)).resolves.toBe(false);
+    expect(blockedCountCard.trigger).toHaveBeenCalledWith(
+      {},
+      { key: 'door', count: 2 },
+    );
 
     jest.setSystemTime(new Date('2024-06-01T12:06:00.000Z'));
     await expect(runAllowOnce(args)).resolves.toBe(true);
 
     expect(settings.get(COOLDOWN_SETTINGS_KEY)).toEqual({
-      door: { lastRunAt: Date.parse('2024-06-01T12:06:00.000Z') },
+      door: { lastRunAt: Date.parse('2024-06-01T12:06:00.000Z'), blockCount: 0 },
     });
     await expect(app.getTriggers()).resolves.toEqual([
-      { key: 'door', lastRunAt: Date.parse('2024-06-01T12:06:00.000Z') },
+      {
+        key: 'door',
+        lastRunAt: Date.parse('2024-06-01T12:06:00.000Z'),
+        blockCount: 0,
+      },
     ]);
+  });
+
+  it('filters blocked-count trigger flows by key and threshold', async () => {
+    const { blockedCountCard } = await createInitializedApp({
+      triggerCards: [{ key: 'door', count: 3 }],
+    });
+
+    const runTrigger = blockedCountCard.runListener!;
+
+    await expect(runTrigger({ key: 'door', count: 3 }, { key: 'door', count: 3 }))
+      .resolves.toBe(true);
+    await expect(runTrigger({ key: 'door', count: 3 }, { key: 'door', count: 2 }))
+      .resolves.toBe(false);
+    await expect(runTrigger({ key: 'window', count: 3 }, { key: 'door', count: 3 }))
+      .resolves.toBe(false);
   });
 
   it('resets and suspends cooldowns through action cards', async () => {
@@ -304,7 +349,7 @@ describe('CooldownManagerApp', () => {
       {
         name: 'door',
         id: 'door',
-        description: expect.stringContaining('6:00 AM'),
+        description: 'Last run: 6/1/24, 6:00:00 AM',
       },
       {
         name: 'window',
@@ -346,7 +391,7 @@ describe('CooldownManagerApp', () => {
     });
 
     expect(settings.get(COOLDOWN_SETTINGS_KEY)).toEqual({
-      door: { lastRunAt: 1_000 },
+      door: { lastRunAt: 1_000, blockCount: 0 },
     });
 
     jest.useFakeTimers().setSystemTime(new Date('2024-06-01T12:00:00.000Z'));
@@ -358,6 +403,7 @@ describe('CooldownManagerApp', () => {
       allowOnceCard,
       resetCooldownCard,
       suspendCooldownCard,
+      blockedCountCard,
     } = await createInitializedApp();
 
     const cleanup = allowOnceCard.on.mock.calls.find(([event]) => event === 'update')?.[1];
@@ -366,5 +412,6 @@ describe('CooldownManagerApp', () => {
     expect(allowOnceCard.off).toHaveBeenCalledWith('update', cleanup);
     expect(resetCooldownCard.off).toHaveBeenCalledWith('update', cleanup);
     expect(suspendCooldownCard.off).toHaveBeenCalledWith('update', cleanup);
+    expect(blockedCountCard.off).toHaveBeenCalledWith('update', cleanup);
   });
 });

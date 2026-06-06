@@ -20,6 +20,7 @@ const FLOW_CARD_IDS = {
   allowOnce: 'allow_once',
   resetCooldown: 'reset_cooldown',
   suspendCooldown: 'suspend_cooldown',
+  blockedCountReached: 'blocked_count_reached',
 } as const;
 
 class CooldownManagerApp extends Homey.App {
@@ -63,7 +64,11 @@ class CooldownManagerApp extends Homey.App {
     };
   }
 
-  async getTriggers(): Promise<Array<{ key: string; lastRunAt: number | null }>> {
+  async getTriggers(): Promise<Array<{
+    key: string;
+    lastRunAt: number | null;
+    blockCount: number;
+  }>> {
     const usedKeys = await this.collectUsedKeys();
 
     return [...usedKeys]
@@ -73,6 +78,7 @@ class CooldownManagerApp extends Homey.App {
         return {
           key,
           lastRunAt: entry?.lastRunAt ?? null,
+          blockCount: entry?.blockCount ?? 0,
         };
       });
   }
@@ -81,16 +87,19 @@ class CooldownManagerApp extends Homey.App {
     const allowOnceCard = this.homey.flow.getConditionCard(FLOW_CARD_IDS.allowOnce);
     const resetCooldownCard = this.homey.flow.getActionCard(FLOW_CARD_IDS.resetCooldown);
     const suspendCooldownCard = this.homey.flow.getActionCard(FLOW_CARD_IDS.suspendCooldown);
+    const blockedCountCard = this.homey.flow.getTriggerCard(FLOW_CARD_IDS.blockedCountReached);
 
-    const [allowCards, resetCards, suspendCards] = await Promise.all([
+    const [allowCards, resetCards, suspendCards, triggerCards] = await Promise.all([
       allowOnceCard.getArgumentValues(),
       resetCooldownCard.getArgumentValues(),
       suspendCooldownCard.getArgumentValues(),
+      blockedCountCard.getArgumentValues(),
     ]);
 
     return findFlowConfigErrors({
       allowCards,
       actionCards: [...resetCards, ...suspendCards],
+      triggerCards,
     });
   }
 
@@ -107,19 +116,39 @@ class CooldownManagerApp extends Homey.App {
     const allowOnceCard = this.homey.flow.getConditionCard(FLOW_CARD_IDS.allowOnce);
     const resetCooldownCard = this.homey.flow.getActionCard(FLOW_CARD_IDS.resetCooldown);
     const suspendCooldownCard = this.homey.flow.getActionCard(FLOW_CARD_IDS.suspendCooldown);
+    const blockedCountCard = this.homey.flow.getTriggerCard(FLOW_CARD_IDS.blockedCountReached);
 
     const keyAutocomplete = async (query: string) => this.autocompleteKeys(query);
 
     allowOnceCard.registerArgumentAutocompleteListener('key', keyAutocomplete);
     resetCooldownCard.registerArgumentAutocompleteListener('key', keyAutocomplete);
     suspendCooldownCard.registerArgumentAutocompleteListener('key', keyAutocomplete);
+    blockedCountCard.registerArgumentAutocompleteListener('key', keyAutocomplete);
+
+    blockedCountCard.registerRunListener(async (args, state) => {
+      const key = normalizeKey(args.key);
+      const threshold = this.normalizeBlockCountThreshold(args.count);
+
+      if (!key || threshold === null) {
+        return false;
+      }
+
+      return canonicalKey(key) === state.key && threshold === state.count;
+    });
 
     allowOnceCard.registerRunListener(async (args) => {
       const key = this.requireKey(args.key);
       const durationMs = this.requireDurationMs(args.duration, args.duration_unit);
 
       try {
-        return await this.cooldownManager.tryAllow(key, durationMs, Date.now());
+        const allowed = await this.cooldownManager.tryAllow(key, durationMs, Date.now());
+
+        if (!allowed) {
+          const blockCount = this.cooldownManager.getEntry(key)?.blockCount ?? 0;
+          await this.triggerBlockedCountReached(key, blockCount);
+        }
+
+        return allowed;
       } catch (error) {
         if (error instanceof InvalidCooldownDurationError) {
           throw new Error(this.homey.__('errors.duration_invalid'));
@@ -146,6 +175,7 @@ class CooldownManagerApp extends Homey.App {
     allowOnceCard.on('update', cleanup);
     resetCooldownCard.on('update', cleanup);
     suspendCooldownCard.on('update', cleanup);
+    blockedCountCard.on('update', cleanup);
   }
 
   private unregisterFlowCards() {
@@ -158,6 +188,7 @@ class CooldownManagerApp extends Homey.App {
       this.homey.flow.getConditionCard(FLOW_CARD_IDS.allowOnce),
       this.homey.flow.getActionCard(FLOW_CARD_IDS.resetCooldown),
       this.homey.flow.getActionCard(FLOW_CARD_IDS.suspendCooldown),
+      this.homey.flow.getTriggerCard(FLOW_CARD_IDS.blockedCountReached),
     ];
 
     for (const card of cards) {
@@ -173,6 +204,29 @@ class CooldownManagerApp extends Homey.App {
       throw new Error(this.homey.__('errors.key_required'));
     }
     return key;
+  }
+
+  private normalizeBlockCountThreshold(value: unknown): number | null {
+    const threshold = typeof value === 'number' ? value : Number(value);
+
+    if (!Number.isInteger(threshold) || threshold < 1) {
+      return null;
+    }
+
+    return threshold;
+  }
+
+  private async triggerBlockedCountReached(key: string, blockCount: number): Promise<void> {
+    const blockedCountCard = this.homey.flow.getTriggerCard(FLOW_CARD_IDS.blockedCountReached);
+
+    try {
+      await blockedCountCard.trigger(
+        {},
+        { key: canonicalKey(key), count: blockCount },
+      );
+    } catch (error) {
+      this.error(error);
+    }
   }
 
   private requireDurationMs(duration: unknown, unit: unknown): number {
@@ -240,6 +294,7 @@ class CooldownManagerApp extends Homey.App {
       this.homey.flow.getConditionCard(FLOW_CARD_IDS.allowOnce),
       this.homey.flow.getActionCard(FLOW_CARD_IDS.resetCooldown),
       this.homey.flow.getActionCard(FLOW_CARD_IDS.suspendCooldown),
+      this.homey.flow.getTriggerCard(FLOW_CARD_IDS.blockedCountReached),
     ];
 
     for (const card of cards) {

@@ -55,8 +55,12 @@
         overflow-wrap: anywhere;
       }
 
-      .trigger-time {
+      .trigger-meta {
         flex: 0 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.15rem;
         text-align: end;
         color: var(--homey-color-text-secondary, #6b7280);
         font-size: 0.875rem;
@@ -140,6 +144,12 @@
             });
           }
 
+          if (error.kind === 'trigger_key_without_allow') {
+            return Homey.__('settings.error_trigger_key_without_allow', {
+              key: error.key,
+            });
+          }
+
           return String(error.kind);
         }
 
@@ -184,11 +194,18 @@
           return formatLastRun(lastRunAt);
         }
 
+        function describeBlockCount(blockCount) {
+          return Homey.__('settings.blocks_since_allow', {
+            count: blockCount,
+          });
+        }
+
         function triggersFromResponse(triggers) {
           return triggers.map(function (trigger) {
             return {
               key: trigger.key,
               lastRunLabel: describeLastRun(trigger.lastRunAt),
+              blockCountLabel: describeBlockCount(trigger.blockCount || 0),
             };
           });
         }
@@ -213,12 +230,19 @@
             key.className = 'trigger-key';
             key.textContent = trigger.key;
 
+            var meta = document.createElement('div');
+            meta.className = 'trigger-meta';
+
             var time = document.createElement('span');
-            time.className = 'trigger-time';
             time.textContent = trigger.lastRunLabel;
 
+            var blocks = document.createElement('span');
+            blocks.textContent = trigger.blockCountLabel;
+
+            meta.appendChild(time);
+            meta.appendChild(blocks);
             item.appendChild(key);
-            item.appendChild(time);
+            item.appendChild(meta);
             listElement.appendChild(item);
           });
         }

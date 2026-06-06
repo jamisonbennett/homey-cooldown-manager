@@ -8,14 +8,33 @@ function canonicalKey(value) {
   return value.trim().toLowerCase();
 }
 
+function normalizeBlockCount(value) {
+  if (typeof value !== 'number' || !Number.isInteger(value) || value < 0) {
+    return 0;
+  }
+
+  return value;
+}
+
 function mergeCooldownEntries(a, b) {
   if (a.lastRunAt === null) {
-    return b;
+    return {
+      lastRunAt: b.lastRunAt,
+      blockCount: Math.max(a.blockCount, b.blockCount),
+    };
   }
   if (b.lastRunAt === null) {
+    return {
+      lastRunAt: a.lastRunAt,
+      blockCount: Math.max(a.blockCount, b.blockCount),
+    };
+  }
+
+  if (a.lastRunAt >= b.lastRunAt) {
     return a;
   }
-  return { lastRunAt: Math.max(a.lastRunAt, b.lastRunAt) };
+
+  return b;
 }
 
 function loadCooldownState(raw) {
@@ -40,10 +59,12 @@ function loadCooldownState(raw) {
     let entry;
 
     const { lastRunAt } = value;
+    const blockCount = normalizeBlockCount(value.blockCount);
+
     if (lastRunAt === null) {
-      entry = { lastRunAt: null };
+      entry = { lastRunAt: null, blockCount };
     } else if (typeof lastRunAt === 'number' && Number.isFinite(lastRunAt)) {
-      entry = { lastRunAt: normalizeLastRunAt(lastRunAt, now) };
+      entry = { lastRunAt: normalizeLastRunAt(lastRunAt, now), blockCount };
     }
 
     if (!entry) {

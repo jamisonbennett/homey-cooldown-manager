@@ -57,11 +57,11 @@ describe('normalizeKey', () => {
 describe('loadCooldownState', () => {
   it('loads valid persisted state', () => {
     expect(loadCooldownState({
-      hall_motion_alert: { lastRunAt: 1000 },
+      hall_motion_alert: { lastRunAt: 1000, blockCount: 2 },
       reset_key: { lastRunAt: null },
     })).toEqual({
-      hall_motion_alert: { lastRunAt: 1000 },
-      reset_key: { lastRunAt: null },
+      hall_motion_alert: { lastRunAt: 1000, blockCount: 2 },
+      reset_key: { lastRunAt: null, blockCount: 0 },
     });
   });
 
@@ -71,7 +71,7 @@ describe('loadCooldownState', () => {
       invalid: { lastRunAt: 'nope' },
       broken: 'value',
     })).toEqual({
-      valid: { lastRunAt: 1000 },
+      valid: { lastRunAt: 1000, blockCount: 0 },
     });
   });
 
@@ -86,8 +86,8 @@ describe('loadCooldownState', () => {
       door: { lastRunAt: 2_000 },
       '  Hall  ': { lastRunAt: null },
     })).toEqual({
-      door: { lastRunAt: 2_000 },
-      hall: { lastRunAt: null },
+      door: { lastRunAt: 2_000, blockCount: 0 },
+      hall: { lastRunAt: null, blockCount: 0 },
     });
   });
 
@@ -100,9 +100,9 @@ describe('loadCooldownState', () => {
       future: { lastRunAt: now + 86_400_000 },
       valid: { lastRunAt: now - 60_000 },
     })).toEqual({
-      negative: { lastRunAt: null },
-      future: { lastRunAt: now },
-      valid: { lastRunAt: now - 60_000 },
+      negative: { lastRunAt: null, blockCount: 0 },
+      future: { lastRunAt: now, blockCount: 0 },
+      valid: { lastRunAt: now - 60_000, blockCount: 0 },
     });
 
     jest.useRealTimers();
@@ -118,14 +118,14 @@ describe('CooldownManager', () => {
 
   it('allows the first execution and records the timestamp', async () => {
     await expect(manager.tryAllow('hall_motion_alert', 600_000, 1_000)).resolves.toBe(true);
-    expect(manager.getEntry('hall_motion_alert')).toEqual({ lastRunAt: 1_000 });
+    expect(manager.getEntry('hall_motion_alert')).toEqual({ lastRunAt: 1_000, blockCount: 0 });
   });
 
   it('treats keys as case-insensitive', async () => {
     await manager.tryAllow('Door', 600_000, 1_000);
 
     await expect(manager.tryAllow('door', 600_000, 1_001)).resolves.toBe(false);
-    expect(manager.getEntry('DOOR')).toEqual({ lastRunAt: 1_000 });
+    expect(manager.getEntry('DOOR')).toEqual({ lastRunAt: 1_000, blockCount: 1 });
   });
 
   it('clamps future lastRunAt on tryAllow and persists the correction', async () => {
@@ -134,7 +134,7 @@ describe('CooldownManager', () => {
     manager = new CooldownManager(store);
 
     await expect(manager.tryAllow('hall_motion_alert', 600_000, 5_000)).resolves.toBe(false);
-    expect(manager.getEntry('hall_motion_alert')).toEqual({ lastRunAt: 5_000 });
+    expect(manager.getEntry('hall_motion_alert')).toEqual({ lastRunAt: 5_000, blockCount: 1 });
   });
 
   it('allows after cooldown once a clock-skewed lastRunAt is corrected', async () => {
@@ -144,21 +144,32 @@ describe('CooldownManager', () => {
 
     await expect(manager.tryAllow('hall_motion_alert', 600_000, 5_000)).resolves.toBe(false);
     await expect(manager.tryAllow('hall_motion_alert', 600_000, 605_000)).resolves.toBe(true);
-    expect(manager.getEntry('hall_motion_alert')).toEqual({ lastRunAt: 605_000 });
+    expect(manager.getEntry('hall_motion_alert')).toEqual({ lastRunAt: 605_000, blockCount: 0 });
   });
 
   it('blocks execution while the cooldown is active', async () => {
     await manager.tryAllow('hall_motion_alert', 600_000, 1_000);
 
     await expect(manager.tryAllow('hall_motion_alert', 600_000, 600_999)).resolves.toBe(false);
-    expect(manager.getEntry('hall_motion_alert')).toEqual({ lastRunAt: 1_000 });
+    expect(manager.getEntry('hall_motion_alert')).toEqual({ lastRunAt: 1_000, blockCount: 1 });
+  });
+
+  it('increments block count on each block and resets it on allow', async () => {
+    await manager.tryAllow('hall_motion_alert', 600_000, 1_000);
+
+    await manager.tryAllow('hall_motion_alert', 600_000, 1_001);
+    await manager.tryAllow('hall_motion_alert', 600_000, 1_002);
+    expect(manager.getEntry('hall_motion_alert')).toEqual({ lastRunAt: 1_000, blockCount: 2 });
+
+    await manager.tryAllow('hall_motion_alert', 600_000, 601_001);
+    expect(manager.getEntry('hall_motion_alert')).toEqual({ lastRunAt: 601_001, blockCount: 0 });
   });
 
   it('allows execution after the cooldown duration has elapsed', async () => {
     await manager.tryAllow('hall_motion_alert', 600_000, 1_000);
 
     await expect(manager.tryAllow('hall_motion_alert', 600_000, 601_001)).resolves.toBe(true);
-    expect(manager.getEntry('hall_motion_alert')).toEqual({ lastRunAt: 601_001 });
+    expect(manager.getEntry('hall_motion_alert')).toEqual({ lastRunAt: 601_001, blockCount: 0 });
   });
 
   it('rejects invalid durations', async () => {
@@ -175,7 +186,7 @@ describe('CooldownManager', () => {
     await manager.tryAllow('hall_motion_alert', 600_000, 1_000);
     await manager.reset('hall_motion_alert');
 
-    expect(manager.getEntry('hall_motion_alert')).toEqual({ lastRunAt: null });
+    expect(manager.getEntry('hall_motion_alert')).toEqual({ lastRunAt: null, blockCount: 0 });
     await expect(manager.tryAllow('hall_motion_alert', 600_000, 1_001)).resolves.toBe(true);
   });
 
@@ -183,7 +194,7 @@ describe('CooldownManager', () => {
     await manager.suspend('hall_motion_alert', 5_000);
 
     await expect(manager.tryAllow('hall_motion_alert', 600_000, 5_001)).resolves.toBe(false);
-    expect(manager.getEntry('hall_motion_alert')).toEqual({ lastRunAt: 5_000 });
+    expect(manager.getEntry('hall_motion_alert')).toEqual({ lastRunAt: 5_000, blockCount: 1 });
   });
 
   it('allows only one concurrent tryAllow for the same key', async () => {
@@ -194,7 +205,7 @@ describe('CooldownManager', () => {
     ]);
 
     expect(results.filter(Boolean)).toHaveLength(1);
-    expect(manager.getEntry('burst_sensor')).toEqual({ lastRunAt: 1_000 });
+    expect(manager.getEntry('burst_sensor')).toEqual({ lastRunAt: 1_000, blockCount: 2 });
   });
 
   it('cleanup removes all keys when no flow keys are known', async () => {
@@ -215,7 +226,7 @@ describe('CooldownManager', () => {
     await manager.cleanup(new Set(['used_key']));
 
     expect(manager.getKeys()).toEqual(['used_key']);
-    expect(manager.getEntry('USED_KEY')).toEqual({ lastRunAt: 1_000 });
+    expect(manager.getEntry('USED_KEY')).toEqual({ lastRunAt: 1_000, blockCount: 0 });
     expect(manager.getEntry('unused_key')).toBeUndefined();
   });
 
@@ -233,7 +244,7 @@ describe('CooldownManager', () => {
     await manager.cleanup(new Set(['new_flow_key']));
 
     expect(manager.getKeys()).toEqual(['new_flow_key']);
-    expect(manager.getEntry('new_flow_key')).toEqual({ lastRunAt: null });
+    expect(manager.getEntry('new_flow_key')).toEqual({ lastRunAt: null, blockCount: 0 });
   });
 
   it('cleanup does not overwrite existing entries when adding flow keys', async () => {
@@ -241,8 +252,8 @@ describe('CooldownManager', () => {
 
     await manager.cleanup(new Set(['used_key', 'new_flow_key']));
 
-    expect(manager.getEntry('used_key')).toEqual({ lastRunAt: 1_000 });
-    expect(manager.getEntry('new_flow_key')).toEqual({ lastRunAt: null });
+    expect(manager.getEntry('used_key')).toEqual({ lastRunAt: 1_000, blockCount: 0 });
+    expect(manager.getEntry('new_flow_key')).toEqual({ lastRunAt: null, blockCount: 0 });
   });
 
   it('cleanup removes never-run keys that are no longer referenced', async () => {
@@ -251,7 +262,7 @@ describe('CooldownManager', () => {
     await manager.cleanup(new Set(['active_key']));
 
     expect(manager.getKeys()).toEqual(['active_key']);
-    expect(manager.getEntry('active_key')).toEqual({ lastRunAt: null });
+    expect(manager.getEntry('active_key')).toEqual({ lastRunAt: null, blockCount: 0 });
     expect(manager.getEntry('orphaned_key')).toBeUndefined();
   });
 });

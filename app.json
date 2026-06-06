@@ -44,6 +44,45 @@
     }
   },
   "flow": {
+    "triggers": [
+      {
+        "id": "blocked_count_reached",
+        "title": {
+          "en": "[[key]] blocked [[count]] times in a row"
+        },
+        "titleFormatted": {
+          "en": "[[key]] blocked [[count]] times in a row"
+        },
+        "hint": {
+          "en": "Runs when the Allow condition blocks the same number of times in a row since the last allowed run."
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "key",
+            "title": {
+              "en": "Key"
+            },
+            "placeholder": {
+              "en": "Select or create key"
+            }
+          },
+          {
+            "type": "number",
+            "name": "count",
+            "title": {
+              "en": "Times blocked"
+            },
+            "placeholder": {
+              "en": "3"
+            },
+            "min": 1,
+            "max": 999999999,
+            "step": 1
+          }
+        ]
+      }
+    ],
     "conditions": [
       {
         "id": "allow_once",

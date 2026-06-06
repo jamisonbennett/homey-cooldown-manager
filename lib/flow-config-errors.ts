@@ -15,9 +15,14 @@ export type ActionCardSnapshot = {
   key: unknown;
 };
 
+export type TriggerCardSnapshot = {
+  key: unknown;
+};
+
 export type FlowConfigSnapshot = {
   allowCards: ReadonlyArray<AllowCardSnapshot>;
   actionCards: ReadonlyArray<ActionCardSnapshot>;
+  triggerCards: ReadonlyArray<TriggerCardSnapshot>;
 };
 
 export type DurationSpec = {
@@ -43,6 +48,10 @@ export type FlowConfigError =
   }
   | {
     kind: 'action_key_without_allow';
+    key: string;
+  }
+  | {
+    kind: 'trigger_key_without_allow';
     key: string;
   };
 
@@ -232,13 +241,14 @@ function findAllowCardsWithInvalidDuration(
   }));
 }
 
-function findActionKeysWithoutAllow(
-  snapshot: FlowConfigSnapshot,
+function findKeysWithoutAllow(
+  cards: ReadonlyArray<{ key: unknown }>,
+  kind: 'action_key_without_allow' | 'trigger_key_without_allow',
+  allowKeys: Set<string>,
 ): FlowConfigError[] {
-  const allowKeys = collectAllowKeys(snapshot);
   const orphanKeys = new Set<string>();
 
-  for (const card of snapshot.actionCards) {
+  for (const card of cards) {
     const key = normalizeKey(card.key);
     if (key && !allowKeys.has(key)) {
       orphanKeys.add(key);
@@ -246,15 +256,36 @@ function findActionKeysWithoutAllow(
   }
 
   return [...orphanKeys].sort().map((key) => ({
-    kind: 'action_key_without_allow',
+    kind,
     key,
   }));
+}
+
+function findActionKeysWithoutAllow(
+  snapshot: FlowConfigSnapshot,
+): FlowConfigError[] {
+  return findKeysWithoutAllow(
+    snapshot.actionCards,
+    'action_key_without_allow',
+    collectAllowKeys(snapshot),
+  );
+}
+
+function findTriggerKeysWithoutAllow(
+  snapshot: FlowConfigSnapshot,
+): FlowConfigError[] {
+  return findKeysWithoutAllow(
+    snapshot.triggerCards,
+    'trigger_key_without_allow',
+    collectAllowKeys(snapshot),
+  );
 }
 
 const FLOW_CONFIG_ERROR_CHECKERS: FlowConfigErrorChecker[] = [
   findAllowKeyConflictingDurations,
   findAllowCardsWithInvalidDuration,
   findActionKeysWithoutAllow,
+  findTriggerKeysWithoutAllow,
 ];
 
 export function findFlowConfigErrors(

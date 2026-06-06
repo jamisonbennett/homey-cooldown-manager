@@ -11,6 +11,7 @@ export const COOLDOWN_SETTINGS_KEY = 'cooldownState';
 
 export interface CooldownEntry {
   lastRunAt: number | null;
+  blockCount: number;
 }
 
 export type CooldownState = Record<string, CooldownEntry>;
@@ -52,27 +53,34 @@ export class CooldownManager {
 
     const normalizedKey = canonicalKey(key);
     const state = this.store.getState();
-    const entry = state[normalizedKey] ?? { lastRunAt: null };
+    const existing = state[normalizedKey];
+    const entry = {
+      lastRunAt: existing?.lastRunAt ?? null,
+      blockCount: existing?.blockCount ?? 0,
+    };
     const effectiveLastRunAt = normalizeLastRunAt(entry.lastRunAt, now);
 
     if (effectiveLastRunAt !== entry.lastRunAt) {
-      state[normalizedKey] = { lastRunAt: effectiveLastRunAt };
+      state[normalizedKey] = { lastRunAt: effectiveLastRunAt, blockCount: entry.blockCount };
       this.store.setState(state);
     }
 
     if (effectiveLastRunAt === null || (now - effectiveLastRunAt) >= durationMs) {
-      state[normalizedKey] = { lastRunAt: now };
+      state[normalizedKey] = { lastRunAt: now, blockCount: 0 };
       this.store.setState(state);
       return true;
     }
 
+    const blockCount = entry.blockCount + 1;
+    state[normalizedKey] = { lastRunAt: effectiveLastRunAt, blockCount };
+    this.store.setState(state);
     return false;
   }
 
   reset(key: string): Promise<void> {
     return this.stateMutex.runExclusive(() => {
       const state = this.store.getState();
-      state[canonicalKey(key)] = { lastRunAt: null };
+      state[canonicalKey(key)] = { lastRunAt: null, blockCount: 0 };
       this.store.setState(state);
     });
   }
@@ -83,7 +91,7 @@ export class CooldownManager {
   suspend(key: string, now: number): Promise<void> {
     return this.stateMutex.runExclusive(() => {
       const state = this.store.getState();
-      state[canonicalKey(key)] = { lastRunAt: now };
+      state[canonicalKey(key)] = { lastRunAt: now, blockCount: state[canonicalKey(key)]?.blockCount ?? 0 };
       this.store.setState(state);
     });
   }
@@ -107,7 +115,7 @@ export class CooldownManager {
 
       for (const key of normalizedUsedKeys) {
         if (!state[key]) {
-          state[key] = { lastRunAt: null };
+          state[key] = { lastRunAt: null, blockCount: 0 };
           changed = true;
         }
       }

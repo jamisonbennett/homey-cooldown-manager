@@ -11,6 +11,7 @@ type DisplayContext = {
 type CooldownTrigger = {
   key: string;
   lastRunAt: number | null;
+  blockCount: number;
 };
 
 type CooldownManagerApp = Homey.App & {

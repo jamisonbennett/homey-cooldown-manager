@@ -10,8 +10,9 @@ import {
 function snapshot(
   allowCards: FlowConfigSnapshot['allowCards'],
   actionCards: FlowConfigSnapshot['actionCards'] = [],
+  triggerCards: FlowConfigSnapshot['triggerCards'] = [],
 ): FlowConfigSnapshot {
-  return { allowCards, actionCards };
+  return { allowCards, actionCards, triggerCards };
 }
 
 describe('findFlowConfigErrors', () => {
@@ -97,6 +98,19 @@ describe('findFlowConfigErrors', () => {
     ))).toEqual([
       {
         kind: 'action_key_without_allow',
+        key: 'window',
+      },
+    ]);
+  });
+
+  it('flags when-card keys that have no allow card', () => {
+    expect(findFlowConfigErrors(snapshot(
+      [{ key: 'door', duration: 5, duration_unit: 'minutes' }],
+      [],
+      [{ key: 'window', count: 3 }],
+    ))).toEqual([
+      {
+        kind: 'trigger_key_without_allow',
         key: 'window',
       },
     ]);

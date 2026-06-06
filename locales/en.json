@@ -20,6 +20,23 @@
         }
       }
     },
+    "triggers": {
+      "blocked_count_reached": {
+        "title": "[[key]] blocked [[count]] times in a row",
+        "titleFormatted": "[[key]] blocked [[count]] times in a row",
+        "hint": "Runs when the Allow condition blocks the same number of times in a row since the last allowed run.",
+        "args": {
+          "key": {
+            "title": "Key",
+            "placeholder": "Select or create key"
+          },
+          "count": {
+            "title": "Times blocked",
+            "placeholder": "3"
+          }
+        }
+      }
+    },
     "actions": {
       "reset_cooldown": {
         "title": "Reset cooldown for [[key]]",
@@ -62,6 +79,8 @@
     "error_allow_key_conflicting_durations": "Key \"__key__\" is used in multiple And cards with different durations (__durations__). Use the same duration everywhere for a key.",
     "error_allow_key_invalid_duration": "Key \"__key__\" has an And card with a missing or invalid duration. Set a whole number greater than 0 with a valid unit.",
     "error_action_key_without_allow": "Key \"__key__\" is used in a Then card but has no matching And card. These cards have no effect.",
+    "error_trigger_key_without_allow": "Key \"__key__\" is used in a When card but has no matching And card. This card will never run.",
+    "blocks_since_allow": "__count__ blocks since last allow",
     "duration_invalid": "invalid duration",
     "duration_unit": {
       "seconds": "seconds",
