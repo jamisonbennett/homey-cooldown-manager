@@ -11,6 +11,7 @@
     "drivers/**/*.ts",
     "lib/**/*.ts",
     "jest.config.ts",
+    "__mocks__/**/*.ts",
     "**/*.test.ts"
   ],
   "exclude": ["node_modules", ".homeybuild"]
