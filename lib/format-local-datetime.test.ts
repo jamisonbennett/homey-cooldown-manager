@@ -12,7 +12,7 @@ describe('formatLocalDateTime', () => {
       'en-GB',
     );
 
-    expect(formatted).toBe('26/05/2026, 20:30');
+    expect(formatted).toBe('26/05/2026, 20:30:00');
   });
 
   it('falls back without timezone when timezone is invalid', () => {

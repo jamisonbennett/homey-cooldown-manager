@@ -4,7 +4,7 @@ function formatLocalDateTime(timestampMs, timezone, language) {
   const date = new Date(timestampMs);
   const baseOptions = {
     dateStyle: 'short',
-    timeStyle: 'short',
+    timeStyle: 'medium',
   };
   const attempts = [
     [language, { ...baseOptions, timeZone: timezone }],
