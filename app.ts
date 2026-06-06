@@ -10,6 +10,10 @@ import {
 } from './lib/cooldown';
 import { durationToMs } from './lib/duration';
 import formatLocalDateTime from './lib/format-local-datetime';
+import {
+  findFlowConfigErrors,
+  type FlowConfigError,
+} from './lib/flow-config-errors';
 import normalizeKey, { canonicalKey } from './lib/flow-key';
 
 const FLOW_CARD_IDS = {
@@ -57,6 +61,23 @@ class CooldownManagerApp extends Homey.App {
       timezone: this.timezone,
       language: this.homey.i18n.getLanguage(),
     };
+  }
+
+  async getFlowConfigErrors(): Promise<FlowConfigError[]> {
+    const allowOnceCard = this.homey.flow.getConditionCard(FLOW_CARD_IDS.allowOnce);
+    const resetCooldownCard = this.homey.flow.getActionCard(FLOW_CARD_IDS.resetCooldown);
+    const suspendCooldownCard = this.homey.flow.getActionCard(FLOW_CARD_IDS.suspendCooldown);
+
+    const [allowCards, resetCards, suspendCards] = await Promise.all([
+      allowOnceCard.getArgumentValues(),
+      resetCooldownCard.getArgumentValues(),
+      suspendCooldownCard.getArgumentValues(),
+    ]);
+
+    return findFlowConfigErrors({
+      allowCards,
+      actionCards: [...resetCards, ...suspendCards],
+    });
   }
 
   private createSettingsStore(): CooldownStore {

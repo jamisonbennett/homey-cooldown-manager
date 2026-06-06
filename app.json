@@ -33,6 +33,10 @@
     "getDisplayContext": {
       "method": "GET",
       "path": "/display-context"
+    },
+    "getFlowConfigErrors": {
+      "method": "GET",
+      "path": "/flow-config-errors"
     }
   },
   "flow": {

@@ -9,6 +9,30 @@
       data-origin="settings"
     ></script>
     <style>
+      .config-errors {
+        margin-block-end: 1.25rem;
+        padding: 0.75rem 0.9rem;
+        border: 1px solid var(--homey-color-border-warning, #f59e0b);
+        border-radius: 0.5rem;
+        background: var(--homey-color-background-warning, rgba(245, 158, 11, 0.08));
+      }
+
+      .config-errors-heading {
+        margin: 0 0 0.5rem;
+        font-size: 0.95rem;
+        font-weight: 600;
+      }
+
+      .config-errors-list {
+        margin: 0;
+        padding-inline-start: 1.1rem;
+      }
+
+      .config-errors-item {
+        margin-block: 0.35rem;
+        line-height: 1.35;
+      }
+
       .trigger-list {
         margin: 0;
         padding: 0;
@@ -45,6 +69,15 @@
     </style>
   </head>
   <body>
+    <section id="config-errors-section" class="config-errors" hidden>
+      <h2
+        id="config-errors-heading"
+        class="config-errors-heading"
+        data-i18n="settings.errors_heading"
+      ></h2>
+      <ul id="config-errors-list" class="config-errors-list"></ul>
+    </section>
+
     <p id="trigger-empty" class="trigger-empty" hidden data-i18n="settings.empty"></p>
     <ul id="trigger-list" class="trigger-list" hidden></ul>
 
@@ -54,16 +87,73 @@
       var COOLDOWN_SETTINGS_KEY = 'cooldownState';
 
       function onHomeyReady(Homey) {
+        var errorsSection = document.getElementById('config-errors-section');
+        var errorsList = document.getElementById('config-errors-list');
         var listElement = document.getElementById('trigger-list');
         var emptyElement = document.getElementById('trigger-empty');
         var hasShown = false;
         var displayContext = null;
+        var pendingLoads = 0;
 
         function showView() {
           if (!hasShown) {
             hasShown = true;
             Homey.ready();
           }
+        }
+
+        function beginLoad() {
+          pendingLoads += 1;
+        }
+
+        function finishLoad() {
+          pendingLoads -= 1;
+          if (pendingLoads <= 0) {
+            showView();
+          }
+        }
+
+        function formatDurationSpec(spec) {
+          if (spec.invalid) {
+            return Homey.__('settings.duration_invalid');
+          }
+
+          return spec.duration + ' ' + Homey.__('settings.duration_unit.' + spec.unit);
+        }
+
+        function describeConfigError(error) {
+          if (error.kind === 'allow_key_conflicting_durations') {
+            return Homey.__('settings.error_allow_key_conflicting_durations', {
+              key: error.key,
+              durations: error.durations.map(formatDurationSpec).join(', '),
+            });
+          }
+
+          if (error.kind === 'action_key_without_allow') {
+            return Homey.__('settings.error_action_key_without_allow', {
+              key: error.key,
+            });
+          }
+
+          return String(error.kind);
+        }
+
+        function renderConfigErrors(errors) {
+          errorsList.innerHTML = '';
+
+          if (!errors.length) {
+            errorsSection.hidden = true;
+            return;
+          }
+
+          errorsSection.hidden = false;
+
+          errors.forEach(function (error) {
+            var item = document.createElement('li');
+            item.className = 'config-errors-item';
+            item.textContent = describeConfigError(error);
+            errorsList.appendChild(item);
+          });
         }
 
         function formatLastRun(timestampMs) {
@@ -106,7 +196,6 @@
           if (!triggers.length) {
             listElement.hidden = true;
             emptyElement.hidden = false;
-            showView();
             return;
           }
 
@@ -129,31 +218,54 @@
             item.appendChild(time);
             listElement.appendChild(item);
           });
+        }
 
-          showView();
+        function loadConfigErrors() {
+          beginLoad();
+
+          Homey.api('GET', '/flow-config-errors', null, function (err, response) {
+            if (err) {
+              Homey.alert(err.message || String(err));
+              finishLoad();
+              return;
+            }
+
+            renderConfigErrors((response && response.errors) || []);
+            finishLoad();
+          });
         }
 
         function loadTriggers() {
+          beginLoad();
+
           Homey.get(COOLDOWN_SETTINGS_KEY, function (err, state) {
             if (err) {
               Homey.alert(err.message || String(err));
-              showView();
+              finishLoad();
               return;
             }
 
             renderTriggers(triggersFromState(state));
+            finishLoad();
           });
+        }
+
+        function loadPage() {
+          hasShown = false;
+          pendingLoads = 0;
+          loadConfigErrors();
+          loadTriggers();
         }
 
         Homey.on('settings.set', function (data) {
           if (!data || data.name === COOLDOWN_SETTINGS_KEY) {
-            loadTriggers();
+            loadPage();
           }
         });
 
         Homey.on('settings.unset', function (data) {
           if (!data || data.name === COOLDOWN_SETTINGS_KEY) {
-            loadTriggers();
+            loadPage();
           }
         });
 
@@ -162,7 +274,7 @@
             displayContext = context;
           }
 
-          loadTriggers();
+          loadPage();
         });
       }
     </script>
