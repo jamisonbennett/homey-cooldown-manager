@@ -60,6 +60,7 @@
     "never_run": "Never triggered",
     "errors_heading": "Configuration issues",
     "error_allow_key_conflicting_durations": "Key \"__key__\" is used in multiple And cards with different durations (__durations__). Use the same duration everywhere for a key.",
+    "error_allow_key_invalid_duration": "Key \"__key__\" has an And card with a missing or invalid duration. Set a whole number greater than 0 with a valid unit.",
     "error_action_key_without_allow": "Key \"__key__\" is used in a Then card but has no matching And card. These cards have no effect.",
     "duration_invalid": "invalid duration",
     "duration_unit": {

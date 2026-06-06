@@ -128,6 +128,12 @@
             });
           }
 
+          if (error.kind === 'allow_key_invalid_duration') {
+            return Homey.__('settings.error_allow_key_invalid_duration', {
+              key: error.key,
+            });
+          }
+
           if (error.kind === 'action_key_without_allow') {
             return Homey.__('settings.error_action_key_without_allow', {
               key: error.key,

@@ -45,6 +45,51 @@ describe('findFlowConfigErrors', () => {
     ]))).toEqual([]);
   });
 
+  it('flags allow cards with missing or invalid duration', () => {
+    expect(findFlowConfigErrors(snapshot([
+      { key: 'door', duration: 0, duration_unit: 'minutes' },
+    ]))).toEqual([
+      {
+        kind: 'allow_key_invalid_duration',
+        key: 'door',
+      },
+    ]);
+
+    expect(findFlowConfigErrors(snapshot([
+      { key: 'door', duration: 1.5, duration_unit: 'minutes' },
+    ]))).toEqual([
+      {
+        kind: 'allow_key_invalid_duration',
+        key: 'door',
+      },
+    ]);
+
+    expect(findFlowConfigErrors(snapshot([
+      { key: 'door', duration: 5, duration_unit: 'weeks' },
+    ]))).toEqual([
+      {
+        kind: 'allow_key_invalid_duration',
+        key: 'door',
+      },
+    ]);
+  });
+
+  it('does not duplicate invalid duration errors when mixed with valid durations', () => {
+    expect(findFlowConfigErrors(snapshot([
+      { key: 'door', duration: 5, duration_unit: 'minutes' },
+      { key: 'door', duration: 0, duration_unit: 'minutes' },
+    ]))).toEqual([
+      {
+        kind: 'allow_key_conflicting_durations',
+        key: 'door',
+        durations: [
+          { duration: 5, unit: 'minutes' },
+          { invalid: true },
+        ],
+      },
+    ]);
+  });
+
   it('flags then-card keys that have no allow card', () => {
     expect(findFlowConfigErrors(snapshot(
       [{ key: 'door', duration: 5, duration_unit: 'minutes' }],

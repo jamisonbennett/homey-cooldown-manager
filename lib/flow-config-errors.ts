@@ -38,6 +38,10 @@ export type FlowConfigError =
     durations: FlowConfigDurationSpec[];
   }
   | {
+    kind: 'allow_key_invalid_duration';
+    key: string;
+  }
+  | {
     kind: 'action_key_without_allow';
     key: string;
   };
@@ -204,6 +208,30 @@ function collectAllowKeys(snapshot: FlowConfigSnapshot): Set<string> {
   return keys;
 }
 
+function findAllowCardsWithInvalidDuration(
+  snapshot: FlowConfigSnapshot,
+): FlowConfigError[] {
+  const invalidKeys = new Set<string>();
+
+  for (const [key, cards] of groupAllowCardsByKey(snapshot.allowCards)) {
+    const hasInvalid = cards.some(
+      (card) => durationToMs(card.duration, card.duration_unit) === null,
+    );
+    const hasValid = cards.some(
+      (card) => durationToMs(card.duration, card.duration_unit) !== null,
+    );
+
+    if (hasInvalid && !hasValid) {
+      invalidKeys.add(key);
+    }
+  }
+
+  return [...invalidKeys].sort().map((key) => ({
+    kind: 'allow_key_invalid_duration',
+    key,
+  }));
+}
+
 function findActionKeysWithoutAllow(
   snapshot: FlowConfigSnapshot,
 ): FlowConfigError[] {
@@ -225,6 +253,7 @@ function findActionKeysWithoutAllow(
 
 const FLOW_CONFIG_ERROR_CHECKERS: FlowConfigErrorChecker[] = [
   findAllowKeyConflictingDurations,
+  findAllowCardsWithInvalidDuration,
   findActionKeysWithoutAllow,
 ];
 
