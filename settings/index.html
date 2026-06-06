@@ -81,7 +81,6 @@
     <p id="trigger-empty" class="trigger-empty" hidden data-i18n="settings.empty"></p>
     <ul id="trigger-list" class="trigger-list" hidden></ul>
 
-    <script type="text/javascript" src="load-cooldown-state.js"></script>
     <script type="text/javascript" src="format-local-datetime.js"></script>
     <script type="text/javascript">
       var COOLDOWN_SETTINGS_KEY = 'cooldownState';
@@ -171,21 +170,19 @@
           }).format(new Date(timestampMs));
         }
 
-        function describeLastRun(entry) {
-          if (entry.lastRunAt === null) {
+        function describeLastRun(lastRunAt) {
+          if (lastRunAt === null) {
             return Homey.__('settings.never_run');
           }
 
-          return formatLastRun(entry.lastRunAt);
+          return formatLastRun(lastRunAt);
         }
 
-        function triggersFromState(raw) {
-          var state = loadCooldownState(raw);
-
-          return Object.keys(state).sort().map(function (key) {
+        function triggersFromResponse(triggers) {
+          return triggers.map(function (trigger) {
             return {
-              key: key,
-              lastRunLabel: describeLastRun(state[key]),
+              key: trigger.key,
+              lastRunLabel: describeLastRun(trigger.lastRunAt),
             };
           });
         }
@@ -238,14 +235,14 @@
         function loadTriggers() {
           beginLoad();
 
-          Homey.get(COOLDOWN_SETTINGS_KEY, function (err, state) {
+          Homey.api('GET', '/triggers', null, function (err, response) {
             if (err) {
               Homey.alert(err.message || String(err));
               finishLoad();
               return;
             }
 
-            renderTriggers(triggersFromState(state));
+            renderTriggers(triggersFromResponse((response && response.triggers) || []));
             finishLoad();
           });
         }

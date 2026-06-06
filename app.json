@@ -37,6 +37,10 @@
     "getFlowConfigErrors": {
       "method": "GET",
       "path": "/flow-config-errors"
+    },
+    "getTriggers": {
+      "method": "GET",
+      "path": "/triggers"
     }
   },
   "flow": {

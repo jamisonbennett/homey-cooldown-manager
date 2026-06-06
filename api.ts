@@ -8,9 +8,15 @@ type DisplayContext = {
   language: string;
 };
 
+type CooldownTrigger = {
+  key: string;
+  lastRunAt: number | null;
+};
+
 type CooldownManagerApp = Homey.App & {
   getDisplayContext(): DisplayContext;
   getFlowConfigErrors(): Promise<FlowConfigError[]>;
+  getTriggers(): Promise<CooldownTrigger[]>;
 };
 
 export = {
@@ -21,5 +27,10 @@ export = {
   async getFlowConfigErrors({ homey }: { homey: { app: CooldownManagerApp } }) {
     const errors = await homey.app.getFlowConfigErrors();
     return { errors };
+  },
+
+  async getTriggers({ homey }: { homey: { app: CooldownManagerApp } }) {
+    const triggers = await homey.app.getTriggers();
+    return { triggers };
   },
 };

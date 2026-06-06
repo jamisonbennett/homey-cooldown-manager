@@ -63,6 +63,20 @@ class CooldownManagerApp extends Homey.App {
     };
   }
 
+  async getTriggers(): Promise<Array<{ key: string; lastRunAt: number | null }>> {
+    const usedKeys = await this.collectUsedKeys();
+
+    return [...usedKeys]
+      .sort()
+      .map((key) => {
+        const entry = this.cooldownManager.getEntry(key);
+        return {
+          key,
+          lastRunAt: entry?.lastRunAt ?? null,
+        };
+      });
+  }
+
   async getFlowConfigErrors(): Promise<FlowConfigError[]> {
     const allowOnceCard = this.homey.flow.getConditionCard(FLOW_CARD_IDS.allowOnce);
     const resetCooldownCard = this.homey.flow.getActionCard(FLOW_CARD_IDS.resetCooldown);
