@@ -11,7 +11,7 @@
     "en": "Cooldown Manager"
   },
   "description": {
-    "en": "Prevent automations from firing too often"
+    "en": "Keep Flows from triggering too often with reusable cooldowns, multi-run limits, block-count alerts, and manual override cards."
   },
   "category": [
     "tools"

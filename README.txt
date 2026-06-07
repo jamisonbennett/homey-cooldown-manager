@@ -1,10 +1,3 @@
-Prevent automations from firing too often.
+Tired of the same Flow firing again and again? Cooldown Manager keeps automations from retriggering too often — motion that runs every few seconds, someone pressing the doorbell repeatedly in quick succession, a sensor that would message you about the same problem over and over, or lights that flip on and off in a loop.
 
-Instead of manually building timers, logic variables, delayed resets, and multiple Flows, you can add a single reusable cooldown condition to your Homey Flows.
-
-The app is designed around one simple idea:
-
-"Allow this action once every X."
-
-Cooldown Manager helps create cleaner, safer, and more stable automations without requiring users to think about timers directly.
-
+Add a reusable cooldown to any Flow instead of building timers, logic variables, and helper Flows by hand. It fits motion and presence alerts, doorbell and intercom notifications, message and push notification throttling, environmental warnings like high water pressure at most once per day, reminders when a door or garage is left open, camera motion bursts, and heating or cooling that short-cycles when a sensor flaps near a threshold. Allow up to several runs per interval when one is not enough. When a run is blocked, the app can track how often that happened in a row and start separate Flows if you need to escalate.

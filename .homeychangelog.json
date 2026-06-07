@@ -1,5 +1,5 @@
 {
   "0.0.1": {
-    "en": "Initial release of the cooldown manager. Prevents automations from firing too often."
+    "en": "Initial release. Allow once and Allow up to cooldown conditions; Reset cooldown and Suspend cooldown actions; block count tracking for consecutive blocked runs; When cards for exact or at-least block thresholds with a block count Flow tag; Restore one or many times and Reset times used actions; settings page with key status and Flow configuration validation."
   }
 }
