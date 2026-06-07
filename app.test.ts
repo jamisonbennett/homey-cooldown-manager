@@ -31,6 +31,7 @@ type HomeyMockOptions = {
   resetCards?: FlowCardArgumentValues;
   suspendCards?: FlowCardArgumentValues;
   triggerCards?: FlowCardArgumentValues;
+  triggerAtLeastCards?: FlowCardArgumentValues;
   persistedState?: Record<string, { lastRunAt: number | null; blockCount?: number }>;
 };
 
@@ -65,8 +66,10 @@ function createHomeyMock(options: HomeyMockOptions = {}) {
   const allowOnceCard = createFlowCardMock(options.allowCards ?? []);
   const resetCooldownCard = createFlowCardMock(options.resetCards ?? []);
   const suspendCooldownCard = createFlowCardMock(options.suspendCards ?? []);
-  const blockedCountCard = createFlowCardMock(options.triggerCards ?? []);
-  blockedCountCard.trigger = jest.fn().mockResolvedValue(undefined);
+  const blockedCountReachedCard = createFlowCardMock(options.triggerCards ?? []);
+  blockedCountReachedCard.trigger = jest.fn().mockResolvedValue(undefined);
+  const blockedCountAtLeastCard = createFlowCardMock(options.triggerAtLeastCards ?? []);
+  blockedCountAtLeastCard.trigger = jest.fn().mockResolvedValue(undefined);
 
   const timezoneListeners = new Map<string, TimezoneChangeListener>();
   const homeyListeners = new Map<string, UnloadListener>();
@@ -111,7 +114,10 @@ function createHomeyMock(options: HomeyMockOptions = {}) {
       }),
       getTriggerCard: jest.fn((id: string) => {
         if (id === 'blocked_count_reached') {
-          return blockedCountCard;
+          return blockedCountReachedCard;
+        }
+        if (id === 'blocked_count_at_least') {
+          return blockedCountAtLeastCard;
         }
         throw new Error(`Unknown trigger card: ${id}`);
       }),
@@ -138,7 +144,8 @@ function createHomeyMock(options: HomeyMockOptions = {}) {
     allowOnceCard,
     resetCooldownCard,
     suspendCooldownCard,
-    blockedCountCard,
+    blockedCountReachedCard,
+    blockedCountAtLeastCard,
     settings,
     timezoneListeners,
     homeyListeners,
@@ -168,14 +175,16 @@ describe('CooldownManagerApp', () => {
       allowOnceCard,
       resetCooldownCard,
       suspendCooldownCard,
-      blockedCountCard,
+      blockedCountReachedCard,
+      blockedCountAtLeastCard,
     } = await createInitializedApp({
       timezone: 'Europe/Oslo',
       language: 'en',
     });
 
     expect(allowOnceCard.registerRunListener).toHaveBeenCalledTimes(1);
-    expect(blockedCountCard.registerRunListener).toHaveBeenCalledTimes(1);
+    expect(blockedCountReachedCard.registerRunListener).toHaveBeenCalledTimes(1);
+    expect(blockedCountAtLeastCard.registerRunListener).toHaveBeenCalledTimes(1);
     expect(allowOnceCard.registerArgumentAutocompleteListener).toHaveBeenCalledWith(
       'key',
       expect.any(Function),
@@ -244,7 +253,8 @@ describe('CooldownManagerApp', () => {
     const {
       app,
       allowOnceCard,
-      blockedCountCard,
+      blockedCountReachedCard,
+      blockedCountAtLeastCard,
       settings,
     } = await createInitializedApp({
       allowCards: [{ key: 'door', duration: 5, duration_unit: 'minutes' }],
@@ -257,10 +267,13 @@ describe('CooldownManagerApp', () => {
     await expect(runAllowOnce(args)).resolves.toBe(true);
     await expect(runAllowOnce(args)).resolves.toBe(false);
     await expect(runAllowOnce(args)).resolves.toBe(false);
-    expect(blockedCountCard.trigger).toHaveBeenCalledWith(
-      {},
+    const triggerPayload = [
+      { block_count: 2 },
       { key: 'door', count: 2 },
-    );
+    ] as const;
+
+    expect(blockedCountReachedCard.trigger).toHaveBeenLastCalledWith(...triggerPayload);
+    expect(blockedCountAtLeastCard.trigger).toHaveBeenLastCalledWith(...triggerPayload);
 
     jest.setSystemTime(new Date('2024-06-01T12:06:00.000Z'));
     await expect(runAllowOnce(args)).resolves.toBe(true);
@@ -277,18 +290,37 @@ describe('CooldownManagerApp', () => {
     ]);
   });
 
-  it('filters blocked-count trigger flows by key and threshold', async () => {
-    const { blockedCountCard } = await createInitializedApp({
+  it('filters exact blocked-count trigger flows by key and count', async () => {
+    const { blockedCountReachedCard } = await createInitializedApp({
       triggerCards: [{ key: 'door', count: 3 }],
     });
 
-    const runTrigger = blockedCountCard.runListener!;
+    const runTrigger = blockedCountReachedCard.runListener!;
 
     await expect(runTrigger({ key: 'door', count: 3 }, { key: 'door', count: 3 }))
       .resolves.toBe(true);
+    await expect(runTrigger({ key: 'door', count: 3 }, { key: 'door', count: 5 }))
+      .resolves.toBe(false);
     await expect(runTrigger({ key: 'door', count: 3 }, { key: 'door', count: 2 }))
       .resolves.toBe(false);
     await expect(runTrigger({ key: 'window', count: 3 }, { key: 'door', count: 3 }))
+      .resolves.toBe(false);
+  });
+
+  it('filters at-least blocked-count trigger flows by key and minimum threshold', async () => {
+    const { blockedCountAtLeastCard } = await createInitializedApp({
+      triggerAtLeastCards: [{ key: 'door', count: 3 }],
+    });
+
+    const runTrigger = blockedCountAtLeastCard.runListener!;
+
+    await expect(runTrigger({ key: 'door', count: 3 }, { key: 'door', count: 3 }))
+      .resolves.toBe(true);
+    await expect(runTrigger({ key: 'door', count: 3 }, { key: 'door', count: 5 }))
+      .resolves.toBe(true);
+    await expect(runTrigger({ key: 'door', count: 3 }, { key: 'door', count: 2 }))
+      .resolves.toBe(false);
+    await expect(runTrigger({ key: 'window', count: 3 }, { key: 'door', count: 5 }))
       .resolves.toBe(false);
   });
 
@@ -403,7 +435,8 @@ describe('CooldownManagerApp', () => {
       allowOnceCard,
       resetCooldownCard,
       suspendCooldownCard,
-      blockedCountCard,
+      blockedCountReachedCard,
+      blockedCountAtLeastCard,
     } = await createInitializedApp();
 
     const cleanup = allowOnceCard.on.mock.calls.find(([event]) => event === 'update')?.[1];
@@ -412,6 +445,7 @@ describe('CooldownManagerApp', () => {
     expect(allowOnceCard.off).toHaveBeenCalledWith('update', cleanup);
     expect(resetCooldownCard.off).toHaveBeenCalledWith('update', cleanup);
     expect(suspendCooldownCard.off).toHaveBeenCalledWith('update', cleanup);
-    expect(blockedCountCard.off).toHaveBeenCalledWith('update', cleanup);
+    expect(blockedCountReachedCard.off).toHaveBeenCalledWith('update', cleanup);
+    expect(blockedCountAtLeastCard.off).toHaveBeenCalledWith('update', cleanup);
   });
 });

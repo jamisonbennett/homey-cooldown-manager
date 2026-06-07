@@ -24,7 +24,13 @@
       "blocked_count_reached": {
         "title": "[[key]] blocked [[count]] times in a row",
         "titleFormatted": "[[key]] blocked [[count]] times in a row",
-        "hint": "Runs when the Allow condition blocks the same number of times in a row since the last allowed run.",
+        "hint": "Runs when the Allow condition blocks exactly the chosen number of times in a row since the last allowed run. Passes the current block count as a Flow tag.",
+        "tokens": {
+          "block_count": {
+            "title": "Block count",
+            "example": "3"
+          }
+        },
         "args": {
           "key": {
             "title": "Key",
@@ -33,6 +39,27 @@
           "count": {
             "title": "Times blocked",
             "placeholder": "3"
+          }
+        }
+      },
+      "blocked_count_at_least": {
+        "title": "[[key]] blocked [[count]] or more times in a row",
+        "titleFormatted": "[[key]] blocked [[count]] or more times in a row",
+        "hint": "Runs when the Allow condition has blocked at least the chosen number of times in a row since the last allowed run. Passes the current block count as a Flow tag.",
+        "tokens": {
+          "block_count": {
+            "title": "Block count",
+            "example": "50"
+          }
+        },
+        "args": {
+          "key": {
+            "title": "Key",
+            "placeholder": "Select or create key"
+          },
+          "count": {
+            "title": "At least times blocked",
+            "placeholder": "50"
           }
         }
       }
