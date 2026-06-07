@@ -15,11 +15,16 @@ import {
   type FlowConfigError,
 } from './lib/flow-config-errors';
 import normalizeKey, { canonicalKey } from './lib/flow-key';
+import { parseMaxCount } from './lib/max-count';
 
 const FLOW_CARD_IDS = {
   allowOnce: 'allow_once',
+  allowUpTo: 'allow_up_to',
   resetCooldown: 'reset_cooldown',
   suspendCooldown: 'suspend_cooldown',
+  resetTokenCount: 'reset_token_count',
+  grantToken: 'grant_token',
+  grantTokens: 'grant_tokens',
   blockedCountReached: 'blocked_count_reached',
   blockedCountAtLeast: 'blocked_count_at_least',
 } as const;
@@ -74,6 +79,7 @@ class CooldownManagerApp extends Homey.App {
     key: string;
     lastRunAt: number | null;
     blockCount: number;
+    usedCount: number;
   }>> {
     const usedKeys = await this.collectUsedKeys();
 
@@ -85,25 +91,50 @@ class CooldownManagerApp extends Homey.App {
           key,
           lastRunAt: entry?.lastRunAt ?? null,
           blockCount: entry?.blockCount ?? 0,
+          usedCount: entry?.usedCount ?? 0,
         };
       });
   }
 
   async getFlowConfigErrors(): Promise<FlowConfigError[]> {
     const allowOnceCard = this.homey.flow.getConditionCard(FLOW_CARD_IDS.allowOnce);
+    const allowUpToCard = this.homey.flow.getConditionCard(FLOW_CARD_IDS.allowUpTo);
     const resetCooldownCard = this.homey.flow.getActionCard(FLOW_CARD_IDS.resetCooldown);
     const suspendCooldownCard = this.homey.flow.getActionCard(FLOW_CARD_IDS.suspendCooldown);
+    const resetTokenCountCard = this.homey.flow.getActionCard(FLOW_CARD_IDS.resetTokenCount);
+    const grantTokenCard = this.homey.flow.getActionCard(FLOW_CARD_IDS.grantToken);
+    const grantTokensCard = this.homey.flow.getActionCard(FLOW_CARD_IDS.grantTokens);
 
-    const [allowCards, resetCards, suspendCards, triggerCards] = await Promise.all([
+    const [
+      allowOnceCards,
+      allowUpToCards,
+      resetCards,
+      suspendCards,
+      resetTokenCards,
+      grantTokenCards,
+      grantTokensCards,
+      triggerCards,
+    ] = await Promise.all([
       allowOnceCard.getArgumentValues(),
+      allowUpToCard.getArgumentValues(),
       resetCooldownCard.getArgumentValues(),
       suspendCooldownCard.getArgumentValues(),
+      resetTokenCountCard.getArgumentValues(),
+      grantTokenCard.getArgumentValues(),
+      grantTokensCard.getArgumentValues(),
       this.getBlockCountTriggerArgumentValues(),
     ]);
 
     return findFlowConfigErrors({
-      allowCards,
-      actionCards: [...resetCards, ...suspendCards],
+      allowOnceCards,
+      allowUpToCards,
+      actionCards: [
+        ...resetCards,
+        ...suspendCards,
+        ...resetTokenCards,
+        ...grantTokenCards,
+      ],
+      grantTokensCards,
       triggerCards,
     });
   }
@@ -119,14 +150,22 @@ class CooldownManagerApp extends Homey.App {
 
   private async registerFlowCards() {
     const allowOnceCard = this.homey.flow.getConditionCard(FLOW_CARD_IDS.allowOnce);
+    const allowUpToCard = this.homey.flow.getConditionCard(FLOW_CARD_IDS.allowUpTo);
     const resetCooldownCard = this.homey.flow.getActionCard(FLOW_CARD_IDS.resetCooldown);
     const suspendCooldownCard = this.homey.flow.getActionCard(FLOW_CARD_IDS.suspendCooldown);
+    const resetTokenCountCard = this.homey.flow.getActionCard(FLOW_CARD_IDS.resetTokenCount);
+    const grantTokenCard = this.homey.flow.getActionCard(FLOW_CARD_IDS.grantToken);
+    const grantTokensCard = this.homey.flow.getActionCard(FLOW_CARD_IDS.grantTokens);
 
     const keyAutocomplete = async (query: string) => this.autocompleteKeys(query);
 
     allowOnceCard.registerArgumentAutocompleteListener('key', keyAutocomplete);
+    allowUpToCard.registerArgumentAutocompleteListener('key', keyAutocomplete);
     resetCooldownCard.registerArgumentAutocompleteListener('key', keyAutocomplete);
     suspendCooldownCard.registerArgumentAutocompleteListener('key', keyAutocomplete);
+    resetTokenCountCard.registerArgumentAutocompleteListener('key', keyAutocomplete);
+    grantTokenCard.registerArgumentAutocompleteListener('key', keyAutocomplete);
+    grantTokensCard.registerArgumentAutocompleteListener('key', keyAutocomplete);
 
     const cleanup = () => {
       this.cleanupUnusedKeys().catch(this.error);
@@ -167,6 +206,33 @@ class CooldownManagerApp extends Homey.App {
       }
     });
 
+    allowUpToCard.registerRunListener(async (args) => {
+      const key = this.requireKey(args.key);
+      const maxCount = this.requireMaxCount(args.max_count);
+      const durationMs = this.requireDurationMs(args.duration, args.duration_unit);
+
+      try {
+        const allowed = await this.cooldownManager.tryAllowUpTo(
+          key,
+          maxCount,
+          durationMs,
+          Date.now(),
+        );
+
+        if (!allowed) {
+          const blockCount = this.cooldownManager.getEntry(key)?.blockCount ?? 0;
+          await this.triggerBlockCountCards(key, blockCount);
+        }
+
+        return allowed;
+      } catch (error) {
+        if (error instanceof InvalidCooldownDurationError) {
+          throw new Error(this.homey.__('errors.max_count_invalid'));
+        }
+        throw error;
+      }
+    });
+
     resetCooldownCard.registerRunListener(async (args) => {
       const key = this.requireKey(args.key);
       await this.cooldownManager.reset(key);
@@ -177,9 +243,35 @@ class CooldownManagerApp extends Homey.App {
       await this.cooldownManager.suspend(key, Date.now());
     });
 
-    allowOnceCard.on('update', cleanup);
-    resetCooldownCard.on('update', cleanup);
-    suspendCooldownCard.on('update', cleanup);
+    resetTokenCountCard.registerRunListener(async (args) => {
+      const key = this.requireKey(args.key);
+      await this.cooldownManager.resetTokenCount(key);
+    });
+
+    grantTokenCard.registerRunListener(async (args) => {
+      const key = this.requireKey(args.key);
+      await this.cooldownManager.grantToken(key);
+    });
+
+    grantTokensCard.registerRunListener(async (args) => {
+      const key = this.requireKey(args.key);
+      const tokenCount = this.requireTokenCount(args.token_count);
+      await this.cooldownManager.grantTokens(key, tokenCount);
+    });
+
+    const cardsWithCleanup = [
+      allowOnceCard,
+      allowUpToCard,
+      resetCooldownCard,
+      suspendCooldownCard,
+      resetTokenCountCard,
+      grantTokenCard,
+      grantTokensCard,
+    ];
+
+    for (const card of cardsWithCleanup) {
+      card.on('update', cleanup);
+    }
   }
 
   private unregisterFlowCards() {
@@ -190,8 +282,12 @@ class CooldownManagerApp extends Homey.App {
 
     const cards = [
       this.homey.flow.getConditionCard(FLOW_CARD_IDS.allowOnce),
+      this.homey.flow.getConditionCard(FLOW_CARD_IDS.allowUpTo),
       this.homey.flow.getActionCard(FLOW_CARD_IDS.resetCooldown),
       this.homey.flow.getActionCard(FLOW_CARD_IDS.suspendCooldown),
+      this.homey.flow.getActionCard(FLOW_CARD_IDS.resetTokenCount),
+      this.homey.flow.getActionCard(FLOW_CARD_IDS.grantToken),
+      this.homey.flow.getActionCard(FLOW_CARD_IDS.grantTokens),
       ...this.getBlockCountTriggerCards(),
     ];
 
@@ -243,6 +339,26 @@ class CooldownManagerApp extends Homey.App {
       throw new Error(this.homey.__('errors.key_required'));
     }
     return key;
+  }
+
+  private requireMaxCount(value: unknown): number {
+    const maxCount = parseMaxCount(value);
+
+    if (maxCount === null) {
+      throw new Error(this.homey.__('errors.max_count_invalid'));
+    }
+
+    return maxCount;
+  }
+
+  private requireTokenCount(value: unknown): number {
+    const tokenCount = parseMaxCount(value);
+
+    if (tokenCount === null) {
+      throw new Error(this.homey.__('errors.token_count_invalid'));
+    }
+
+    return tokenCount;
   }
 
   private normalizeBlockCountThreshold(value: unknown): number | null {
@@ -331,8 +447,12 @@ class CooldownManagerApp extends Homey.App {
     const keys = new Set<string>();
     const cards = [
       this.homey.flow.getConditionCard(FLOW_CARD_IDS.allowOnce),
+      this.homey.flow.getConditionCard(FLOW_CARD_IDS.allowUpTo),
       this.homey.flow.getActionCard(FLOW_CARD_IDS.resetCooldown),
       this.homey.flow.getActionCard(FLOW_CARD_IDS.suspendCooldown),
+      this.homey.flow.getActionCard(FLOW_CARD_IDS.resetTokenCount),
+      this.homey.flow.getActionCard(FLOW_CARD_IDS.grantToken),
+      this.homey.flow.getActionCard(FLOW_CARD_IDS.grantTokens),
       ...this.getBlockCountTriggerCards(),
     ];
 

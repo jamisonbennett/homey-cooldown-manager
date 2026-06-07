@@ -1,0 +1,24 @@
+{
+  "id": "reset_token_count",
+  "title": {
+    "en": "Reset times used for [[key]]"
+  },
+  "titleFormatted": {
+    "en": "Reset times used for [[key]]"
+  },
+  "hint": {
+    "en": "Clears how many times this key has been used, so the full max times is available again in the current interval."
+  },
+  "args": [
+    {
+      "type": "autocomplete",
+      "name": "key",
+      "title": {
+        "en": "Key"
+      },
+      "placeholder": {
+        "en": "Select or create key"
+      }
+    }
+  ]
+}

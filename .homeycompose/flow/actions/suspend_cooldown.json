@@ -7,7 +7,7 @@
     "en": "Suspend cooldown for [[key]]"
   },
   "hint": {
-    "en": "Registers the cooldown as if it just ran, blocking further triggers until the duration defined in the Allow condition has elapsed."
+    "en": "Registers the cooldown as if it just ran, blocking further triggers until the duration defined in the Allow condition has elapsed. Also blocks Allow up to keys until reset."
   },
   "args": [
     {

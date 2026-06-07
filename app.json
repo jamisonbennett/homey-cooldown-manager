@@ -215,9 +215,160 @@
             ]
           }
         ]
+      },
+      {
+        "id": "allow_up_to",
+        "highlight": true,
+        "title": {
+          "en": "Allow [[key]] up to [[max_count]] times every [[duration]] [[duration_unit]]"
+        },
+        "titleFormatted": {
+          "en": "Allow [[key]] up to [[max_count]] times every [[duration]] [[duration_unit]]"
+        },
+        "hint": {
+          "en": "Checks whether the key can still run in the current interval, counts as one time if allowed, and returns true to continue the Flow or false to stop it."
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "key",
+            "title": {
+              "en": "Key"
+            },
+            "placeholder": {
+              "en": "Select or create key"
+            }
+          },
+          {
+            "type": "number",
+            "name": "max_count",
+            "title": {
+              "en": "Max times"
+            },
+            "placeholder": {
+              "en": "3"
+            },
+            "hint": {
+              "en": "Whole number of 1 or greater"
+            },
+            "min": 1,
+            "max": 999999999,
+            "step": 1
+          },
+          {
+            "type": "number",
+            "name": "duration",
+            "title": {
+              "en": "Duration"
+            },
+            "placeholder": {
+              "en": "10"
+            },
+            "min": 1,
+            "max": 999999999,
+            "step": 1
+          },
+          {
+            "type": "dropdown",
+            "name": "duration_unit",
+            "title": {
+              "en": "Unit"
+            },
+            "values": [
+              {
+                "id": "seconds",
+                "label": {
+                  "en": "seconds"
+                }
+              },
+              {
+                "id": "minutes",
+                "label": {
+                  "en": "minutes"
+                }
+              },
+              {
+                "id": "hours",
+                "label": {
+                  "en": "hours"
+                }
+              },
+              {
+                "id": "days",
+                "label": {
+                  "en": "days"
+                }
+              }
+            ]
+          }
+        ]
       }
     ],
     "actions": [
+      {
+        "id": "grant_token",
+        "title": {
+          "en": "Restore one time for [[key]]"
+        },
+        "titleFormatted": {
+          "en": "Restore one time for [[key]]"
+        },
+        "hint": {
+          "en": "Makes one more run available for this key in the current interval."
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "key",
+            "title": {
+              "en": "Key"
+            },
+            "placeholder": {
+              "en": "Select or create key"
+            }
+          }
+        ]
+      },
+      {
+        "id": "grant_tokens",
+        "title": {
+          "en": "Restore [[token_count]] times for [[key]]"
+        },
+        "titleFormatted": {
+          "en": "Restore [[token_count]] times for [[key]]"
+        },
+        "hint": {
+          "en": "Makes that many more runs available for this key in the current interval."
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "key",
+            "title": {
+              "en": "Key"
+            },
+            "placeholder": {
+              "en": "Select or create key"
+            }
+          },
+          {
+            "type": "number",
+            "name": "token_count",
+            "title": {
+              "en": "Times"
+            },
+            "placeholder": {
+              "en": "1"
+            },
+            "hint": {
+              "en": "Whole number of 1 or greater"
+            },
+            "min": 1,
+            "max": 999999999,
+            "step": 1
+          }
+        ]
+      },
       {
         "id": "reset_cooldown",
         "title": {
@@ -243,6 +394,30 @@
         ]
       },
       {
+        "id": "reset_token_count",
+        "title": {
+          "en": "Reset times used for [[key]]"
+        },
+        "titleFormatted": {
+          "en": "Reset times used for [[key]]"
+        },
+        "hint": {
+          "en": "Clears how many times this key has been used, so the full max times is available again in the current interval."
+        },
+        "args": [
+          {
+            "type": "autocomplete",
+            "name": "key",
+            "title": {
+              "en": "Key"
+            },
+            "placeholder": {
+              "en": "Select or create key"
+            }
+          }
+        ]
+      },
+      {
         "id": "suspend_cooldown",
         "title": {
           "en": "Suspend cooldown for [[key]]"
@@ -251,7 +426,7 @@
           "en": "Suspend cooldown for [[key]]"
         },
         "hint": {
-          "en": "Registers the cooldown as if it just ran, blocking further triggers until the duration defined in the Allow condition has elapsed."
+          "en": "Registers the cooldown as if it just ran, blocking further triggers until the duration defined in the Allow condition has elapsed. Also blocks Allow up to keys until reset."
         },
         "args": [
           {

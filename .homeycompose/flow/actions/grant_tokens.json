@@ -1,0 +1,40 @@
+{
+  "id": "grant_tokens",
+  "title": {
+    "en": "Restore [[token_count]] times for [[key]]"
+  },
+  "titleFormatted": {
+    "en": "Restore [[token_count]] times for [[key]]"
+  },
+  "hint": {
+    "en": "Makes that many more runs available for this key in the current interval."
+  },
+  "args": [
+    {
+      "type": "autocomplete",
+      "name": "key",
+      "title": {
+        "en": "Key"
+      },
+      "placeholder": {
+        "en": "Select or create key"
+      }
+    },
+    {
+      "type": "number",
+      "name": "token_count",
+      "title": {
+        "en": "Times"
+      },
+      "placeholder": {
+        "en": "1"
+      },
+      "hint": {
+        "en": "Whole number of 1 or greater"
+      },
+      "min": 1,
+      "max": 999999999,
+      "step": 1
+    }
+  ]
+}

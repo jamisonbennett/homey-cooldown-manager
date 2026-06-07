@@ -4,6 +4,8 @@
 // eslint-disable-next-line import/extensions
 const normalizeLastRunAt = require('../lib/last-run-at');
 
+const SUSPENDED_USED_COUNT = -1;
+
 function canonicalKey(value) {
   return value.trim().toLowerCase();
 }
@@ -16,25 +18,42 @@ function normalizeBlockCount(value) {
   return value;
 }
 
+function normalizeUsedCount(value) {
+  if (value === SUSPENDED_USED_COUNT) {
+    return SUSPENDED_USED_COUNT;
+  }
+
+  if (typeof value !== 'number' || !Number.isInteger(value) || value < 0) {
+    return 0;
+  }
+
+  return value;
+}
+
 function mergeCooldownEntries(a, b) {
+  const merged = {
+    lastRunAt: null,
+    blockCount: Math.max(a.blockCount, b.blockCount),
+    usedCount: 0,
+  };
+
   if (a.lastRunAt === null) {
-    return {
-      lastRunAt: b.lastRunAt,
-      blockCount: Math.max(a.blockCount, b.blockCount),
-    };
-  }
-  if (b.lastRunAt === null) {
-    return {
-      lastRunAt: a.lastRunAt,
-      blockCount: Math.max(a.blockCount, b.blockCount),
-    };
+    merged.lastRunAt = b.lastRunAt;
+  } else if (b.lastRunAt === null) {
+    merged.lastRunAt = a.lastRunAt;
+  } else if (a.lastRunAt >= b.lastRunAt) {
+    merged.lastRunAt = a.lastRunAt;
+  } else {
+    merged.lastRunAt = b.lastRunAt;
   }
 
-  if (a.lastRunAt >= b.lastRunAt) {
-    return a;
+  if (a.usedCount === SUSPENDED_USED_COUNT || b.usedCount === SUSPENDED_USED_COUNT) {
+    merged.usedCount = SUSPENDED_USED_COUNT;
+  } else {
+    merged.usedCount = Math.max(a.usedCount, b.usedCount);
   }
 
-  return b;
+  return merged;
 }
 
 function loadCooldownState(raw) {
@@ -60,11 +79,16 @@ function loadCooldownState(raw) {
 
     const { lastRunAt } = value;
     const blockCount = normalizeBlockCount(value.blockCount);
+    const usedCount = normalizeUsedCount(value.usedCount);
 
     if (lastRunAt === null) {
-      entry = { lastRunAt: null, blockCount };
+      entry = { lastRunAt: null, blockCount, usedCount };
     } else if (typeof lastRunAt === 'number' && Number.isFinite(lastRunAt)) {
-      entry = { lastRunAt: normalizeLastRunAt(lastRunAt, now), blockCount };
+      entry = {
+        lastRunAt: normalizeLastRunAt(lastRunAt, now),
+        blockCount,
+        usedCount,
+      };
     }
 
     if (!entry) {
@@ -79,7 +103,7 @@ function loadCooldownState(raw) {
 }
 
 if (typeof module !== 'undefined' && module.exports) {
-  module.exports = { loadCooldownState };
+  module.exports = { loadCooldownState, SUSPENDED_USED_COUNT };
 } else if (typeof globalThis !== 'undefined') {
   globalThis.loadCooldownState = loadCooldownState;
 }

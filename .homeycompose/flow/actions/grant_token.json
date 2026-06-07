@@ -1,0 +1,24 @@
+{
+  "id": "grant_token",
+  "title": {
+    "en": "Restore one time for [[key]]"
+  },
+  "titleFormatted": {
+    "en": "Restore one time for [[key]]"
+  },
+  "hint": {
+    "en": "Makes one more run available for this key in the current interval."
+  },
+  "args": [
+    {
+      "type": "autocomplete",
+      "name": "key",
+      "title": {
+        "en": "Key"
+      },
+      "placeholder": {
+        "en": "Select or create key"
+      }
+    }
+  ]
+}

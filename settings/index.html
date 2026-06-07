@@ -116,12 +116,25 @@
           }
         }
 
+        var SUSPENDED_USED_COUNT = -1;
+
         function formatDurationSpec(spec) {
           if (spec.invalid) {
             return Homey.__('settings.duration_invalid');
           }
 
           return spec.duration + ' ' + Homey.__('settings.duration_unit.' + spec.unit);
+        }
+
+        function formatAllowUpToLimitSpec(spec) {
+          if (spec.invalid) {
+            return Homey.__('settings.limit_invalid');
+          }
+
+          return spec.maxCount + ' times in ' + formatDurationSpec({
+            duration: spec.duration,
+            unit: spec.unit,
+          });
         }
 
         function describeConfigError(error) {
@@ -134,6 +147,31 @@
 
           if (error.kind === 'allow_key_invalid_duration') {
             return Homey.__('settings.error_allow_key_invalid_duration', {
+              key: error.key,
+            });
+          }
+
+          if (error.kind === 'allow_up_to_key_conflicting_limits') {
+            return Homey.__('settings.error_allow_up_to_key_conflicting_limits', {
+              key: error.key,
+              limits: error.limits.map(formatAllowUpToLimitSpec).join(', '),
+            });
+          }
+
+          if (error.kind === 'allow_up_to_key_invalid_limit') {
+            return Homey.__('settings.error_allow_up_to_key_invalid_limit', {
+              key: error.key,
+            });
+          }
+
+          if (error.kind === 'grant_tokens_key_invalid_token_count') {
+            return Homey.__('settings.error_grant_tokens_key_invalid_token_count', {
+              key: error.key,
+            });
+          }
+
+          if (error.kind === 'allow_key_mixed_card_types') {
+            return Homey.__('settings.error_allow_key_mixed_card_types', {
               key: error.key,
             });
           }
@@ -200,12 +238,23 @@
           });
         }
 
+        function describeUsedCount(usedCount) {
+          if (usedCount === SUSPENDED_USED_COUNT) {
+            return Homey.__('settings.used_count_suspended');
+          }
+
+          return Homey.__('settings.used_count', {
+            count: usedCount || 0,
+          });
+        }
+
         function triggersFromResponse(triggers) {
           return triggers.map(function (trigger) {
             return {
               key: trigger.key,
               lastRunLabel: describeLastRun(trigger.lastRunAt),
               blockCountLabel: describeBlockCount(trigger.blockCount || 0),
+              usedCountLabel: describeUsedCount(trigger.usedCount),
             };
           });
         }
@@ -239,8 +288,12 @@
             var blocks = document.createElement('span');
             blocks.textContent = trigger.blockCountLabel;
 
+            var usedCount = document.createElement('span');
+            usedCount.textContent = trigger.usedCountLabel;
+
             meta.appendChild(time);
             meta.appendChild(blocks);
+            meta.appendChild(usedCount);
             item.appendChild(key);
             item.appendChild(meta);
             listElement.appendChild(item);
