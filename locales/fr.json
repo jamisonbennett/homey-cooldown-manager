@@ -1,0 +1,189 @@
+{
+  "flow": {
+    "conditions": {
+      "allow_once": {
+        "title": "Permettre [[key]] une fois tous les [[duration]] [[duration_unit]]",
+        "titleFormatted": "Permettre [[key]] une fois tous les [[duration]] [[duration_unit]]",
+        "hint": "Vérifie si le délai de refroidissement est actif, l'active atomiquement si autorisé, et retourne vrai pour continuer le Flow ou faux pour l'arrêter.",
+        "args": {
+          "key": {
+            "title": "Clé",
+            "placeholder": "Sélectionnez ou créez une clé"
+          },
+          "duration": {
+            "title": "Durée",
+            "placeholder": "10"
+          },
+          "duration_unit": {
+            "title": "Unité"
+          }
+        }
+      },
+      "allow_up_to": {
+        "title": "Permettre [[key]] jusqu'à [[max_count]] fois tous les [[duration]] [[duration_unit]]",
+        "titleFormatted": "Permettre [[key]] jusqu'à [[max_count]] fois tous les [[duration]] [[duration_unit]]",
+        "hint": "Vérifie si la clé peut encore fonctionner dans l'intervalle actuel, compte comme une fois si autorisé, et retourne vrai pour continuer le Flow ou faux pour l'arrêter.",
+        "args": {
+          "key": {
+            "title": "Clé",
+            "placeholder": "Sélectionnez ou créez une clé"
+          },
+          "max_count": {
+            "title": "Nombre max de fois",
+            "placeholder": "3",
+            "hint": "Nombre entier de 1 ou plus"
+          },
+          "duration": {
+            "title": "Durée",
+            "placeholder": "10"
+          },
+          "duration_unit": {
+            "title": "Unité"
+          }
+        }
+      }
+    },
+    "triggers": {
+      "blocked_count_reached": {
+        "title": "[[key]] bloqué [[count]] fois d'affilée",
+        "titleFormatted": "[[key]] bloqué [[count]] fois d'affilée",
+        "hint": "S'exécute lorsque la condition de permission bloque exactement le nombre choisi de fois d'affilée depuis la dernière exécution autorisée. Transmet le nombre de blocages actuel comme balise Flow.",
+        "tokens": {
+          "block_count": {
+            "title": "Nombre de blocages",
+            "example": "3"
+          }
+        },
+        "args": {
+          "key": {
+            "title": "Clé",
+            "placeholder": "Sélectionnez ou créez une clé"
+          },
+          "count": {
+            "title": "Fois bloqué",
+            "placeholder": "3"
+          }
+        }
+      },
+      "blocked_count_at_least": {
+        "title": "[[key]] bloqué [[count]] fois ou plus d'affilée",
+        "titleFormatted": "[[key]] bloqué [[count]] fois ou plus d'affilée",
+        "hint": "S'exécute lorsque la condition de permission a bloqué au moins le nombre choisi de fois d'affilée depuis la dernière exécution autorisée. Transmet le nombre de blocages actuel comme balise Flow.",
+        "tokens": {
+          "block_count": {
+            "title": "Nombre de blocages",
+            "example": "50"
+          }
+        },
+        "args": {
+          "key": {
+            "title": "Clé",
+            "placeholder": "Sélectionnez ou créez une clé"
+          },
+          "count": {
+            "title": "Au moins fois bloqué",
+            "placeholder": "50"
+          }
+        }
+      }
+    },
+    "actions": {
+      "reset_cooldown": {
+        "title": "Réinitialiser le délai de refroidissement pour [[key]]",
+        "titleFormatted": "Réinitialiser le délai de refroidissement pour [[key]]",
+        "hint": "Efface le délai de refroidissement pour la clé sélectionnée afin qu'elle puisse se déclencher à nouveau immédiatement.",
+        "args": {
+          "key": {
+            "title": "Clé",
+            "placeholder": "Sélectionnez ou créez une clé"
+          }
+        }
+      },
+      "suspend_cooldown": {
+        "title": "Suspendre le délai de refroidissement pour [[key]]",
+        "titleFormatted": "Suspendre le délai de refroidissement pour [[key]]",
+        "hint": "Enregistre le délai de refroidissement comme s'il venait de s'exécuter, bloquant les déclenchements ultérieurs jusqu'à ce que la durée définie dans la condition d'autorisation soit écoulée. Bloque également les clés Allow up to jusqu'à réinitialisation.",
+        "args": {
+          "key": {
+            "title": "Clé",
+            "placeholder": "Sélectionnez ou créez une clé"
+          }
+        }
+      },
+      "reset_token_count": {
+        "title": "Réinitialiser le nombre de fois utilisé pour [[key]]",
+        "titleFormatted": "Réinitialiser le nombre de fois utilisé pour [[key]]",
+        "hint": "Efface combien de fois cette clé a été utilisée, de sorte que le nombre maximum soit à nouveau disponible dans l'intervalle actuel.",
+        "args": {
+          "key": {
+            "title": "Clé",
+            "placeholder": "Sélectionnez ou créez une clé"
+          }
+        }
+      },
+      "grant_token": {
+        "title": "Restaurer une fois pour [[key]]",
+        "titleFormatted": "Restaurer une fois pour [[key]]",
+        "hint": "Rend une exécution supplémentaire disponible pour cette clé dans l'intervalle actuel.",
+        "args": {
+          "key": {
+            "title": "Clé",
+            "placeholder": "Sélectionnez ou créez une clé"
+          }
+        }
+      },
+      "grant_tokens": {
+        "title": "Restaurer [[token_count]] fois pour [[key]]",
+        "titleFormatted": "Restaurer [[token_count]] fois pour [[key]]",
+        "hint": "Rend autant d'exécutions supplémentaires disponibles pour cette clé dans l'intervalle actuel.",
+        "args": {
+          "key": {
+            "title": "Clé",
+            "placeholder": "Sélectionnez ou créez une clé"
+          },
+          "token_count": {
+            "title": "Fois",
+            "placeholder": "1",
+            "hint": "Nombre entier de 1 ou plus"
+          }
+        }
+      }
+    }
+  },
+  "errors": {
+    "key_required": "Une clé de délai de refroidissement est requise.",
+    "duration_required": "Une durée de délai de refroidissement est requise.",
+    "duration_invalid": "La durée du délai de refroidissement doit être supérieure à 0.",
+    "max_count_invalid": "Le nombre maximum de fois doit être un nombre entier de 1 ou plus.",
+    "token_count_invalid": "Le nombre de fois doit être un nombre entier de 1 ou plus."
+  },
+  "autocomplete": {
+    "create_key": "Créer une nouvelle clé",
+    "never_run": "Jamais exécuté",
+    "last_run": "Dernière exécution : __time__"
+  },
+  "settings": {
+    "empty": "Aucune clé de délai de refroidissement pour le moment. Ajoutez une clé dans une carte Flow pour la voir ici.",
+    "never_run": "Jamais déclenché",
+    "errors_heading": "Problèmes de configuration",
+    "error_allow_key_conflicting_durations": "La clé \"__key__\" est utilisée dans plusieurs cartes And avec des durées différentes (__durations__). Utilisez la même durée partout pour une clé.",
+    "error_allow_key_invalid_duration": "La clé \"__key__\" a une carte And avec une durée manquante ou invalide. La durée doit être un nombre entier d'au moins 1 avec une unité valide, ou une balise Flow.",
+    "error_action_key_without_allow": "La clé \"__key__\" est utilisée dans une carte Then mais n'a pas de carte And correspondante. Ces cartes n'ont aucun effet.",
+    "error_trigger_key_without_allow": "La clé \"__key__\" est utilisée dans une carte When mais n'a pas de carte And correspondante. Cette carte ne s'exécutera jamais.",
+    "error_allow_up_to_key_conflicting_limits": "La clé \"__key__\" est utilisée dans plusieurs cartes And avec des limites différentes (__limits__). Utilisez les mêmes maximums et durées partout pour une clé.",
+    "error_allow_up_to_key_invalid_limit": "La clé \"__key__\" a une carte And avec un nombre maximum de fois ou une durée manquants ou invalides. Le nombre maximum de fois doit être un nombre entier de 1 ou plus, ou une balise Flow. La durée doit être un nombre entier d'au moins 1 avec une unité valide, ou une balise Flow.",
+    "error_grant_tokens_key_invalid_token_count": "La clé \"__key__\" a une carte Then avec un nombre de fois manquant ou invalide. Le nombre de fois doit être un nombre entier de 1 ou plus, ou une balise Flow.",
+    "error_allow_key_mixed_card_types": "La clé \"__key__\" est utilisée dans les cartes Allow once et Allow up to And. Utilisez seulement un type de carte par clé, sauf si la carte Allow up to utilise un maximum de fois exactement égal à 1.",
+    "blocks_since_allow": "__count__ blocages depuis la dernière permission",
+    "used_count": "__count__ fois utilisées cet intervalle",
+    "used_count_suspended": "Suspendu",
+    "duration_invalid": "durée invalide",
+    "limit_invalid": "limite invalide",
+    "duration_unit": {
+      "seconds": "secondes",
+      "minutes": "minutes",
+      "hours": "heures",
+      "days": "jours"
+    }
+  }
+}

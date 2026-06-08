@@ -1,0 +1,189 @@
+{
+  "flow": {
+    "conditions": {
+      "allow_once": {
+        "title": "Tillat [[key]] en gang hver [[duration]] [[duration_unit]]",
+        "titleFormatted": "Tillat [[key]] en gang hver [[duration]] [[duration_unit]]",
+        "hint": "Sjekker om cooldown er aktiv, aktiverer den atomært hvis tillatt, og returnerer sant for å fortsette flyten eller usant for å stoppe den.",
+        "args": {
+          "key": {
+            "title": "Nøkkel",
+            "placeholder": "Velg eller opprett nøkkel"
+          },
+          "duration": {
+            "title": "Varighet",
+            "placeholder": "10"
+          },
+          "duration_unit": {
+            "title": "Enhet"
+          }
+        }
+      },
+      "allow_up_to": {
+        "title": "Tillat [[key]] opptil [[max_count]] ganger hver [[duration]] [[duration_unit]]",
+        "titleFormatted": "Tillat [[key]] opptil [[max_count]] ganger hver [[duration]] [[duration_unit]]",
+        "hint": "Sjekker om nøkkelen fortsatt kan kjøre i det nåværende intervallet, teller som en gang hvis tillatt, og returnerer sant for å fortsette flyten eller usant for å stoppe den.",
+        "args": {
+          "key": {
+            "title": "Nøkkel",
+            "placeholder": "Velg eller opprett nøkkel"
+          },
+          "max_count": {
+            "title": "Maks antall ganger",
+            "placeholder": "3",
+            "hint": "Hele tall større enn eller lik 1"
+          },
+          "duration": {
+            "title": "Varighet",
+            "placeholder": "10"
+          },
+          "duration_unit": {
+            "title": "Enhet"
+          }
+        }
+      }
+    },
+    "triggers": {
+      "blocked_count_reached": {
+        "title": "[[key]] blokkert [[count]] ganger på rad",
+        "titleFormatted": "[[key]] blokkert [[count]] ganger på rad",
+        "hint": "Kjører når Tillat betingelsen blokkerer nøyaktig det valgte antall ganger på rad siden sist lovlige kjøring. Passerer nåværende blokkering som en Flow tag.",
+        "tokens": {
+          "block_count": {
+            "title": "Blokkeringsantall",
+            "example": "3"
+          }
+        },
+        "args": {
+          "key": {
+            "title": "Nøkkel",
+            "placeholder": "Velg eller opprett nøkkel"
+          },
+          "count": {
+            "title": "Antall ganger blokkert",
+            "placeholder": "3"
+          }
+        }
+      },
+      "blocked_count_at_least": {
+        "title": "[[key]] blokkert [[count]] eller flere ganger på rad",
+        "titleFormatted": "[[key]] blokkert [[count]] eller flere ganger på rad",
+        "hint": "Kjører når Tillat betingelsen har blokkert minst det valgte antall ganger på rad siden sist lovlige kjøring. Passerer nåværende blokkering som en Flow tag.",
+        "tokens": {
+          "block_count": {
+            "title": "Blokkeringsantall",
+            "example": "50"
+          }
+        },
+        "args": {
+          "key": {
+            "title": "Nøkkel",
+            "placeholder": "Velg eller opprett nøkkel"
+          },
+          "count": {
+            "title": "Minst antall ganger blokkert",
+            "placeholder": "50"
+          }
+        }
+      }
+    },
+    "actions": {
+      "reset_cooldown": {
+        "title": "Nullstill cooldown for [[key]]",
+        "titleFormatted": "Nullstill cooldown for [[key]]",
+        "hint": "Sletter cooldown for den valgte nøkkelen slik at den kan utløses igjen umiddelbart.",
+        "args": {
+          "key": {
+            "title": "Nøkkel",
+            "placeholder": "Velg eller opprett nøkkel"
+          }
+        }
+      },
+      "suspend_cooldown": {
+        "title": "Pause cooldown for [[key]]",
+        "titleFormatted": "Pause cooldown for [[key]]",
+        "hint": "Registrerer cooldown som om den nettopp kjørte, blokkerer videre utløsing til varigheten definert i Tillat betingelsen har gått. Blokkerer også Tillat opptil nøkler til de er nullstilt.",
+        "args": {
+          "key": {
+            "title": "Nøkkel",
+            "placeholder": "Velg eller opprett nøkkel"
+          }
+        }
+      },
+      "reset_token_count": {
+        "title": "Nullstill antall brukt for [[key]]",
+        "titleFormatted": "Nullstill antall brukt for [[key]]",
+        "hint": "Sletter hvor mange ganger denne nøkkelen har blitt brukt, så hele maks antall ganger er tilgjengelig igjen i det nåværende intervallet.",
+        "args": {
+          "key": {
+            "title": "Nøkkel",
+            "placeholder": "Velg eller opprett nøkkel"
+          }
+        }
+      },
+      "grant_token": {
+        "title": "Gjenopprett en gang for [[key]]",
+        "titleFormatted": "Gjenopprett en gang for [[key]]",
+        "hint": "Gjør en kjøring til tilgjengelig for denne nøkkelen i det nåværende intervallet.",
+        "args": {
+          "key": {
+            "title": "Nøkkel",
+            "placeholder": "Velg eller opprett nøkkel"
+          }
+        }
+      },
+      "grant_tokens": {
+        "title": "Gjenopprett [[token_count]] ganger for [[key]]",
+        "titleFormatted": "Gjenopprett [[token_count]] ganger for [[key]]",
+        "hint": "Gjør så mange flere kjøringer tilgjengelig for denne nøkkelen i det nåværende intervallet.",
+        "args": {
+          "key": {
+            "title": "Nøkkel",
+            "placeholder": "Velg eller opprett nøkkel"
+          },
+          "token_count": {
+            "title": "Ganger",
+            "placeholder": "1",
+            "hint": "Hele tall større enn eller lik 1"
+          }
+        }
+      }
+    }
+  },
+  "errors": {
+    "key_required": "En cooldown nøkkel er nødvendig.",
+    "duration_required": "En cooldown varighet er nødvendig.",
+    "duration_invalid": "Cooldown varighet må være større enn 0.",
+    "max_count_invalid": "Maks antall ganger må være et helt tall større enn eller lik 1.",
+    "token_count_invalid": "Antall ganger må være et helt tall større enn eller lik 1."
+  },
+  "autocomplete": {
+    "create_key": "Opprett ny nøkkel",
+    "never_run": "Aldri kjørt",
+    "last_run": "Sist kjørt: __time__"
+  },
+  "settings": {
+    "empty": "Ingen cooldown nøkler ennå. Legg til en nøkkel i et Flow-kort for å se den her.",
+    "never_run": "Aldri utløst",
+    "errors_heading": "Konfigurasjonsproblemer",
+    "error_allow_key_conflicting_durations": "Nøkkel \"__key__\" brukes i flere And-kort med forskjellige varigheter (__durations__). Bruk samme varighet overalt for en nøkkel.",
+    "error_allow_key_invalid_duration": "Nøkkel \"__key__\" har et And-kort med en manglende eller ugyldig varighet. Varigheten må være et helt tall på minst 1 med en gyldig enhet, eller en Flow tag.",
+    "error_action_key_without_allow": "Nøkkel \"__key__\" brukes i et Then-kort, men har ingen tilsvarende And-kort. Disse kortene har ingen effekt.",
+    "error_trigger_key_without_allow": "Nøkkel \"__key__\" brukes i et When-kort, men har ingen tilsvarende And-kort. Dette kortet vil aldri kjøres.",
+    "error_allow_up_to_key_conflicting_limits": "Nøkkel \"__key__\" brukes i flere And-kort med forskjellige begrensninger (__limits__). Bruk samme maks antall ganger og varighet overalt for en nøkkel.",
+    "error_allow_up_to_key_invalid_limit": "Nøkkel \"__key__\" har et And-kort med manglende eller ugyldig maks antall ganger eller varighet. Maks antall ganger må være et heltall på 1 eller større, eller en Flow tag. Varigheten må være et heltall på minst 1 med en gyldig enhet, eller en Flow tag.",
+    "error_grant_tokens_key_invalid_token_count": "Nøkkel \"__key__\" har et Then-kort med manglende eller ugyldig antall ganger. Antall ganger må være et heltall på 1 eller større, eller en Flow tag.",
+    "error_allow_key_mixed_card_types": "Nøkkel \"__key__\" brukes i både Tillat en gang og Tillat opptil And-kort. Bruk kun en korttype per nøkkel, med mindre Tillat opptil-kortet bruker et maks antall ganger på nøyaktig 1.",
+    "blocks_since_allow": "__count__ blokkeringer siden sist tillatt",
+    "used_count": "__count__ ganger brukt dette intervallet",
+    "used_count_suspended": "Pauset",
+    "duration_invalid": "ugyldig varighet",
+    "limit_invalid": "ugyldig grense",
+    "duration_unit": {
+      "seconds": "sekunder",
+      "minutes": "minutter",
+      "hours": "timer",
+      "days": "dager"
+    }
+  }
+}

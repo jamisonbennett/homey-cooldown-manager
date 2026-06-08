@@ -1,0 +1,189 @@
+{
+  "flow": {
+    "conditions": {
+      "allow_once": {
+        "title": "[[key]]을(를) [[duration]] [[duration_unit]]마다 한 번 허용",
+        "titleFormatted": "[[key]]을(를) [[duration]] [[duration_unit]]마다 한 번 허용",
+        "hint": "쿨다운이 활성인지 확인하고, 가능하다면 원자적으로 활성화하여 Flow를 계속할 수 있도록 true를 반환하거나 중지할 수 있도록 false를 반환합니다.",
+        "args": {
+          "key": {
+            "title": "키",
+            "placeholder": "키 선택 또는 생성"
+          },
+          "duration": {
+            "title": "지속 시간",
+            "placeholder": "10"
+          },
+          "duration_unit": {
+            "title": "단위"
+          }
+        }
+      },
+      "allow_up_to": {
+        "title": "[[key]]을(를) [[duration]] [[duration_unit]]마다 최대 [[max_count]]번 허용",
+        "titleFormatted": "[[key]]을(를) [[duration]] [[duration_unit]]마다 최대 [[max_count]]번 허용",
+        "hint": "현재 간격 내에서 키가 계속 실행 가능한지 확인하고, 가능하다면 한 번으로 카운트하며 Flow를 계속할 수 있도록 true를 반환하거나 중지할 수 있도록 false를 반환합니다.",
+        "args": {
+          "key": {
+            "title": "키",
+            "placeholder": "키 선택 또는 생성"
+          },
+          "max_count": {
+            "title": "최대 횟수",
+            "placeholder": "3",
+            "hint": "1 이상의 정수"
+          },
+          "duration": {
+            "title": "지속 시간",
+            "placeholder": "10"
+          },
+          "duration_unit": {
+            "title": "단위"
+          }
+        }
+      }
+    },
+    "triggers": {
+      "blocked_count_reached": {
+        "title": "[[key]]이(가) 연속 [[count]]번 차단됨",
+        "titleFormatted": "[[key]]이(가) 연속 [[count]]번 차단됨",
+        "hint": "Allow 조건이 마지막으로 허용된 이후 정확히 연속하여 선택된 횟수만큼 차단되었을 때 실행됩니다. 현재 차단 횟수를 Flow 태그로 전달합니다.",
+        "tokens": {
+          "block_count": {
+            "title": "차단 횟수",
+            "example": "3"
+          }
+        },
+        "args": {
+          "key": {
+            "title": "키",
+            "placeholder": "키 선택 또는 생성"
+          },
+          "count": {
+            "title": "차단된 횟수",
+            "placeholder": "3"
+          }
+        }
+      },
+      "blocked_count_at_least": {
+        "title": "[[key]]이(가) 연속 [[count]]번 이상 차단됨",
+        "titleFormatted": "[[key]]이(가) 연속 [[count]]번 이상 차단됨",
+        "hint": "Allow 조건이 마지막으로 허용된 이후 적어도 연속하여 선택된 횟수만큼 차단되었을 때 실행됩니다. 현재 차단 횟수를 Flow 태그로 전달합니다.",
+        "tokens": {
+          "block_count": {
+            "title": "차단 횟수",
+            "example": "50"
+          }
+        },
+        "args": {
+          "key": {
+            "title": "키",
+            "placeholder": "키 선택 또는 생성"
+          },
+          "count": {
+            "title": "적어도 차단된 횟수",
+            "placeholder": "50"
+          }
+        }
+      }
+    },
+    "actions": {
+      "reset_cooldown": {
+        "title": "[[key]]의 쿨다운 초기화",
+        "titleFormatted": "[[key]]의 쿨다운 초기화",
+        "hint": "선택된 키의 쿨다운을 제거하여 즉시 다시 트리거할 수 있게 합니다.",
+        "args": {
+          "key": {
+            "title": "키",
+            "placeholder": "키 선택 또는 생성"
+          }
+        }
+      },
+      "suspend_cooldown": {
+        "title": "[[key]]의 쿨다운 일시 중단",
+        "titleFormatted": "[[key]]의 쿨다운 일시 중단",
+        "hint": "방금 실행된 것처럼 쿨다운을 등록하여 Allow 조건에서 정의한 기간이 경과할 때까지 추가 트리거를 차단합니다. Also blocks Allow up to keys until reset.",
+        "args": {
+          "key": {
+            "title": "키",
+            "placeholder": "키 선택 또는 생성"
+          }
+        }
+      },
+      "reset_token_count": {
+        "title": "[[key]]의 사용 횟수 초기화",
+        "titleFormatted": "[[key]]의 사용 횟수 초기화",
+        "hint": "이 키가 사용된 횟수를 초기화하여 현재 간격 내에서 최대 횟수를 다시 사용할 수 있게 합니다.",
+        "args": {
+          "key": {
+            "title": "키",
+            "placeholder": "키 선택 또는 생성"
+          }
+        }
+      },
+      "grant_token": {
+        "title": "[[key]]의 사용 횟수 1회 복원",
+        "titleFormatted": "[[key]]의 사용 횟수 1회 복원",
+        "hint": "현재 간격 내에서 이 키에 대해 추가로 한 번 더 실행할 수 있게 합니다.",
+        "args": {
+          "key": {
+            "title": "키",
+            "placeholder": "키 선택 또는 생성"
+          }
+        }
+      },
+      "grant_tokens": {
+        "title": "[[key]]의 사용 횟수 [[token_count]]회 복원",
+        "titleFormatted": "[[key]]의 사용 횟수 [[token_count]]회 복원",
+        "hint": "현재 간격 내에서 이 키에 대해 추가로 그 만큼의 실행을 할 수 있게 합니다.",
+        "args": {
+          "key": {
+            "title": "키",
+            "placeholder": "키 선택 또는 생성"
+          },
+          "token_count": {
+            "title": "횟수",
+            "placeholder": "1",
+            "hint": "1 이상의 정수"
+          }
+        }
+      }
+    }
+  },
+  "errors": {
+    "key_required": "쿨다운 키가 필요합니다.",
+    "duration_required": "쿨다운 지속 시간이 필요합니다.",
+    "duration_invalid": "쿨다운 지속 시간은 0보다 커야 합니다.",
+    "max_count_invalid": "최대 횟수는 1 이상의 정수여야 합니다.",
+    "token_count_invalid": "횟수는 1 이상의 정수여야 합니다."
+  },
+  "autocomplete": {
+    "create_key": "새로운 키 생성",
+    "never_run": "실행되지 않음",
+    "last_run": "마지막 실행: __time__"
+  },
+  "settings": {
+    "empty": "아직 쿨다운 키가 없습니다. 여기에서 보려면 Flow 카드에 키를 추가하세요.",
+    "never_run": "트리거되지 않음",
+    "errors_heading": "구성 문제",
+    "error_allow_key_conflicting_durations": "키 \"__key__\"가 여러 And 카드에서 서로 다른 지속 시간(__durations__)으로 사용됩니다. 키에 대해 모든 곳에서 동일한 지속 시간을 사용하세요.",
+    "error_allow_key_invalid_duration": "키 \"__key__\"가 지속 시간이 없거나 잘못된 And 카드를 가지고 있습니다. 지속 시간은 최소 1 이상의 정수여야 하고 유효한 단위 또는 Flow 태그가 있어야 합니다.",
+    "error_action_key_without_allow": "키 \"__key__\"가 Then 카드에서 사용되지만 일치하는 And 카드가 없습니다. 이러한 카드는 아무런 효과가 없습니다.",
+    "error_trigger_key_without_allow": "키 \"__key__\"가 When 카드에서 사용되지만 일치하는 And 카드가 없습니다. 이 카드는 절대로 실행되지 않습니다.",
+    "error_allow_up_to_key_conflicting_limits": "키 \"__key__\"가 여러 And 카드에서 서로 다른 제한(__limits__)으로 사용됩니다. 키에 대해 모든 곳에서 동일한 최대 횟수 및 지속 시간을 사용하세요.",
+    "error_allow_up_to_key_invalid_limit": "키 \"__key__\"가 최대 횟수나 지속 시간이 없거나 잘못된 And 카드를 가지고 있습니다. 최대 횟수는 1 이상의 정수 또는 Flow 태그여야 하며, 지속 시간은 최소 1 이상의 정수와 유효한 단위 또는 Flow 태그가 있어야 합니다.",
+    "error_grant_tokens_key_invalid_token_count": "키 \"__key__\"가 횟수가 없거나 잘못된 Then 카드를 가지고 있습니다. 횟수는 1 이상의 정수 또는 Flow 태그여야 합니다.",
+    "error_allow_key_mixed_card_types": "키 \"__key__\"가 Allow once와 Allow up to And 카드 모두에 사용됩니다. Allow up to 카드가 정확히 1의 최대 횟수를 사용하지 않는 한, 키당 한 가지 카드 유형만 사용하세요.",
+    "blocks_since_allow": "마지막 허용 이후 __count__번 차단됨",
+    "used_count": "이 간격에 __count__번 사용됨",
+    "used_count_suspended": "일시 중단됨",
+    "duration_invalid": "유효하지 않은 지속 시간",
+    "limit_invalid": "유효하지 않은 제한",
+    "duration_unit": {
+      "seconds": "초",
+      "minutes": "분",
+      "hours": "시간",
+      "days": "일"
+    }
+  }
+}

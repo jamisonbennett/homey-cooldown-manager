@@ -1,23 +1,83 @@
 {
   "id": "suspend_cooldown",
   "title": {
-    "en": "Suspend cooldown for [[key]]"
+    "en": "Suspend cooldown for [[key]]",
+    "nl": "Onderbreek cooldown voor [[key]]",
+    "da": "Suspender nedkøling for [[key]]",
+    "de": "Cooldown für [[key]] aussetzen",
+    "es": "Suspender el enfriamiento para [[key]]",
+    "fr": "Suspendre le cooldown pour [[key]]",
+    "it": "Sospendi il cooldown per [[key]]",
+    "no": "Suspendér nedkjøling for [[key]]",
+    "sv": "Pausa nedkylning för [[key]]",
+    "pl": "Zawieś cooldown dla [[key]]",
+    "ru": "Приостановить время восстановления для [[key]]",
+    "ko": "[[key]]의 쿨다운 일시 중지",
+    "ar": "إيقاف فترة التهدئة لـ [[key]]"
   },
   "titleFormatted": {
-    "en": "Suspend cooldown for [[key]]"
+    "en": "Suspend cooldown for [[key]]",
+    "nl": "Onderbreek cooldown voor [[key]]",
+    "da": "Suspender nedkøling for [[key]]",
+    "de": "Cooldown für [[key]] aussetzen",
+    "es": "Suspender el enfriamiento para [[key]]",
+    "fr": "Suspendre le cooldown pour [[key]]",
+    "it": "Sospendi il cooldown per [[key]]",
+    "no": "Suspendér nedkjøling for [[key]]",
+    "sv": "Pausa nedkylning för [[key]]",
+    "pl": "Zawieś okres schładzania dla [[key]]",
+    "ru": "Приостановить период ожидания для [[key]]",
+    "ko": "[[key]]의 쿨다운 일시 중지",
+    "ar": "إيقاف فترة التهدئة لـ [[key]]"
   },
   "hint": {
-    "en": "Registers the cooldown as if it just ran, blocking further triggers until the duration defined in the Allow condition has elapsed. Also blocks Allow up to keys until reset."
+    "en": "Registers the cooldown as if it just ran, blocking further triggers until the duration defined in the Allow condition has elapsed. Also blocks Allow up to keys until reset.",
+    "nl": "Registreert de cooldown alsof deze net is uitgevoerd, waardoor verdere triggers worden geblokkeerd totdat de duur die in de Toestaan-voorwaarde is gedefinieerd, is verstreken. Blokkeert ook Toestaan tot sleutels totdat deze opnieuw is ingesteld.",
+    "da": "Registrerer cooldownen, som om den lige er blevet kørt, og blokerer yderligere udløsninger, indtil den varighed, der er defineret i Tillad-betingelsen, er udløbet. Blokerer også Tillad op til nøgler, indtil der nulstilles.",
+    "de": "Registriert die Abkühlzeit, als ob sie gerade ausgeführt wurde, und blockiert weitere Auslöser, bis die in der Erlauben-Bedingung definierte Dauer abgelaufen ist. Blockiert auch Erlauben bis Schlüssel, bis zurückgesetzt wird.",
+    "es": "Registra el tiempo de espera como si acabara de ejecutarse, bloqueando más activaciones hasta que transcurra la duración definida en la condición de Permitir. También bloquea las claves de Permitir hasta que se restablezca.",
+    "fr": "Enregistre le temps de récupération comme s'il venait de s'exécuter, bloquant ainsi d'autres déclenchements jusqu'à ce que la durée définie dans la condition d'autorisation soit écoulée. Bloque également les clés d'autorisation jusqu'à réinitialisation.",
+    "it": "Registra il cooldown come se fosse appena stato eseguito, bloccando ulteriori attivazioni fino a quando non è trascorso il tempo definito nella condizione di Permesso. Blocca anche i tasti Permesso fino al reset.",
+    "no": "Registrerer nedkjølingen som om den nettopp ble kjørt, og blokkerer ytterligere utløsere til varigheten definert i Tillat-betingelsen har utløpt. Blokkerer også Tillat opptil-nøkler til tilbakestilling.",
+    "sv": "Registrerar nedkylningen som om den just kördes, vilket blockerar ytterligare utlösare tills den tid som definierats i Tillåt-villkoret har gått. Blockerar också Tillåt upp till nycklar tills återställning.",
+    "pl": "Rejestruje cooldown, jakby właśnie się uruchomił, blokując dalsze wyzwalacze do momentu, gdy upłynie czas określony w warunku Allow. Blokuje również klucze Allow up do momentu resetu.",
+    "ru": "Регистрирует период ожидания, как будто он только что начался, блокируя дальнейшие срабатывания до тех пор, пока не истечет время, определенное в условии Allow. Также блокирует ключи Allow до сброса.",
+    "ko": "쿨다운이 방금 실행된 것처럼 등록되어, 허용 조건에 정의된 기간이 경과할 때까지 추가 트리거를 차단합니다. 또한 초기화될 때까지 허용 키도 차단됩니다.",
+    "ar": "يسجل فترة التهدئة كما لو أنها بدأت للتو، مما يمنع أي تفعيل آخر حتى تنقضي المدة المحددة في شرط السماح. كما يمنع السماح حتى المفاتيح حتى يتم إعادة التعيين."
   },
   "args": [
     {
       "type": "autocomplete",
       "name": "key",
       "title": {
-        "en": "Key"
+        "en": "Key",
+        "nl": "Sleutel",
+        "da": "Nøgle",
+        "de": "Schlüssel",
+        "es": "Clave",
+        "fr": "Clé",
+        "it": "Chiave",
+        "no": "Nøkkel",
+        "sv": "Nyckel",
+        "pl": "Klucz",
+        "ru": "Ключ",
+        "ko": "키",
+        "ar": "مفتاح"
       },
       "placeholder": {
-        "en": "Select or create key"
+        "en": "Select or create key",
+        "nl": "Selecteer of maak een sleutel aan",
+        "da": "Vælg eller opret nøgle",
+        "de": "Schlüssel auswählen oder erstellen",
+        "es": "Selecciona o crea una clave",
+        "fr": "Sélectionner ou créer une clé",
+        "it": "Seleziona o crea chiave",
+        "no": "Velg eller opprett nøkkel",
+        "sv": "Välj eller skapa nyckel",
+        "pl": "Wybierz lub utwórz klucz",
+        "ru": "Выберите или создайте ключ",
+        "ko": "키 선택 또는 생성",
+        "ar": "اختر أو أنشئ مفتاحًا"
       }
     }
   ]

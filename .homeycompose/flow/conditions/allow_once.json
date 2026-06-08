@@ -2,33 +2,117 @@
   "id": "allow_once",
   "highlight": true,
   "title": {
-    "en": "Allow [[key]] once every [[duration]] [[duration_unit]]"
+    "en": "Allow [[key]] once every [[duration]] [[duration_unit]]",
+    "nl": "Sta [[key]] toe eens per [[duration]] [[duration_unit]]",
+    "da": "Tillad [[key]] én gang hver [[duration]] [[duration_unit]]",
+    "de": "Erlaube [[key]] einmal alle [[duration]] [[duration_unit]]",
+    "es": "Permitir [[key]] una vez cada [[duration]] [[duration_unit]]",
+    "fr": "Autoriser [[key]] une fois toutes les [[duration]] [[duration_unit]]",
+    "it": "Consenti [[key]] una volta ogni [[duration]] [[duration_unit]]",
+    "no": "Tillat [[key]] en gang hver [[duration]] [[duration_unit]]",
+    "sv": "Tillåt [[key]] en gång var [[duration]] [[duration_unit]]",
+    "pl": "Zezwól na [[key]] raz na [[duration]] [[duration_unit]]",
+    "ru": "Разрешить [[key]] один раз в [[duration]] [[duration_unit]]",
+    "ko": "[[duration]] [[duration_unit]]마다 [[key]]을(를) 한 번 허용하세요.",
+    "ar": "السماح لـ [[key]] مرة كل [[duration]] [[duration_unit]]"
   },
   "titleFormatted": {
-    "en": "Allow [[key]] once every [[duration]] [[duration_unit]]"
+    "en": "Allow [[key]] once every [[duration]] [[duration_unit]]",
+    "nl": "Sta [[key]] toe eens per [[duration]] [[duration_unit]]",
+    "da": "Tillad [[key]] én gang hver [[duration]] [[duration_unit]]",
+    "de": "Erlaube [[key]] einmal alle [[duration]] [[duration_unit]]",
+    "es": "Permitir [[key]] una vez cada [[duration]] [[duration_unit]]",
+    "fr": "Autoriser [[key]] une fois toutes les [[duration]] [[duration_unit]]",
+    "it": "Consenti [[key]] una volta ogni [[duration]] [[duration_unit]]",
+    "no": "Tillat [[key]] en gang hver [[duration]] [[duration_unit]]",
+    "sv": "Tillåt [[key]] en gång var [[duration]] [[duration_unit]]",
+    "pl": "Zezwól na [[key]] raz na [[duration]] [[duration_unit]]",
+    "ru": "Разрешить [[key]] один раз в [[duration]] [[duration_unit]]",
+    "ko": "[[duration]] [[duration_unit]]마다 [[key]]을(를) 한 번 허용하세요.",
+    "ar": "السماح لـ [[key]] مرة كل [[duration]] [[duration_unit]]"
   },
   "hint": {
-    "en": "Checks whether the cooldown is active, atomically activates it if allowed, and returns true to continue the Flow or false to stop it."
+    "en": "Checks whether the cooldown is active, atomically activates it if allowed, and returns true to continue the Flow or false to stop it.",
+    "nl": "Controleert of de cooldown actief is, activeert deze indien toegestaan en geeft true terug om de Flow voort te zetten of false om deze te stoppen.",
+    "da": "Kontrollerer, om cooldownen er aktiv, aktiverer den atomisk, hvis det er tilladt, og returnerer sand for at fortsætte Flowet eller falsk for at stoppe det.",
+    "de": "Prüft, ob die Abkühlzeit aktiv ist, aktiviert sie atomar, wenn erlaubt, und gibt true zurück, um den Flow fortzusetzen, oder false, um ihn zu stoppen.",
+    "es": "Verifica si el tiempo de espera está activo, lo activa de manera atómica si está permitido, y devuelve verdadero para continuar el Flow o falso para detenerlo.",
+    "fr": "Vérifie si le délai de récupération est actif, l'active de manière atomique si c'est autorisé, et renvoie vrai pour continuer le Flow ou faux pour l'arrêter.",
+    "it": "Verifica se il cooldown è attivo, lo attiva automaticamente se consentito e restituisce true per continuare il Flow o false per fermarlo.",
+    "no": "Sjekker om nedkjølingen er aktiv, aktiverer den atomisk hvis det er tillatt, og returnerer true for å fortsette flyten eller false for å stoppe den.",
+    "sv": "Kontrollerar om nedkylningen är aktiv, aktiverar den atomiskt om det är tillåtet, och returnerar sant för att fortsätta Flödet eller falskt för att stoppa det.",
+    "pl": "Sprawdza, czy cooldown jest aktywny, atomowo go aktywuje, jeśli jest to dozwolone, i zwraca wartość true, aby kontynuować Flow, lub false, aby go zatrzymać.",
+    "ru": "Проверяет, активен ли период охлаждения, атомарно активирует его, если это разрешено, и возвращает true для продолжения потока или false для его остановки.",
+    "ko": "쿨다운이 활성화되어 있는지 확인하고, 허용되면 원자적으로 활성화하며, 플로우를 계속하기 위해 true를 반환하거나 중지하기 위해 false를 반환합니다.",
+    "ar": "يتحقق مما إذا كانت فترة التهدئة نشطة، ويفعلها تلقائيًا إذا كان مسموحًا بذلك، ويعيد \"صحيح\" لمتابعة التدفق أو \"خطأ\" لإيقافه."
   },
   "args": [
     {
       "type": "autocomplete",
       "name": "key",
       "title": {
-        "en": "Key"
+        "en": "Key",
+        "nl": "Sleutel",
+        "da": "Nøgle",
+        "de": "Schlüssel",
+        "es": "Clave",
+        "fr": "Clé",
+        "it": "Chiave",
+        "no": "Nøkkel",
+        "sv": "Nyckel",
+        "pl": "Klucz",
+        "ru": "Ключ",
+        "ko": "키",
+        "ar": "مفتاح"
       },
       "placeholder": {
-        "en": "Select or create key"
+        "en": "Select or create key",
+        "nl": "Selecteer of maak een sleutel aan",
+        "da": "Vælg eller opret nøgle",
+        "de": "Schlüssel auswählen oder erstellen",
+        "es": "Seleccionar o crear clave",
+        "fr": "Sélectionner ou créer une clé",
+        "it": "Seleziona o crea chiave",
+        "no": "Velg eller opprett nøkkel",
+        "sv": "Välj eller skapa nyckel",
+        "pl": "Wybierz lub utwórz klucz",
+        "ru": "Выберите или создайте ключ",
+        "ko": "키 선택 또는 생성",
+        "ar": "اختر أو أنشئ مفتاحًا"
       }
     },
     {
       "type": "number",
       "name": "duration",
       "title": {
-        "en": "Duration"
+        "en": "Duration",
+        "nl": "Duur",
+        "da": "Varighed",
+        "de": "Dauer",
+        "es": "Duración",
+        "fr": "Durée",
+        "it": "Durata",
+        "no": "Varighet",
+        "sv": "Varaktighet",
+        "pl": "Czas trwania",
+        "ru": "Продолжительность",
+        "ko": "기간",
+        "ar": "المدة الزمنية"
       },
       "placeholder": {
-        "en": "10"
+        "en": "10",
+        "nl": "10",
+        "da": "10",
+        "de": "10",
+        "es": "10",
+        "fr": "10",
+        "it": "10",
+        "no": "10",
+        "sv": "10",
+        "pl": "10",
+        "ru": "10",
+        "ko": "10",
+        "ar": "١٠"
       },
       "min": 1,
       "max": 999999999,
@@ -38,31 +122,91 @@
       "type": "dropdown",
       "name": "duration_unit",
       "title": {
-        "en": "Unit"
+        "en": "Unit",
+        "nl": "Eenheid",
+        "da": "Enhed",
+        "de": "Einheit",
+        "es": "Unidad",
+        "fr": "Unité",
+        "it": "Unità",
+        "no": "Enhet",
+        "sv": "Enhet",
+        "pl": "Jednostka",
+        "ru": "Единица",
+        "ko": "단위",
+        "ar": "وحدة"
       },
       "values": [
         {
           "id": "seconds",
           "label": {
-            "en": "seconds"
+            "en": "seconds",
+            "nl": "seconden",
+            "da": "sekunder",
+            "de": "Sekunden",
+            "es": "segundos",
+            "fr": "secondes",
+            "it": "secondi",
+            "no": "sekunder",
+            "sv": "sekunder",
+            "pl": "sekundy",
+            "ru": "секунды",
+            "ko": "초",
+            "ar": "ثوانٍ"
           }
         },
         {
           "id": "minutes",
           "label": {
-            "en": "minutes"
+            "en": "minutes",
+            "nl": "minuten",
+            "da": "minutter",
+            "de": "Minuten",
+            "es": "minutos",
+            "fr": "minutes",
+            "it": "minuti",
+            "no": "minutter",
+            "sv": "minuter",
+            "pl": "minuty",
+            "ru": "минуты",
+            "ko": "분",
+            "ar": "دقائق"
           }
         },
         {
           "id": "hours",
           "label": {
-            "en": "hours"
+            "en": "hours",
+            "nl": "uren",
+            "da": "timer",
+            "de": "Stunden",
+            "es": "horas",
+            "fr": "heures",
+            "it": "ore",
+            "no": "timer",
+            "sv": "timmar",
+            "pl": "godziny",
+            "ru": "часы",
+            "ko": "시간",
+            "ar": "ساعات"
           }
         },
         {
           "id": "days",
           "label": {
-            "en": "days"
+            "en": "days",
+            "nl": "dagen",
+            "da": "dage",
+            "de": "Tage",
+            "es": "días",
+            "fr": "jours",
+            "it": "giorni",
+            "no": "dager",
+            "sv": "dagar",
+            "pl": "dni",
+            "ru": "дни",
+            "ko": "일",
+            "ar": "أيام"
           }
         }
       ]

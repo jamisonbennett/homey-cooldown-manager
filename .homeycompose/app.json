@@ -8,10 +8,34 @@
     "local"
   ],
   "name": {
-    "en": "Cooldown Manager"
+    "en": "Cooldown Manager",
+    "nl": "Cooldown Manager",
+    "da": "Cooldown Manager",
+    "de": "Cooldown-Manager",
+    "es": "Cooldown Manager",
+    "fr": "Gestionnaire de refroidissement",
+    "it": "Gestore di Raffreddamento",
+    "no": "Cooldown Manager",
+    "sv": "Cooldown Manager",
+    "pl": "Cooldown Manager",
+    "ru": "Менеджер перерывов",
+    "ko": "쿨다운 매니저",
+    "ar": "مدير فترة التهدئة"
   },
   "description": {
-    "en": "Keep Flows from triggering too often with reusable cooldowns, multi-run limits, block-count alerts, and manual override cards."
+    "en": "Keep Flows from triggering too often with reusable cooldowns, multi-run limits, block-count alerts, and manual override cards.",
+    "nl": "Voorkom dat Flows te vaak worden geactiveerd met herbruikbare cooldowns, multi-run limieten, blokkeer-tel waarschuwingen en handmatige override kaarten.",
+    "da": "Hold Flows fra at udløse for ofte med genanvendelige cooldowns, multi-run begrænsninger, blok-tællingsalarmer og manuelle tilsidesættelseskort.",
+    "de": "Verhindere, dass Flows zu oft ausgelöst werden, mit wiederverwendbaren Abkühlzeiten, Multi-Run-Limits, Blockzählungswarnungen und manuellen Überschreibungskarten.",
+    "es": "Evita que los Flows se activen con demasiada frecuencia utilizando cooldowns reutilizables, límites de ejecuciones múltiples, alertas de conteo de bloqueos y tarjetas de anulación manual.",
+    "fr": "Empêchez les Flows de se déclencher trop souvent grâce à des délais de réutilisation, des limites de multi-exécution, des alertes de comptage de blocage et des cartes de dérogation manuelle.",
+    "it": "Impedisci che i Flows si attivino troppo spesso con cooldown riutilizzabili, limiti di esecuzione multipla, avvisi di conteggio blocchi e carte di override manuale.",
+    "no": "Hold Flows fra å utløses for ofte med gjenbrukbare nedkjølingsperioder, begrensninger på flere kjøringer, varsler for blokkeringer, og manuelle overstyringskort.",
+    "sv": "Håll Flows från att triggas för ofta med återanvändbara cooldowns, multi-run begränsningar, block-räknarvarningar och manuella åsidosättningskort.",
+    "pl": "Zabezpiecz Flows przed zbyt częstym uruchamianiem dzięki wielokrotnie używanym cooldownom, limitom wielokrotnego uruchamiania, alertom liczby blokad i kartom ręcznego nadpisywania.",
+    "ru": "Предотвращайте слишком частые срабатывания Flows с помощью многоразовых периодов ожидания, ограничений на количество запусков, оповещений о количестве блокировок и карт ручного обхода.",
+    "ko": "재사용 가능한 쿨다운, 다중 실행 제한, 블록 수 알림, 수동 오버라이드 카드를 사용하여 플로우가 너무 자주 트리거되지 않도록 하세요.",
+    "ar": "احتفظ بتدفقاتك من التشغيل بشكل متكرر باستخدام فترات التهدئة القابلة لإعادة الاستخدام، وحدود التشغيل المتعددة، وتنبيهات عدد الحظر، وبطاقات التجاوز اليدوي."
   },
   "category": [
     "tools"

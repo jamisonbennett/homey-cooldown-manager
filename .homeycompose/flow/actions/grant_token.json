@@ -1,23 +1,83 @@
 {
   "id": "grant_token",
   "title": {
-    "en": "Restore one time for [[key]]"
+    "en": "Restore one time for [[key]]",
+    "nl": "Herstel één keer voor [[key]]",
+    "da": "Gendan én gang for [[key]]",
+    "de": "Einmalig wiederherstellen für [[key]]",
+    "es": "Restaurar una vez para [[key]]",
+    "fr": "Restaurer une fois pour [[key]]",
+    "it": "Ripristina una volta per [[key]]",
+    "no": "Gjenopprett én gang for [[key]]",
+    "sv": "Återställ en gång för [[key]]",
+    "pl": "Przywróć jednorazowo dla [[key]]",
+    "ru": "Восстановить один раз для [[key]]",
+    "ko": "[[key]]에 대해 한 번 복원하기",
+    "ar": "استعادة مرة واحدة لـ [[key]]"
   },
   "titleFormatted": {
-    "en": "Restore one time for [[key]]"
+    "en": "Restore one time for [[key]]",
+    "nl": "Herstel één keer voor [[key]]",
+    "da": "Gendan én gang for [[key]]",
+    "de": "Einmalig für [[key]] wiederherstellen",
+    "es": "Restaurar una vez para [[key]]",
+    "fr": "Restaurer une fois pour [[key]]",
+    "it": "Ripristina una volta per [[key]]",
+    "no": "Gjenopprett én gang for [[key]]",
+    "sv": "Återställ en gång för [[key]]",
+    "pl": "Przywróć jednorazowo dla [[key]]",
+    "ru": "Восстановить один раз для [[key]]",
+    "ko": "[[key]]에 대해 한 번 복원하기",
+    "ar": "استعادة مرة واحدة لـ [[key]]"
   },
   "hint": {
-    "en": "Makes one more run available for this key in the current interval."
+    "en": "Makes one more run available for this key in the current interval.",
+    "nl": "Maakt één extra run beschikbaar voor deze sleutel in het huidige interval.",
+    "da": "Gør én ekstra kørsel tilgængelig for denne nøgle i det nuværende interval.",
+    "de": "Macht einen weiteren Lauf für diesen Schlüssel im aktuellen Intervall verfügbar.",
+    "es": "Hace que una ejecución más esté disponible para esta clave en el intervalo actual.",
+    "fr": "Rend une exécution supplémentaire disponible pour cette clé dans l'intervalle actuel.",
+    "it": "Rende disponibile un'altra esecuzione per questa chiave nell'intervallo corrente.",
+    "no": "Gjør én ekstra kjøring tilgjengelig for denne nøkkelen i det nåværende intervallet.",
+    "sv": "Gör en extra körning tillgänglig för denna nyckel i det aktuella intervallet.",
+    "pl": "Umożliwia jeszcze jedno uruchomienie dla tego klucza w bieżącym przedziale czasowym.",
+    "ru": "Делает еще один запуск доступным для этого ключа в текущем интервале.",
+    "ko": "현재 간격에서 이 키에 대해 한 번 더 실행할 수 있습니다.",
+    "ar": "يجعل تشغيلًا إضافيًا متاحًا لهذه المفتاح في الفترة الحالية."
   },
   "args": [
     {
       "type": "autocomplete",
       "name": "key",
       "title": {
-        "en": "Key"
+        "en": "Key",
+        "nl": "Sleutel",
+        "da": "Nøgle",
+        "de": "Schlüssel",
+        "es": "Clave",
+        "fr": "Clé",
+        "it": "Chiave",
+        "no": "Nøkkel",
+        "sv": "Nyckel",
+        "pl": "Klucz",
+        "ru": "Ключ",
+        "ko": "키",
+        "ar": "مفتاح"
       },
       "placeholder": {
-        "en": "Select or create key"
+        "en": "Select or create key",
+        "nl": "Selecteer of maak een sleutel aan",
+        "da": "Vælg eller opret nøgle",
+        "de": "Schlüssel auswählen oder erstellen",
+        "es": "Seleccionar o crear clave",
+        "fr": "Sélectionner ou créer une clé",
+        "it": "Seleziona o crea chiave",
+        "no": "Velg eller opprett nøkkel",
+        "sv": "Välj eller skapa nyckel",
+        "pl": "Wybierz lub utwórz klucz",
+        "ru": "Выберите или создайте ключ",
+        "ko": "키 선택 또는 생성",
+        "ar": "اختر أو أنشئ مفتاحًا"
       }
     }
   ]

@@ -1,23 +1,83 @@
 {
   "id": "reset_token_count",
   "title": {
-    "en": "Reset times used for [[key]]"
+    "en": "Reset times used for [[key]]",
+    "nl": "Reset tijden gebruikt voor [[key]]",
+    "da": "Nulstil tider brugt til [[key]]",
+    "de": "Zurücksetzen der verwendeten Zeiten für [[key]]",
+    "es": "Restablecer los tiempos utilizados para [[key]]",
+    "fr": "Réinitialiser les temps utilisés pour [[key]]",
+    "it": "Reimposta i tempi utilizzati per [[key]]",
+    "no": "Nullstill tider brukt for [[key]]",
+    "sv": "Återställ tider som används för [[key]]",
+    "pl": "Zresetuj użyte czasy dla [[key]]",
+    "ru": "Сбросить использованные времена для [[key]]",
+    "ko": "[[key]]에 사용된 시간 재설정",
+    "ar": "إعادة تعيين الأوقات المستخدمة لـ [[key]]"
   },
   "titleFormatted": {
-    "en": "Reset times used for [[key]]"
+    "en": "Reset times used for [[key]]",
+    "nl": "Reset tijden gebruikt voor [[key]]",
+    "da": "Nulstil tider brugt til [[key]]",
+    "de": "Zurücksetzen der verwendeten Zeiten für [[key]]",
+    "es": "Restablecer los tiempos utilizados para [[key]]",
+    "fr": "Réinitialiser les temps utilisés pour [[key]]",
+    "it": "Reimposta i tempi utilizzati per [[key]]",
+    "no": "Nullstill tider brukt for [[key]]",
+    "sv": "Återställ tider som används för [[key]]",
+    "pl": "Zresetuj użyte czasy dla [[key]]",
+    "ru": "Сбросить использованные времена для [[key]]",
+    "ko": "[[key]]에 사용된 시간 재설정",
+    "ar": "إعادة تعيين الأوقات المستخدمة لـ [[key]]"
   },
   "hint": {
-    "en": "Clears how many times this key has been used, so the full max times is available again in the current interval."
+    "en": "Clears how many times this key has been used, so the full max times is available again in the current interval.",
+    "nl": "Maakt het aantal keren dat deze sleutel is gebruikt weer leeg, zodat het volledige maximale aantal keren opnieuw beschikbaar is in het huidige interval.",
+    "da": "Nulstiller, hvor mange gange denne nøgle er blevet brugt, så det fulde maksimale antal gange er tilgængeligt igen i den nuværende periode.",
+    "de": "Setzt die Anzahl der Verwendungen dieses Schlüssels zurück, sodass die maximale Anzahl an Verwendungen im aktuellen Intervall wieder verfügbar ist.",
+    "es": "Borra cuántas veces se ha usado esta clave, para que el número máximo de usos esté disponible nuevamente en el intervalo actual.",
+    "fr": "Réinitialise le nombre de fois où cette clé a été utilisée, afin que le nombre maximal complet soit à nouveau disponible dans l'intervalle actuel.",
+    "it": "Cancella quante volte è stata utilizzata questa chiave, in modo che il numero massimo di utilizzi sia nuovamente disponibile nell'intervallo corrente.",
+    "no": "Nullstiller hvor mange ganger denne nøkkelen har blitt brukt, slik at det maksimale antallet ganger er tilgjengelig igjen i den nåværende perioden.",
+    "sv": "Rensar hur många gånger den här nyckeln har använts, så att det fulla maxantalet är tillgängligt igen under den nuvarande perioden.",
+    "pl": "Czyści liczbę użyć tego klucza, dzięki czemu pełna maksymalna liczba użyć jest ponownie dostępna w bieżącym przedziale.",
+    "ru": "Очищает количество использований этого ключа, чтобы максимальное количество использований снова было доступно в текущем интервале.",
+    "ko": "이 키가 사용된 횟수를 초기화하여 현재 간격에서 최대 사용 횟수를 다시 사용할 수 있도록 합니다.",
+    "ar": "يمسح عدد المرات التي تم فيها استخدام هذا المفتاح، بحيث يكون الحد الأقصى الكامل متاحًا مرة أخرى في الفترة الحالية."
   },
   "args": [
     {
       "type": "autocomplete",
       "name": "key",
       "title": {
-        "en": "Key"
+        "en": "Key",
+        "nl": "Sleutel",
+        "da": "Nøgle",
+        "de": "Schlüssel",
+        "es": "Clave",
+        "fr": "Clé",
+        "it": "Chiave",
+        "no": "Nøkkel",
+        "sv": "Nyckel",
+        "pl": "Klucz",
+        "ru": "Ключ",
+        "ko": "키",
+        "ar": "مفتاح"
       },
       "placeholder": {
-        "en": "Select or create key"
+        "en": "Select or create key",
+        "nl": "Selecteer of maak een sleutel aan",
+        "da": "Vælg eller opret nøgle",
+        "de": "Schlüssel auswählen oder erstellen",
+        "es": "Seleccionar o crear clave",
+        "fr": "Sélectionner ou créer une clé",
+        "it": "Seleziona o crea chiave",
+        "no": "Velg eller opprett nøkkel",
+        "sv": "Välj eller skapa nyckel",
+        "pl": "Wybierz lub utwórz klucz",
+        "ru": "Выберите или создайте ключ",
+        "ko": "키 선택 또는 생성",
+        "ar": "اختر أو أنشئ مفتاحًا"
       }
     }
   ]

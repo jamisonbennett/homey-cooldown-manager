@@ -1,0 +1,189 @@
+{
+  "flow": {
+    "conditions": {
+      "allow_once": {
+        "title": "Erlaube [[key]] einmal alle [[duration]] [[duration_unit]]",
+        "titleFormatted": "Erlaube [[key]] einmal alle [[duration]] [[duration_unit]]",
+        "hint": "Prüft, ob der Cooldown aktiv ist, aktiviert ihn atomar, wenn erlaubt, und gibt true zurück, um den Flow fortzusetzen, oder false, um ihn zu stoppen.",
+        "args": {
+          "key": {
+            "title": "Schlüssel",
+            "placeholder": "Schlüssel auswählen oder erstellen"
+          },
+          "duration": {
+            "title": "Dauer",
+            "placeholder": "10"
+          },
+          "duration_unit": {
+            "title": "Einheit"
+          }
+        }
+      },
+      "allow_up_to": {
+        "title": "Erlaube [[key]] bis zu [[max_count]] mal alle [[duration]] [[duration_unit]]",
+        "titleFormatted": "Erlaube [[key]] bis zu [[max_count]] mal alle [[duration]] [[duration_unit]]",
+        "hint": "Prüft, ob der Schlüssel im aktuellen Intervall noch ausgeführt werden kann, zählt als einmal ausgeführt, wenn erlaubt, und gibt true zurück, um den Flow fortzusetzen, oder false, um ihn zu stoppen.",
+        "args": {
+          "key": {
+            "title": "Schlüssel",
+            "placeholder": "Schlüssel auswählen oder erstellen"
+          },
+          "max_count": {
+            "title": "Maximale Male",
+            "placeholder": "3",
+            "hint": "Ganze Zahl von 1 oder größer"
+          },
+          "duration": {
+            "title": "Dauer",
+            "placeholder": "10"
+          },
+          "duration_unit": {
+            "title": "Einheit"
+          }
+        }
+      }
+    },
+    "triggers": {
+      "blocked_count_reached": {
+        "title": "[[key]] blockiert [[count]] mal hintereinander",
+        "titleFormatted": "[[key]] blockiert [[count]] mal hintereinander",
+        "hint": "Wird ausgeführt, wenn die Erlauben-Bedingung genau die gewählte Anzahl Male hintereinander seit dem letzten erlaubten Durchlauf blockiert hat. Gibt die aktuelle Blockanzahl als Flow-Tag weiter.",
+        "tokens": {
+          "block_count": {
+            "title": "Blockanzahl",
+            "example": "3"
+          }
+        },
+        "args": {
+          "key": {
+            "title": "Schlüssel",
+            "placeholder": "Schlüssel auswählen oder erstellen"
+          },
+          "count": {
+            "title": "Mal blockiert",
+            "placeholder": "3"
+          }
+        }
+      },
+      "blocked_count_at_least": {
+        "title": "[[key]] blockiert [[count]] oder mehr Mal hintereinander",
+        "titleFormatted": "[[key]] blockiert [[count]] oder mehr Mal hintereinander",
+        "hint": "Wird ausgeführt, wenn die Erlauben-Bedingung mindestens die gewählte Anzahl Male hintereinander seit dem letzten erlaubten Durchlauf blockiert hat. Gibt die aktuelle Blockanzahl als Flow-Tag weiter.",
+        "tokens": {
+          "block_count": {
+            "title": "Blockanzahl",
+            "example": "50"
+          }
+        },
+        "args": {
+          "key": {
+            "title": "Schlüssel",
+            "placeholder": "Schlüssel auswählen oder erstellen"
+          },
+          "count": {
+            "title": "Mindestens Mal blockiert",
+            "placeholder": "50"
+          }
+        }
+      }
+    },
+    "actions": {
+      "reset_cooldown": {
+        "title": "Cooldown für [[key]] zurücksetzen",
+        "titleFormatted": "Cooldown für [[key]] zurücksetzen",
+        "hint": "Löscht den Cooldown für den ausgewählten Schlüssel, damit er sofort wieder ausgelöst werden kann.",
+        "args": {
+          "key": {
+            "title": "Schlüssel",
+            "placeholder": "Schlüssel auswählen oder erstellen"
+          }
+        }
+      },
+      "suspend_cooldown": {
+        "title": "Cooldown für [[key]] aussetzen",
+        "titleFormatted": "Cooldown für [[key]] aussetzen",
+        "hint": "Registriert den Cooldown, als ob er gerade gelaufen wäre und blockt weitere Auslösungen, bis die in der Erlauben-Bedingung definierte Dauer abgelaufen ist. Blockiert zudem Erlauben bis zu Schlüssel bis zum Zurücksetzen.",
+        "args": {
+          "key": {
+            "title": "Schlüssel",
+            "placeholder": "Schlüssel auswählen oder erstellen"
+          }
+        }
+      },
+      "reset_token_count": {
+        "title": "Verwendungen für [[key]] zurücksetzen",
+        "titleFormatted": "Verwendungen für [[key]] zurücksetzen",
+        "hint": "Setzt zurück, wie oft dieser Schlüssel verwendet wurde, sodass die volle Maximalzahl an Verwendungen im aktuellen Intervall wieder verfügbar ist.",
+        "args": {
+          "key": {
+            "title": "Schlüssel",
+            "placeholder": "Schlüssel auswählen oder erstellen"
+          }
+        }
+      },
+      "grant_token": {
+        "title": "Eine Verwendung für [[key]] wiederherstellen",
+        "titleFormatted": "Eine Verwendung für [[key]] wiederherstellen",
+        "hint": "Ermöglicht eine weitere Ausführung für diesen Schlüssel im aktuellen Intervall.",
+        "args": {
+          "key": {
+            "title": "Schlüssel",
+            "placeholder": "Schlüssel auswählen oder erstellen"
+          }
+        }
+      },
+      "grant_tokens": {
+        "title": "[[token_count]] Verwendungen für [[key]] wiederherstellen",
+        "titleFormatted": "[[token_count]] Verwendungen für [[key]] wiederherstellen",
+        "hint": "Ermöglicht so viele weitere Ausführungen für diesen Schlüssel im aktuellen Intervall.",
+        "args": {
+          "key": {
+            "title": "Schlüssel",
+            "placeholder": "Schlüssel auswählen oder erstellen"
+          },
+          "token_count": {
+            "title": "Verwendungen",
+            "placeholder": "1",
+            "hint": "Ganze Zahl von 1 oder größer"
+          }
+        }
+      }
+    }
+  },
+  "errors": {
+    "key_required": "Ein Cooldown-Schlüssel ist erforderlich.",
+    "duration_required": "Eine Cooldown-Dauer ist erforderlich.",
+    "duration_invalid": "Die Cooldown-Dauer muss größer als 0 sein.",
+    "max_count_invalid": "Die maximale Anzahl muss eine ganze Zahl von 1 oder größer sein.",
+    "token_count_invalid": "Die Anzahl der Verwendungen muss eine ganze Zahl von 1 oder größer sein."
+  },
+  "autocomplete": {
+    "create_key": "Neuen Schlüssel erstellen",
+    "never_run": "Nie ausgeführt",
+    "last_run": "Letzte Ausführung: __time__"
+  },
+  "settings": {
+    "empty": "Noch keine Cooldown-Schlüssel. Fügen Sie einen Schlüssel in einer Flow-Karte hinzu, um ihn hier zu sehen.",
+    "never_run": "Nie ausgelöst",
+    "errors_heading": "Konfigurationsprobleme",
+    "error_allow_key_conflicting_durations": "Schlüssel \"__key__\" wird in mehreren Und-Karten mit unterschiedlichen Dauern verwendet (__durations__). Verwenden Sie für einen Schlüssel überall die gleiche Dauer.",
+    "error_allow_key_invalid_duration": "Schlüssel \"__key__\" hat eine Und-Karte mit einer fehlenden oder ungültigen Dauer. Die Dauer muss eine ganze Zahl von mindestens 1 mit einer gültigen Einheit oder ein Flow-Tag sein.",
+    "error_action_key_without_allow": "Schlüssel \"__key__\" wird in einer Dann-Karte verwendet, hat aber keine passende Und-Karte. Diese Karten haben keine Wirkung.",
+    "error_trigger_key_without_allow": "Schlüssel \"__key__\" wird in einer Wenn-Karte verwendet, hat aber keine passende Und-Karte. Diese Karte wird nie ausgeführt.",
+    "error_allow_up_to_key_conflicting_limits": "Schlüssel \"__key__\" wird in mehreren Und-Karten mit unterschiedlichen Limits verwendet (__limits__). Verwenden Sie überall dieselbe Maximalanzahl und Dauer für einen Schlüssel.",
+    "error_allow_up_to_key_invalid_limit": "Schlüssel \"__key__\" hat eine Und-Karte mit einer fehlenden oder ungültigen maximalen Anzahl oder Dauer. Die maximale Anzahl muss eine ganze Zahl von 1 oder größer oder ein Flow-Tag sein. Die Dauer muss eine ganze Zahl von mindestens 1 mit einer gültigen Einheit oder ein Flow-Tag sein.",
+    "error_grant_tokens_key_invalid_token_count": "Schlüssel \"__key__\" hat eine Dann-Karte mit einer fehlenden oder ungültigen Anzahl von Verwendungen. Die Anzahl muss eine ganze Zahl von 1 oder größer oder ein Flow-Tag sein.",
+    "error_allow_key_mixed_card_types": "Schlüssel \"__key__\" wird sowohl in Erlaube einmal- als auch in Erlaube bis zu-Und-Karten verwendet. Verwenden Sie pro Schlüssel nur einen Kartentyp, es sei denn, die Erlaube bis zu-Karte verwendet eine maximale Anzahl von genau 1.",
+    "blocks_since_allow": "__count__ Blöcke seit dem letzten Erlauben",
+    "used_count": "__count__ Mal in diesem Intervall verwendet",
+    "used_count_suspended": "Ausgesetzt",
+    "duration_invalid": "ungültige Dauer",
+    "limit_invalid": "ungültiges Limit",
+    "duration_unit": {
+      "seconds": "Sekunden",
+      "minutes": "Minuten",
+      "hours": "Stunden",
+      "days": "Tage"
+    }
+  }
+}

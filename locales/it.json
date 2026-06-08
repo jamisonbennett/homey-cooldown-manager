@@ -1,0 +1,189 @@
+{
+  "flow": {
+    "conditions": {
+      "allow_once": {
+        "title": "Permetti [[key]] una volta ogni [[duration]] [[duration_unit]]",
+        "titleFormatted": "Permetti [[key]] una volta ogni [[duration]] [[duration_unit]]",
+        "hint": "Controlla se il tempo di attesa è attivo, lo attiva atomicamente se permesso e restituisce true per continuare il Flow o false per fermarlo.",
+        "args": {
+          "key": {
+            "title": "Chiave",
+            "placeholder": "Seleziona o crea chiave"
+          },
+          "duration": {
+            "title": "Durata",
+            "placeholder": "10"
+          },
+          "duration_unit": {
+            "title": "Unità"
+          }
+        }
+      },
+      "allow_up_to": {
+        "title": "Permetti [[key]] fino a [[max_count]] volte ogni [[duration]] [[duration_unit]]",
+        "titleFormatted": "Permetti [[key]] fino a [[max_count]] volte ogni [[duration]] [[duration_unit]]",
+        "hint": "Controlla se la chiave può ancora essere eseguita nell'intervallo corrente, conta come una volta se permesso e restituisce true per continuare il Flow o false per fermarlo.",
+        "args": {
+          "key": {
+            "title": "Chiave",
+            "placeholder": "Seleziona o crea chiave"
+          },
+          "max_count": {
+            "title": "Max volte",
+            "placeholder": "3",
+            "hint": "Numero intero 1 o maggiore"
+          },
+          "duration": {
+            "title": "Durata",
+            "placeholder": "10"
+          },
+          "duration_unit": {
+            "title": "Unità"
+          }
+        }
+      }
+    },
+    "triggers": {
+      "blocked_count_reached": {
+        "title": "[[key]] bloccato [[count]] volte di fila",
+        "titleFormatted": "[[key]] bloccato [[count]] volte di fila",
+        "hint": "Si attiva quando la condizione Permetti blocca esattamente il numero scelto di volte di fila dall'ultima esecuzione permessa. Passa il conteggio corrente dei blocchi come tag Flow.",
+        "tokens": {
+          "block_count": {
+            "title": "Conteggio blocchi",
+            "example": "3"
+          }
+        },
+        "args": {
+          "key": {
+            "title": "Chiave",
+            "placeholder": "Seleziona o crea chiave"
+          },
+          "count": {
+            "title": "Volte bloccato",
+            "placeholder": "3"
+          }
+        }
+      },
+      "blocked_count_at_least": {
+        "title": "[[key]] bloccato [[count]] o più volte di fila",
+        "titleFormatted": "[[key]] bloccato [[count]] o più volte di fila",
+        "hint": "Si attiva quando la condizione Permetti ha bloccato almeno il numero scelto di volte di fila dall'ultima esecuzione permessa. Passa il conteggio corrente dei blocchi come tag Flow.",
+        "tokens": {
+          "block_count": {
+            "title": "Conteggio blocchi",
+            "example": "50"
+          }
+        },
+        "args": {
+          "key": {
+            "title": "Chiave",
+            "placeholder": "Seleziona o crea chiave"
+          },
+          "count": {
+            "title": "Almeno volte bloccato",
+            "placeholder": "50"
+          }
+        }
+      }
+    },
+    "actions": {
+      "reset_cooldown": {
+        "title": "Resetta il tempo di attesa per [[key]]",
+        "titleFormatted": "Resetta il tempo di attesa per [[key]]",
+        "hint": "Azzera il tempo di attesa per la chiave selezionata in modo che possa essere attivata di nuovo immediatamente.",
+        "args": {
+          "key": {
+            "title": "Chiave",
+            "placeholder": "Seleziona o crea chiave"
+          }
+        }
+      },
+      "suspend_cooldown": {
+        "title": "Sospendi il tempo di attesa per [[key]]",
+        "titleFormatted": "Sospendi il tempo di attesa per [[key]]",
+        "hint": "Registra il tempo di attesa come se fosse appena eseguito, bloccando ulteriori attivazioni fino al termine della durata definita nella condizione Permetti. Blocca anche le chiavi Permetti fino a quando non vengono reimpostate.",
+        "args": {
+          "key": {
+            "title": "Chiave",
+            "placeholder": "Seleziona o crea chiave"
+          }
+        }
+      },
+      "reset_token_count": {
+        "title": "Resetta il numero di utilizzi per [[key]]",
+        "titleFormatted": "Resetta il numero di utilizzi per [[key]]",
+        "hint": "Azzera quante volte è stata utilizzata questa chiave, quindi il numero massimo completo è di nuovo disponibile nell'intervallo corrente.",
+        "args": {
+          "key": {
+            "title": "Chiave",
+            "placeholder": "Seleziona o crea chiave"
+          }
+        }
+      },
+      "grant_token": {
+        "title": "Ripristina un uso per [[key]]",
+        "titleFormatted": "Ripristina un uso per [[key]]",
+        "hint": "Rende disponibile un'altra esecuzione per questa chiave nell'intervallo corrente.",
+        "args": {
+          "key": {
+            "title": "Chiave",
+            "placeholder": "Seleziona o crea chiave"
+          }
+        }
+      },
+      "grant_tokens": {
+        "title": "Ripristina [[token_count]] usi per [[key]]",
+        "titleFormatted": "Ripristina [[token_count]] usi per [[key]]",
+        "hint": "Rende disponibili un numero maggiore di esecuzioni per questa chiave nell'intervallo corrente.",
+        "args": {
+          "key": {
+            "title": "Chiave",
+            "placeholder": "Seleziona o crea chiave"
+          },
+          "token_count": {
+            "title": "Volte",
+            "placeholder": "1",
+            "hint": "Numero intero 1 o maggiore"
+          }
+        }
+      }
+    }
+  },
+  "errors": {
+    "key_required": "È richiesta una chiave di attesa.",
+    "duration_required": "È richiesta una durata di attesa.",
+    "duration_invalid": "La durata del tempo di attesa deve essere maggiore di 0.",
+    "max_count_invalid": "Le volte massime devono essere un numero intero di 1 o maggiore.",
+    "token_count_invalid": "I tempi devono essere un numero intero di 1 o maggiore."
+  },
+  "autocomplete": {
+    "create_key": "Crea nuova chiave",
+    "never_run": "Mai eseguito",
+    "last_run": "Ultima esecuzione: __time__"
+  },
+  "settings": {
+    "empty": "Ancora nessuna chiave di attesa. Aggiungi una chiave in una carta Flow per vederla qui.",
+    "never_run": "Mai attivato",
+    "errors_heading": "Problemi di configurazione",
+    "error_allow_key_conflicting_durations": "La chiave \"__key__\" è utilizzata in più carte And con durate diverse (__durations__). Usa la stessa durata ovunque per una chiave.",
+    "error_allow_key_invalid_duration": "La chiave \"__key__\" ha una carta And con una durata mancante o non valida. La durata deve essere un numero intero di almeno 1 con un'unità valida, o un tag Flow.",
+    "error_action_key_without_allow": "La chiave \"__key__\" è utilizzata in una carta Then ma non ha una carta And corrispondente. Queste carte non hanno effetto.",
+    "error_trigger_key_without_allow": "La chiave \"__key__\" è utilizzata in una carta When ma non ha una carta And corrispondente. Questa carta non verrà mai eseguita.",
+    "error_allow_up_to_key_conflicting_limits": "La chiave \"__key__\" è utilizzata in più carte And con limiti diversi (__limits__). Usa lo stesso numero massimo di volte e la stessa durata ovunque per una chiave.",
+    "error_allow_up_to_key_invalid_limit": "La chiave \"__key__\" ha una carta And con un numero massimo di volte o durata mancante o non valido. Max volte deve essere un numero intero di 1 o maggiore o un tag Flow. La durata deve essere un numero intero di almeno 1 con un'unità valida o un tag Flow.",
+    "error_grant_tokens_key_invalid_token_count": "La chiave \"__key__\" ha una carta Then con un numero mancante o non valido di volte. I tempi devono essere un numero intero di 1 o maggiore o un tag Flow.",
+    "error_allow_key_mixed_card_types": "La chiave \"__key__\" è utilizzata sia in Allow once che in Allow up to carte And. Usa solo un tipo di carta per chiave, a meno che la carta Allow up to utilizzi un max times pari a 1.",
+    "blocks_since_allow": "__count__ blocchi dall'ultimo permesso",
+    "used_count": "__count__ volte utilizzate in questo intervallo",
+    "used_count_suspended": "Sospeso",
+    "duration_invalid": "durata non valida",
+    "limit_invalid": "limite non valido",
+    "duration_unit": {
+      "seconds": "secondi",
+      "minutes": "minuti",
+      "hours": "ore",
+      "days": "giorni"
+    }
+  }
+}

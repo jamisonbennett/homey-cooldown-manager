@@ -1,23 +1,83 @@
 {
   "id": "reset_cooldown",
   "title": {
-    "en": "Reset cooldown for [[key]]"
+    "en": "Reset cooldown for [[key]]",
+    "nl": "Cooldown resetten voor [[key]]",
+    "da": "Nulstil cooldown for [[key]]",
+    "de": "Cooldown für [[key]] zurücksetzen",
+    "es": "Restablecer el tiempo de espera para [[key]]",
+    "fr": "Réinitialiser le délai de récupération pour [[key]]",
+    "it": "Reimposta il cooldown per [[key]]",
+    "no": "Tilbakestill nedkjøling for [[key]]",
+    "sv": "Återställ nedkylning för [[key]]",
+    "pl": "Zresetuj czas odnowienia dla [[key]]",
+    "ru": "Сбросить время восстановления для [[key]]",
+    "ko": "[[key]]의 쿨다운 초기화",
+    "ar": "إعادة تعيين فترة التهدئة لـ [[key]]"
   },
   "titleFormatted": {
-    "en": "Reset cooldown for [[key]]"
+    "en": "Reset cooldown for [[key]]",
+    "nl": "Cooldown voor [[key]] opnieuw instellen",
+    "da": "Nulstil cooldown for [[key]]",
+    "de": "Cooldown für [[key]] zurücksetzen",
+    "es": "Restablecer el tiempo de espera para [[key]]",
+    "fr": "Réinitialiser le délai d'attente pour [[key]]",
+    "it": "Reimposta il cooldown per [[key]]",
+    "no": "Tilbakestill nedkjøling for [[key]]",
+    "sv": "Återställ nedkylning för [[key]]",
+    "pl": "Zresetuj czas odnowienia dla [[key]]",
+    "ru": "Сбросить время восстановления для [[key]]",
+    "ko": "[[key]]의 쿨다운 초기화",
+    "ar": "إعادة تعيين فترة التهدئة لـ [[key]]"
   },
   "hint": {
-    "en": "Clears the cooldown for the selected key so it can trigger again immediately."
+    "en": "Clears the cooldown for the selected key so it can trigger again immediately.",
+    "nl": "Verwijdert de cooldown voor de geselecteerde sleutel, zodat deze direct opnieuw kan worden geactiveerd.",
+    "da": "Nulstiller cooldown for den valgte nøgle, så den kan udløse igen med det samme.",
+    "de": "Hebt die Abklingzeit für den ausgewählten Schlüssel auf, damit er sofort wieder ausgelöst werden kann.",
+    "es": "Borra el tiempo de espera para la clave seleccionada, de modo que pueda activarse de nuevo de inmediato.",
+    "fr": "Réinitialise le délai d'attente pour la clé sélectionnée afin qu'elle puisse se déclencher à nouveau immédiatement.",
+    "it": "Cancella il cooldown per la chiave selezionata in modo che possa attivarsi di nuovo immediatamente.",
+    "no": "Fjerner nedkjøling for den valgte nøkkelen slik at den kan utløses igjen umiddelbart.",
+    "sv": "Rensar nedkylningen för den valda nyckeln så att den kan utlösas igen omedelbart.",
+    "pl": "Usuwa czas odnowienia dla wybranego klucza, dzięki czemu może zostać ponownie uruchomiony natychmiast.",
+    "ru": "Сбрасывает время ожидания для выбранного ключа, чтобы он мог сработать снова немедленно.",
+    "ko": "선택한 키의 쿨다운을 해제하여 즉시 다시 트리거할 수 있습니다.",
+    "ar": "يقوم بإزالة فترة التهدئة للمفتاح المحدد حتى يمكن تشغيله مرة أخرى فورًا."
   },
   "args": [
     {
       "type": "autocomplete",
       "name": "key",
       "title": {
-        "en": "Key"
+        "en": "Key",
+        "nl": "Sleutel",
+        "da": "Nøgle",
+        "de": "Schlüssel",
+        "es": "Clave",
+        "fr": "Clé",
+        "it": "Chiave",
+        "no": "Nøkkel",
+        "sv": "Nyckel",
+        "pl": "Klucz",
+        "ru": "Ключ",
+        "ko": "키",
+        "ar": "مفتاح"
       },
       "placeholder": {
-        "en": "Select or create key"
+        "en": "Select or create key",
+        "nl": "Selecteer of maak een sleutel aan",
+        "da": "Vælg eller opret nøgle",
+        "de": "Schlüssel auswählen oder erstellen",
+        "es": "Seleccionar o crear clave",
+        "fr": "Sélectionner ou créer une clé",
+        "it": "Seleziona o crea chiave",
+        "no": "Velg eller opprett nøkkel",
+        "sv": "Välj eller skapa nyckel",
+        "pl": "Wybierz lub utwórz klucz",
+        "ru": "Выберите или создайте ключ",
+        "ko": "키 선택 또는 생성",
+        "ar": "اختر أو أنشئ مفتاحًا"
       }
     }
   ]

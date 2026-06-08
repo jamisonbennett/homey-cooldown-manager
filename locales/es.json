@@ -1,0 +1,189 @@
+{
+  "flow": {
+    "conditions": {
+      "allow_once": {
+        "title": "Permitir [[key]] una vez cada [[duration]] [[duration_unit]]",
+        "titleFormatted": "Permitir [[key]] una vez cada [[duration]] [[duration_unit]]",
+        "hint": "Verifica si el enfriamiento está activo, lo activa atómicamente si está permitido, y devuelve verdadero para continuar el flujo o falso para detenerlo.",
+        "args": {
+          "key": {
+            "title": "Clave",
+            "placeholder": "Selecciona o crea clave"
+          },
+          "duration": {
+            "title": "Duración",
+            "placeholder": "10"
+          },
+          "duration_unit": {
+            "title": "Unidad"
+          }
+        }
+      },
+      "allow_up_to": {
+        "title": "Permitir [[key]] hasta [[max_count]] veces cada [[duration]] [[duration_unit]]",
+        "titleFormatted": "Permitir [[key]] hasta [[max_count]] veces cada [[duration]] [[duration_unit]]",
+        "hint": "Verifica si la clave aún puede ejecutarse en el intervalo actual, cuenta como una vez si está permitido, y devuelve verdadero para continuar el flujo o falso para detenerlo.",
+        "args": {
+          "key": {
+            "title": "Clave",
+            "placeholder": "Selecciona o crea clave"
+          },
+          "max_count": {
+            "title": "Máximas veces",
+            "placeholder": "3",
+            "hint": "Número entero de 1 o superior"
+          },
+          "duration": {
+            "title": "Duración",
+            "placeholder": "10"
+          },
+          "duration_unit": {
+            "title": "Unidad"
+          }
+        }
+      }
+    },
+    "triggers": {
+      "blocked_count_reached": {
+        "title": "[[key]] bloqueada [[count]] veces seguidas",
+        "titleFormatted": "[[key]] bloqueada [[count]] veces seguidas",
+        "hint": "Se ejecuta cuando la condición de Permitir bloquea exactamente el número de veces elegido seguidas desde la última ejecución permitida. Pasa el número actual de bloqueos como una etiqueta de Flujo.",
+        "tokens": {
+          "block_count": {
+            "title": "Contador de bloqueos",
+            "example": "3"
+          }
+        },
+        "args": {
+          "key": {
+            "title": "Clave",
+            "placeholder": "Selecciona o crea clave"
+          },
+          "count": {
+            "title": "Veces bloqueadas",
+            "placeholder": "3"
+          }
+        }
+      },
+      "blocked_count_at_least": {
+        "title": "[[key]] bloqueada [[count]] o más veces seguidas",
+        "titleFormatted": "[[key]] bloqueada [[count]] o más veces seguidas",
+        "hint": "Se ejecuta cuando la condición de Permitir ha bloqueado al menos el número de veces elegido seguidas desde la última ejecución permitida. Pasa el número actual de bloqueos como una etiqueta de Flujo.",
+        "tokens": {
+          "block_count": {
+            "title": "Contador de bloqueos",
+            "example": "50"
+          }
+        },
+        "args": {
+          "key": {
+            "title": "Clave",
+            "placeholder": "Selecciona o crea clave"
+          },
+          "count": {
+            "title": "Al menos veces bloqueadas",
+            "placeholder": "50"
+          }
+        }
+      }
+    },
+    "actions": {
+      "reset_cooldown": {
+        "title": "Reiniciar enfriamiento para [[key]]",
+        "titleFormatted": "Reiniciar enfriamiento para [[key]]",
+        "hint": "Limpia el enfriamiento para la clave seleccionada para que pueda activarse de nuevo inmediatamente.",
+        "args": {
+          "key": {
+            "title": "Clave",
+            "placeholder": "Selecciona o crea clave"
+          }
+        }
+      },
+      "suspend_cooldown": {
+        "title": "Suspender enfriamiento para [[key]]",
+        "titleFormatted": "Suspender enfriamiento para [[key]]",
+        "hint": "Registra el enfriamiento como si se acabara de ejecutar, bloqueando más activaciones hasta que haya pasado la duración definida en la condición de Permitir. También bloquea las llaves de Permitir hasta que se restablezca.",
+        "args": {
+          "key": {
+            "title": "Clave",
+            "placeholder": "Selecciona o crea clave"
+          }
+        }
+      },
+      "reset_token_count": {
+        "title": "Reiniciar tiempos usados para [[key]]",
+        "titleFormatted": "Reiniciar tiempos usados para [[key]]",
+        "hint": "Borra cuántas veces se ha usado esta clave, por lo que el total de veces máximas está disponible de nuevo en el intervalo actual.",
+        "args": {
+          "key": {
+            "title": "Clave",
+            "placeholder": "Selecciona o crea clave"
+          }
+        }
+      },
+      "grant_token": {
+        "title": "Restaurar un uso para [[key]]",
+        "titleFormatted": "Restaurar un uso para [[key]]",
+        "hint": "Hace disponible una ejecución más para esta clave en el intervalo actual.",
+        "args": {
+          "key": {
+            "title": "Clave",
+            "placeholder": "Selecciona o crea clave"
+          }
+        }
+      },
+      "grant_tokens": {
+        "title": "Restaurar [[token_count]] usos para [[key]]",
+        "titleFormatted": "Restaurar [[token_count]] usos para [[key]]",
+        "hint": "Hace disponibles tantas ejecuciones más para esta clave en el intervalo actual.",
+        "args": {
+          "key": {
+            "title": "Clave",
+            "placeholder": "Selecciona o crea clave"
+          },
+          "token_count": {
+            "title": "Veces",
+            "placeholder": "1",
+            "hint": "Número entero de 1 o superior"
+          }
+        }
+      }
+    }
+  },
+  "errors": {
+    "key_required": "Se requiere una clave de enfriamiento.",
+    "duration_required": "Se requiere una duración de enfriamiento.",
+    "duration_invalid": "La duración de enfriamiento debe ser mayor que 0.",
+    "max_count_invalid": "El número máximo de veces debe ser un número entero de 1 o mayor.",
+    "token_count_invalid": "Las veces deben ser un número entero de 1 o mayor."
+  },
+  "autocomplete": {
+    "create_key": "Crear nueva clave",
+    "never_run": "Nunca se ejecutó",
+    "last_run": "Última ejecución: __time__"
+  },
+  "settings": {
+    "empty": "Aún no hay claves de enfriamiento. Añade una clave en una tarjeta de Flujo para verla aquí.",
+    "never_run": "Nunca activado",
+    "errors_heading": "Problemas de configuración",
+    "error_allow_key_conflicting_durations": "La clave \"__key__\" se usa en múltiples tarjetas Y con diferentes duraciones (__durations__). Usa la misma duración para una clave en todas partes.",
+    "error_allow_key_invalid_duration": "La clave \"__key__\" tiene una tarjeta Y con una duración faltante o inválida. La duración debe ser un número entero de al menos 1 con una unidad válida, o una etiqueta de Flujo.",
+    "error_action_key_without_allow": "La clave \"__key__\" se usa en una tarjeta Entonces pero no tiene una tarjeta Y correspondiente. Estas tarjetas no tienen efecto.",
+    "error_trigger_key_without_allow": "La clave \"__key__\" se usa en una tarjeta Cuando pero no tiene una tarjeta Y correspondiente. Esta tarjeta nunca se ejecutará.",
+    "error_allow_up_to_key_conflicting_limits": "La clave \"__key__\" se usa en múltiples tarjetas Y con diferentes límites (__limits__). Usa las mismas máximas veces y duración para una clave en todas partes.",
+    "error_allow_up_to_key_invalid_limit": "La clave \"__key__\" tiene una tarjeta Y con un máximo o una duración faltante o inválida. Las máximas veces deben ser un número entero de 1 o mayor, o una etiqueta de Flujo. La duración debe ser un número entero de al menos 1 con una unidad válida, o una etiqueta de Flujo.",
+    "error_grant_tokens_key_invalid_token_count": "La clave \"__key__\" tiene una tarjeta Entonces con un número de veces faltante o inválido. Las veces deben ser un número entero de 1 o mayor, o una etiqueta de Flujo.",
+    "error_allow_key_mixed_card_types": "La clave \"__key__\" se usa en tarjetas Y de tanto Permitir una vez como Permitir hasta. Usa solo un tipo de tarjeta por clave, a menos que la tarjeta Permitir hasta use un máximo de exactamente 1.",
+    "blocks_since_allow": "__count__ bloqueos desde la última permitida",
+    "used_count": "__count__ veces usadas este intervalo",
+    "used_count_suspended": "Suspendido",
+    "duration_invalid": "duración inválida",
+    "limit_invalid": "límite inválido",
+    "duration_unit": {
+      "seconds": "segundos",
+      "minutes": "minutos",
+      "hours": "horas",
+      "days": "días"
+    }
+  }
+}

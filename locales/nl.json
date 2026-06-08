@@ -1,0 +1,189 @@
+{
+  "flow": {
+    "conditions": {
+      "allow_once": {
+        "title": "[[key]] eenmaal toestaan iedere [[duration]] [[duration_unit]]",
+        "titleFormatted": "[[key]] eenmaal toestaan iedere [[duration]] [[duration_unit]]",
+        "hint": "Controleert of de cooldown actief is, activeert deze atomisch indien toegestaan, en retourneert true om de Flow voort te zetten of false om deze te stoppen.",
+        "args": {
+          "key": {
+            "title": "Sleutel",
+            "placeholder": "Selecteer of maak een sleutel"
+          },
+          "duration": {
+            "title": "Duur",
+            "placeholder": "10"
+          },
+          "duration_unit": {
+            "title": "Eenheid"
+          }
+        }
+      },
+      "allow_up_to": {
+        "title": "[[key]] toestaan tot [[max_count]] keren iedere [[duration]] [[duration_unit]]",
+        "titleFormatted": "[[key]] toestaan tot [[max_count]] keren iedere [[duration]] [[duration_unit]]",
+        "hint": "Controleert of de sleutel nog kan worden uitgevoerd in het huidige interval, telt als één keer indien toegestaan, en retourneert true om de Flow voort te zetten of false om deze te stoppen.",
+        "args": {
+          "key": {
+            "title": "Sleutel",
+            "placeholder": "Selecteer of maak een sleutel"
+          },
+          "max_count": {
+            "title": "Max aantal keren",
+            "placeholder": "3",
+            "hint": "Heel getal van 1 of hoger"
+          },
+          "duration": {
+            "title": "Duur",
+            "placeholder": "10"
+          },
+          "duration_unit": {
+            "title": "Eenheid"
+          }
+        }
+      }
+    },
+    "triggers": {
+      "blocked_count_reached": {
+        "title": "[[key]] geblokkeerd [[count]] keren op rij",
+        "titleFormatted": "[[key]] geblokkeerd [[count]] keren op rij",
+        "hint": "Wordt uitgevoerd wanneer de 'Toestaan' conditie exact het gekozen aantal keren op rij heeft geblokkeerd sinds de laatste toegestane uitvoering. Geeft het huidige blokkeeraantal door als een Flow tag.",
+        "tokens": {
+          "block_count": {
+            "title": "Aantal geblokkeerd",
+            "example": "3"
+          }
+        },
+        "args": {
+          "key": {
+            "title": "Sleutel",
+            "placeholder": "Selecteer of maak een sleutel"
+          },
+          "count": {
+            "title": "Aantal keren geblokkeerd",
+            "placeholder": "3"
+          }
+        }
+      },
+      "blocked_count_at_least": {
+        "title": "[[key]] geblokkeerd [[count]] of meer keren op rij",
+        "titleFormatted": "[[key]] geblokkeerd [[count]] of meer keren op rij",
+        "hint": "Wordt uitgevoerd wanneer de 'Toestaan' conditie ten minste het gekozen aantal keren op rij heeft geblokkeerd sinds de laatste toegestane uitvoering. Geeft het huidige blokkeeraantal door als een Flow tag.",
+        "tokens": {
+          "block_count": {
+            "title": "Aantal geblokkeerd",
+            "example": "50"
+          }
+        },
+        "args": {
+          "key": {
+            "title": "Sleutel",
+            "placeholder": "Selecteer of maak een sleutel"
+          },
+          "count": {
+            "title": "Minimaal aantal keren geblokkeerd",
+            "placeholder": "50"
+          }
+        }
+      }
+    },
+    "actions": {
+      "reset_cooldown": {
+        "title": "Cooldown resetten voor [[key]]",
+        "titleFormatted": "Cooldown resetten voor [[key]]",
+        "hint": "Verwijdert de cooldown voor de geselecteerde sleutel zodat deze direct weer kan triggeren.",
+        "args": {
+          "key": {
+            "title": "Sleutel",
+            "placeholder": "Selecteer of maak een sleutel"
+          }
+        }
+      },
+      "suspend_cooldown": {
+        "title": "Cooldown onderbreken voor [[key]]",
+        "titleFormatted": "Cooldown onderbreken voor [[key]]",
+        "hint": "Registreert de cooldown alsof deze net is uitgevoerd, waardoor verdere triggers worden geblokkeerd totdat de duur zoals gedefinieerd in de Toestaan conditie is verlopen. Blokkeert ook 'Toestaan tot' sleutels totdat deze gereset worden.",
+        "args": {
+          "key": {
+            "title": "Sleutel",
+            "placeholder": "Selecteer of maak een sleutel"
+          }
+        }
+      },
+      "reset_token_count": {
+        "title": "Hoe vaak gebruikt resetten voor [[key]]",
+        "titleFormatted": "Hoe vaak gebruikt resetten voor [[key]]",
+        "hint": "Verwijdert hoeveel keer deze sleutel is gebruikt, zodat het volledige maximum aantal keren weer beschikbaar is in het huidige interval.",
+        "args": {
+          "key": {
+            "title": "Sleutel",
+            "placeholder": "Selecteer of maak een sleutel"
+          }
+        }
+      },
+      "grant_token": {
+        "title": "Een keer herstellen voor [[key]]",
+        "titleFormatted": "Een keer herstellen voor [[key]]",
+        "hint": "Maakt één extra uitvoering beschikbaar voor deze sleutel in het huidige interval.",
+        "args": {
+          "key": {
+            "title": "Sleutel",
+            "placeholder": "Selecteer of maak een sleutel"
+          }
+        }
+      },
+      "grant_tokens": {
+        "title": "[[token_count]] keren herstellen voor [[key]]",
+        "titleFormatted": "[[token_count]] keren herstellen voor [[key]]",
+        "hint": "Maakt dat aantal extra uitvoeringen beschikbaar voor deze sleutel in het huidige interval.",
+        "args": {
+          "key": {
+            "title": "Sleutel",
+            "placeholder": "Selecteer of maak een sleutel"
+          },
+          "token_count": {
+            "title": "Aantal keren",
+            "placeholder": "1",
+            "hint": "Heel getal van 1 of hoger"
+          }
+        }
+      }
+    }
+  },
+  "errors": {
+    "key_required": "Een cooldown sleutel is vereist.",
+    "duration_required": "Een cooldown duur is vereist.",
+    "duration_invalid": "Cooldown duur moet groter zijn dan 0.",
+    "max_count_invalid": "Max aantal keren moet een heel getal van 1 of hoger zijn.",
+    "token_count_invalid": "Aantal keren moet een heel getal van 1 of hoger zijn."
+  },
+  "autocomplete": {
+    "create_key": "Nieuwe sleutel maken",
+    "never_run": "Nooit uitgevoerd",
+    "last_run": "Laatste uitvoering: __time__"
+  },
+  "settings": {
+    "empty": "Nog geen cooldown sleutels. Voeg een sleutel toe in een Flow kaart om deze hier te zien.",
+    "never_run": "Nooit getriggerd",
+    "errors_heading": "Configuratie problemen",
+    "error_allow_key_conflicting_durations": "Sleutel \"__key__\" wordt gebruikt in meerdere And kaarten met verschillende duur (__durations__). Gebruik overal dezelfde duur voor een sleutel.",
+    "error_allow_key_invalid_duration": "Sleutel \"__key__\" heeft een And kaart met een ontbrekende of ongeldige duur. Duur moet een heel getal van ten minste 1 zijn met een geldige eenheid, of een Flow tag.",
+    "error_action_key_without_allow": "Sleutel \"__key__\" wordt gebruikt in een Then kaart maar heeft geen bijpassende And kaart. Deze kaarten hebben geen effect.",
+    "error_trigger_key_without_allow": "Sleutel \"__key__\" wordt gebruikt in een When kaart maar heeft geen bijpassende And kaart. Deze kaart zal nooit worden uitgevoerd.",
+    "error_allow_up_to_key_conflicting_limits": "Sleutel \"__key__\" wordt gebruikt in meerdere And kaarten met verschillende limieten (__limits__). Gebruik hetzelfde maximum aantal keren en duur overal voor een sleutel.",
+    "error_allow_up_to_key_invalid_limit": "Sleutel \"__key__\" heeft een And kaart met een ontbrekend of ongeldig maximum aantal keren of duur. Maximum aantal keren moet een heel getal van 1 of hoger zijn, of een Flow tag. Duur moet een heel getal van ten minste 1 zijn met een geldige eenheid, of een Flow tag.",
+    "error_grant_tokens_key_invalid_token_count": "Sleutel \"__key__\" heeft een Then kaart met een ontbrekend of ongeldig aantal keren. Aantal keren moet een heel getal van 1 of hoger zijn, of een Flow tag.",
+    "error_allow_key_mixed_card_types": "Sleutel \"__key__\" wordt gebruikt in zowel 'eenmaal toestaan' als 'tot toestaan' And kaarten. Gebruik maar één kaarttype per sleutel, tenzij de 'tot toestaan' kaart een maximum aantal keren van precies 1 gebruikt.",
+    "blocks_since_allow": "__count__ blokkades sinds laatste toestaan",
+    "used_count": "__count__ keren gebruikt dit interval",
+    "used_count_suspended": "Opgeschort",
+    "duration_invalid": "ongeldige duur",
+    "limit_invalid": "ongeldige limiet",
+    "duration_unit": {
+      "seconds": "seconden",
+      "minutes": "minuten",
+      "hours": "uren",
+      "days": "dagen"
+    }
+  }
+}

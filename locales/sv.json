@@ -1,0 +1,189 @@
+{
+  "flow": {
+    "conditions": {
+      "allow_once": {
+        "title": "Tillåt [[key]] en gång var [[duration]] [[duration_unit]]",
+        "titleFormatted": "Tillåt [[key]] en gång var [[duration]] [[duration_unit]]",
+        "hint": "Kontrollerar om nedkylningen är aktiv, aktiverar den automatiskt om det är tillåtet och returnerar sant för att fortsätta Flödet eller falskt för att stoppa det.",
+        "args": {
+          "key": {
+            "title": "Nyckel",
+            "placeholder": "Välj eller skapa nyckel"
+          },
+          "duration": {
+            "title": "Varaktighet",
+            "placeholder": "10"
+          },
+          "duration_unit": {
+            "title": "Enhet"
+          }
+        }
+      },
+      "allow_up_to": {
+        "title": "Tillåt [[key]] upp till [[max_count]] gånger var [[duration]] [[duration_unit]]",
+        "titleFormatted": "Tillåt [[key]] upp till [[max_count]] gånger var [[duration]] [[duration_unit]]",
+        "hint": "Kontrollerar om nyckeln fortfarande kan köras under det aktuella intervallet, räknas som en gång om det är tillåtet och returnerar sant för att fortsätta Flödet eller falskt för att stoppa det.",
+        "args": {
+          "key": {
+            "title": "Nyckel",
+            "placeholder": "Välj eller skapa nyckel"
+          },
+          "max_count": {
+            "title": "Max gånger",
+            "placeholder": "3",
+            "hint": "Heltal 1 eller större"
+          },
+          "duration": {
+            "title": "Varaktighet",
+            "placeholder": "10"
+          },
+          "duration_unit": {
+            "title": "Enhet"
+          }
+        }
+      }
+    },
+    "triggers": {
+      "blocked_count_reached": {
+        "title": "[[key]] blockerades [[count]] gånger i rad",
+        "titleFormatted": "[[key]] blockerades [[count]] gånger i rad",
+        "hint": "Körs när Tillåt-villkoret blockeras exakt det valda antalet gånger i rad sedan den senaste tillåtna körningen. Passerar det aktuella blockeringsantalet som en Flödestagg.",
+        "tokens": {
+          "block_count": {
+            "title": "Blockeringsantal",
+            "example": "3"
+          }
+        },
+        "args": {
+          "key": {
+            "title": "Nyckel",
+            "placeholder": "Välj eller skapa nyckel"
+          },
+          "count": {
+            "title": "Gånger blockerad",
+            "placeholder": "3"
+          }
+        }
+      },
+      "blocked_count_at_least": {
+        "title": "[[key]] blockerades [[count]] eller fler gånger i rad",
+        "titleFormatted": "[[key]] blockerades [[count]] eller fler gånger i rad",
+        "hint": "Körs när Tillåt-villkoret har blockerat minst det valda antalet gånger i rad sedan den senaste tillåtna körningen. Passerar det aktuella blockeringsantalet som en Flödestagg.",
+        "tokens": {
+          "block_count": {
+            "title": "Blockeringsantal",
+            "example": "50"
+          }
+        },
+        "args": {
+          "key": {
+            "title": "Nyckel",
+            "placeholder": "Välj eller skapa nyckel"
+          },
+          "count": {
+            "title": "Minsta antal gånger blockerad",
+            "placeholder": "50"
+          }
+        }
+      }
+    },
+    "actions": {
+      "reset_cooldown": {
+        "title": "Återställ nedkylning för [[key]]",
+        "titleFormatted": "Återställ nedkylning för [[key]]",
+        "hint": "Rensar nedkylningen för den valda nyckeln så att den kan utlösas igen omedelbart.",
+        "args": {
+          "key": {
+            "title": "Nyckel",
+            "placeholder": "Välj eller skapa nyckel"
+          }
+        }
+      },
+      "suspend_cooldown": {
+        "title": "Avbryt nedkylning för [[key]]",
+        "titleFormatted": "Avbryt nedkylning för [[key]]",
+        "hint": "Registrerar nedkylningen som om den precis har körts, vilket blockerar ytterligare utlösare tills varaktigheten som definieras i Tillåt-villkoret har förflutit. Blockerar också Tillåt upp till nycklar tills återställning.",
+        "args": {
+          "key": {
+            "title": "Nyckel",
+            "placeholder": "Välj eller skapa nyckel"
+          }
+        }
+      },
+      "reset_token_count": {
+        "title": "Återställ antal gånger använda för [[key]]",
+        "titleFormatted": "Återställ antal gånger använda för [[key]]",
+        "hint": "Rensar hur många gånger denna nyckel har använts, så att det fulla maxantalet är tillgängligt igen i det aktuella intervallet.",
+        "args": {
+          "key": {
+            "title": "Nyckel",
+            "placeholder": "Välj eller skapa nyckel"
+          }
+        }
+      },
+      "grant_token": {
+        "title": "Återställ en gång för [[key]]",
+        "titleFormatted": "Återställ en gång för [[key]]",
+        "hint": "Gör en ytterligare gång tillgänglig för denna nyckel i det aktuella intervallet.",
+        "args": {
+          "key": {
+            "title": "Nyckel",
+            "placeholder": "Välj eller skapa nyckel"
+          }
+        }
+      },
+      "grant_tokens": {
+        "title": "Återställ [[token_count]] gånger för [[key]]",
+        "titleFormatted": "Återställ [[token_count]] gånger för [[key]]",
+        "hint": "Gör så många fler körningar tillgängliga för denna nyckel i det aktuella intervallet.",
+        "args": {
+          "key": {
+            "title": "Nyckel",
+            "placeholder": "Välj eller skapa nyckel"
+          },
+          "token_count": {
+            "title": "Gånger",
+            "placeholder": "1",
+            "hint": "Heltal 1 eller större"
+          }
+        }
+      }
+    }
+  },
+  "errors": {
+    "key_required": "En nyckel för nedkylning krävs.",
+    "duration_required": "En varaktighet för nedkylning krävs.",
+    "duration_invalid": "Varaktigheten för nedkylning måste vara större än 0.",
+    "max_count_invalid": "Max gånger måste vara ett heltal 1 eller större.",
+    "token_count_invalid": "Gånger måste vara ett heltal 1 eller större."
+  },
+  "autocomplete": {
+    "create_key": "Skapa ny nyckel",
+    "never_run": "Körs aldrig",
+    "last_run": "Senaste körning: __time__"
+  },
+  "settings": {
+    "empty": "Inga nedkylningsnycklar ännu. Lägg till en nyckel i ett Flödeskort för att se den här.",
+    "never_run": "Aldrig utlöses",
+    "errors_heading": "Konfigurationsproblem",
+    "error_allow_key_conflicting_durations": "Nyckel \"__key__\" används i flera Och-kort med olika varaktigheter (__durations__). Använd samma varaktighet överallt för en nyckel.",
+    "error_allow_key_invalid_duration": "Nyckel \"__key__\" har ett Och-kort med en saknad eller ogiltig varaktighet. Varaktigheten måste vara ett heltal på minst 1 med en giltig enhet, eller en Flödestagg.",
+    "error_action_key_without_allow": "Nyckel \"__key__\" används i ett Då-kort men har inget matchande Och-kort. Dessa kort har ingen effekt.",
+    "error_trigger_key_without_allow": "Nyckel \"__key__\" används i ett När-kort men har inget matchande Och-kort. Detta kort kommer aldrig att köras.",
+    "error_allow_up_to_key_conflicting_limits": "Nyckel \"__key__\" används i flera Och-kort med olika begränsningar (__limits__). Använd samma max gånger och varaktighet överallt för en nyckel.",
+    "error_allow_up_to_key_invalid_limit": "Nyckel \"__key__\" har ett Och-kort med en saknad eller ogiltig max gånger eller varaktighet. Max gånger måste vara ett heltal på 1 eller större, eller en Flödestagg. Varaktigheten måste vara ett heltal på minst 1 med en giltig enhet, eller en Flödestagg.",
+    "error_grant_tokens_key_invalid_token_count": "Nyckel \"__key__\" har ett Då-kort med ett saknat eller ogiltigt antal gånger. Antalet gånger måste vara ett heltal på 1 eller större, eller en Flödestagg.",
+    "error_allow_key_mixed_card_types": "Nyckel \"__key__\" används i både Tillåt en gång och Tillåt upp till Och-kort. Använd endast en korttyp per nyckel, om inte Tillåt upp till kort använder ett max gånger exakt 1.",
+    "blocks_since_allow": "__count__ blockeringar sedan senaste tillåtelsen",
+    "used_count": "__count__ gånger använda detta intervall",
+    "used_count_suspended": "Avbruten",
+    "duration_invalid": "ogiltig varaktighet",
+    "limit_invalid": "ogiltig begränsning",
+    "duration_unit": {
+      "seconds": "sekunder",
+      "minutes": "minuter",
+      "hours": "timmar",
+      "days": "dagar"
+    }
+  }
+}

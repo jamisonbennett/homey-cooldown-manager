@@ -1,36 +1,132 @@
 {
   "id": "grant_tokens",
   "title": {
-    "en": "Restore [[token_count]] times for [[key]]"
+    "en": "Restore [[token_count]] times for [[key]]",
+    "nl": "Herstel [[token_count]] keer voor [[key]]",
+    "da": "Gendan [[token_count]] gange for [[key]]",
+    "de": "Wiederherstellen [[token_count]] Mal für [[key]]",
+    "es": "Restaurar [[token_count]] veces para [[key]]",
+    "fr": "Restaurer [[token_count]] fois pour [[key]]",
+    "it": "Ripristina [[token_count]] volte per [[key]]",
+    "no": "Gjenopprett [[token_count]] ganger for [[key]]",
+    "sv": "Återställ [[token_count]] gånger för [[key]]",
+    "pl": "Przywróć [[token_count]] razy dla [[key]]",
+    "ru": "Восстановить [[token_count]] раз для [[key]]",
+    "ko": "[[key]]에 대해 [[token_count]]회 복원하기",
+    "ar": "استعادة [[token_count]] مرات لـ [[key]]"
   },
   "titleFormatted": {
-    "en": "Restore [[token_count]] times for [[key]]"
+    "en": "Restore [[token_count]] times for [[key]]",
+    "nl": "Herstel [[token_count]] keer voor [[key]]",
+    "da": "Gendan [[token_count]] gange for [[key]]",
+    "de": "Wiederherstellen [[token_count]] Mal für [[key]]",
+    "es": "Restaurar [[token_count]] veces para [[key]]",
+    "fr": "Restaurer [[token_count]] fois pour [[key]]",
+    "it": "Ripristina [[token_count]] volte per [[key]]",
+    "no": "Gjenopprett [[token_count]] ganger for [[key]]",
+    "sv": "Återställ [[token_count]] gånger för [[key]]",
+    "pl": "Przywróć [[token_count]] razy dla [[key]]",
+    "ru": "Восстановить [[token_count]] раз для [[key]]",
+    "ko": "[[key]]에 대해 [[token_count]]번 복원하기",
+    "ar": "استعادة [[token_count]] مرات لـ [[key]]"
   },
   "hint": {
-    "en": "Makes that many more runs available for this key in the current interval."
+    "en": "Makes that many more runs available for this key in the current interval.",
+    "nl": "Maakt veel meer runs beschikbaar voor deze sleutel in het huidige interval.",
+    "da": "Gør så mange flere kørseler tilgængelige for denne nøgle i det nuværende interval.",
+    "de": "Macht in diesem Intervall viele weitere Ausführungen für diesen Schlüssel verfügbar.",
+    "es": "Hace que haya muchas más ejecuciones disponibles para esta clave en el intervalo actual.",
+    "fr": "Rend beaucoup plus de tentatives disponibles pour cette clé dans l'intervalle actuel.",
+    "it": "Rende disponibili molte più esecuzioni per questa chiave nell'intervallo corrente.",
+    "no": "Gjør at mange flere kjøringer er tilgjengelige for denne nøkkelen i det nåværende intervallet.",
+    "sv": "Gör så att fler körningar blir tillgängliga för denna nyckel under det aktuella intervallet.",
+    "pl": "Umożliwia wykonanie tylu dodatkowych uruchomień dla tego klucza w bieżącym przedziale czasowym.",
+    "ru": "Делает доступным больше запусков для этого ключа в текущем интервале.",
+    "ko": "현재 간격에서 이 키에 대해 더 많은 실행을 사용할 수 있게 합니다.",
+    "ar": "يجعل عددًا أكبر من العمليات متاحًا لهذا المفتاح في الفترة الحالية."
   },
   "args": [
     {
       "type": "autocomplete",
       "name": "key",
       "title": {
-        "en": "Key"
+        "en": "Key",
+        "nl": "Sleutel",
+        "da": "Nøgle",
+        "de": "Schlüssel",
+        "es": "Clave",
+        "fr": "Clé",
+        "it": "Chiave",
+        "no": "Nøkkel",
+        "sv": "Nyckel",
+        "pl": "Klucz",
+        "ru": "Ключ",
+        "ko": "키",
+        "ar": "مفتاح"
       },
       "placeholder": {
-        "en": "Select or create key"
+        "en": "Select or create key",
+        "nl": "Selecteer of maak een sleutel aan",
+        "da": "Vælg eller opret nøgle",
+        "de": "Schlüssel auswählen oder erstellen",
+        "es": "Seleccionar o crear clave",
+        "fr": "Sélectionner ou créer une clé",
+        "it": "Seleziona o crea chiave",
+        "no": "Velg eller opprett nøkkel",
+        "sv": "Välj eller skapa nyckel",
+        "pl": "Wybierz lub utwórz klucz",
+        "ru": "Выберите или создайте ключ",
+        "ko": "키 선택 또는 생성",
+        "ar": "اختر أو أنشئ مفتاحًا"
       }
     },
     {
       "type": "number",
       "name": "token_count",
       "title": {
-        "en": "Times"
+        "en": "Times",
+        "nl": "Tijden",
+        "da": "Tidspunkter",
+        "de": "Zeiten",
+        "es": "Tiempos",
+        "fr": "Horaires",
+        "it": "Orari",
+        "no": "Tider",
+        "sv": "Tider",
+        "pl": "Czasy",
+        "ru": "Время",
+        "ko": "시간",
+        "ar": "الأوقات"
       },
       "placeholder": {
-        "en": "1"
+        "en": "1",
+        "nl": "1",
+        "da": "1",
+        "de": "1",
+        "es": "1",
+        "fr": "1",
+        "it": "1",
+        "no": "1",
+        "sv": "1",
+        "pl": "1",
+        "ru": "1",
+        "ko": "1",
+        "ar": "١"
       },
       "hint": {
-        "en": "Whole number of 1 or greater"
+        "en": "Whole number of 1 or greater",
+        "nl": "Heel getal van 1 of groter",
+        "da": "Heltal på 1 eller større",
+        "de": "Ganze Zahl von 1 oder größer",
+        "es": "Número entero de 1 o mayor",
+        "fr": "Nombre entier de 1 ou plus grand",
+        "it": "Numero intero pari o maggiore di 1",
+        "no": "Heltall på 1 eller større",
+        "sv": "Heltal på 1 eller större",
+        "pl": "Całkowita liczba 1 lub większa",
+        "ru": "Целое число 1 или больше",
+        "ko": "1 이상의 정수",
+        "ar": "عدد صحيح 1 أو أكبر"
       },
       "min": 1,
       "max": 999999999,

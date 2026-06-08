@@ -1,0 +1,189 @@
+{
+  "flow": {
+    "conditions": {
+      "allow_once": {
+        "title": "Tillad [[key]] en gang hver [[duration]] [[duration_unit]]",
+        "titleFormatted": "Tillad [[key]] en gang hver [[duration]] [[duration_unit]]",
+        "hint": "Tjekker om cooldown er aktiv, aktiverer den atomisk, hvis tilladt, og returnerer sand for at fortsætte Flowet eller falsk for at stoppe det.",
+        "args": {
+          "key": {
+            "title": "Nøgle",
+            "placeholder": "Vælg eller opret nøgle"
+          },
+          "duration": {
+            "title": "Varighed",
+            "placeholder": "10"
+          },
+          "duration_unit": {
+            "title": "Enhed"
+          }
+        }
+      },
+      "allow_up_to": {
+        "title": "Tillad [[key]] op til [[max_count]] gange hver [[duration]] [[duration_unit]]",
+        "titleFormatted": "Tillad [[key]] op til [[max_count]] gange hver [[duration]] [[duration_unit]]",
+        "hint": "Tjekker om nøglen stadig kan køre i det aktuelle interval, tæller som en gang hvis tilladt, og returnerer sand for at fortsætte flowet eller falsk for at stoppe det.",
+        "args": {
+          "key": {
+            "title": "Nøgle",
+            "placeholder": "Vælg eller opret nøgle"
+          },
+          "max_count": {
+            "title": "Max gange",
+            "placeholder": "3",
+            "hint": "Heltal på 1 eller større"
+          },
+          "duration": {
+            "title": "Varighed",
+            "placeholder": "10"
+          },
+          "duration_unit": {
+            "title": "Enhed"
+          }
+        }
+      }
+    },
+    "triggers": {
+      "blocked_count_reached": {
+        "title": "[[key]] blokeret [[count]] gange i træk",
+        "titleFormatted": "[[key]] blokeret [[count]] gange i træk",
+        "hint": "Kører når Tillad-betingelsen blokerer præcis det valgte antal gange i træk siden den sidste tilladte kørsel. Sender det aktuelle bloktal som en Flow tag.",
+        "tokens": {
+          "block_count": {
+            "title": "Blok antal",
+            "example": "3"
+          }
+        },
+        "args": {
+          "key": {
+            "title": "Nøgle",
+            "placeholder": "Vælg eller opret nøgle"
+          },
+          "count": {
+            "title": "Gange blokeret",
+            "placeholder": "3"
+          }
+        }
+      },
+      "blocked_count_at_least": {
+        "title": "[[key]] blokeret [[count]] eller flere gange i træk",
+        "titleFormatted": "[[key]] blokeret [[count]] eller flere gange i træk",
+        "hint": "Kører når Tillad-betingelsen har blokeret mindst det valgte antal gange i træk siden den sidste tilladte kørsel. Sender det aktuelle bloktal som en Flow tag.",
+        "tokens": {
+          "block_count": {
+            "title": "Blok antal",
+            "example": "50"
+          }
+        },
+        "args": {
+          "key": {
+            "title": "Nøgle",
+            "placeholder": "Vælg eller opret nøgle"
+          },
+          "count": {
+            "title": "Mindst gange blokeret",
+            "placeholder": "50"
+          }
+        }
+      }
+    },
+    "actions": {
+      "reset_cooldown": {
+        "title": "Nulstil cooldown for [[key]]",
+        "titleFormatted": "Nulstil cooldown for [[key]]",
+        "hint": "Rydder cooldown for den valgte nøgle, så den kan udløses igen med det samme.",
+        "args": {
+          "key": {
+            "title": "Nøgle",
+            "placeholder": "Vælg eller opret nøgle"
+          }
+        }
+      },
+      "suspend_cooldown": {
+        "title": "Suspender cooldown for [[key]]",
+        "titleFormatted": "Suspender cooldown for [[key]]",
+        "hint": "Registrerer cooldown som om den lige har kørt, og blokerer yderligere udløser, indtil varigheden defineret i Tillad-betingelsen er udløbet. Blokerer også Tillad op til nøgler indtil nulstillet.",
+        "args": {
+          "key": {
+            "title": "Nøgle",
+            "placeholder": "Vælg eller opret nøgle"
+          }
+        }
+      },
+      "reset_token_count": {
+        "title": "Nulstil antal brugte for [[key]]",
+        "titleFormatted": "Nulstil antal brugte for [[key]]",
+        "hint": "Rydder hvor mange gange denne nøgle er blevet brugt, så det fulde maksimum antal er tilgængeligt igen i det aktuelle interval.",
+        "args": {
+          "key": {
+            "title": "Nøgle",
+            "placeholder": "Vælg eller opret nøgle"
+          }
+        }
+      },
+      "grant_token": {
+        "title": "Gendan en gang for [[key]]",
+        "titleFormatted": "Gendan en gang for [[key]]",
+        "hint": "Gør en kørsel mere tilgængelig for denne nøgle i det aktuelle interval.",
+        "args": {
+          "key": {
+            "title": "Nøgle",
+            "placeholder": "Vælg eller opret nøgle"
+          }
+        }
+      },
+      "grant_tokens": {
+        "title": "Gendan [[token_count]] gange for [[key]]",
+        "titleFormatted": "Gendan [[token_count]] gange for [[key]]",
+        "hint": "Gør så mange flere kørsler tilgængelige for denne nøgle i det aktuelle interval.",
+        "args": {
+          "key": {
+            "title": "Nøgle",
+            "placeholder": "Vælg eller opret nøgle"
+          },
+          "token_count": {
+            "title": "Gange",
+            "placeholder": "1",
+            "hint": "Heltal på 1 eller større"
+          }
+        }
+      }
+    }
+  },
+  "errors": {
+    "key_required": "En cooldown-nøgle er påkrævet.",
+    "duration_required": "En cooldown-varighed er påkrævet.",
+    "duration_invalid": "Cooldown-varigheden skal være større end 0.",
+    "max_count_invalid": "Max gange skal være et heltal på 1 eller større.",
+    "token_count_invalid": "Gange skal være et heltal på 1 eller større."
+  },
+  "autocomplete": {
+    "create_key": "Opret ny nøgle",
+    "never_run": "Aldrig kørt",
+    "last_run": "Sidste kørsel: __time__"
+  },
+  "settings": {
+    "empty": "Ingen cooldown-nøgler endnu. Tilføj en nøgle i et Flow-kort for at se den her.",
+    "never_run": "Aldrig udløst",
+    "errors_heading": "Konfigurationsproblemer",
+    "error_allow_key_conflicting_durations": "Nøgle \"__key__\" bruges i flere Og-kort med forskellige varigheder (__durations__). Brug den samme varighed overalt for en nøgle.",
+    "error_allow_key_invalid_duration": "Nøgle \"__key__\" har et Og-kort med en manglende eller ugyldig varighed. Varighed skal være et heltal på mindst 1 med en gyldig enhed, eller et Flow-tag.",
+    "error_action_key_without_allow": "Nøgle \"__key__\" bruges i et Så-kort, men har intet tilsvarende Og-kort. Disse kort har ingen effekt.",
+    "error_trigger_key_without_allow": "Nøgle \"__key__\" bruges i et Når-kort, men har intet tilsvarende Og-kort. Dette kort vil aldrig køre.",
+    "error_allow_up_to_key_conflicting_limits": "Nøgle \"__key__\" bruges i flere Og-kort med forskellige begrænsninger (__limits__). Brug den samme max gange og varighed overalt for en nøgle.",
+    "error_allow_up_to_key_invalid_limit": "Nøgle \"__key__\" har et Og-kort med en manglende eller ugyldig max gange eller varighed. Max gange skal være et heltal på 1 eller større, eller et Flow-tag. Varighed skal være et heltal på mindst 1 med en gyldig enhed, eller et Flow-tag.",
+    "error_grant_tokens_key_invalid_token_count": "Nøgle \"__key__\" har et Så-kort med et manglende eller ugyldigt antal gange. Gange skal være et heltal på 1 eller større, eller et Flow-tag.",
+    "error_allow_key_mixed_card_types": "Nøgle \"__key__\" bruges i både Tillad en gang og Tillad op til Og-kort. Brug kun en korttype per nøgle, medmindre Tillad op til kortet bruger et maksimalt antal gange på præcis 1.",
+    "blocks_since_allow": "__count__ blokeringer siden sidste tilladelse",
+    "used_count": "__count__ gange brugt i dette interval",
+    "used_count_suspended": "Suspenderet",
+    "duration_invalid": "ugyldig varighed",
+    "limit_invalid": "ugyldig begrænsning",
+    "duration_unit": {
+      "seconds": "sekunder",
+      "minutes": "minutter",
+      "hours": "timer",
+      "days": "dage"
+    }
+  }
+}

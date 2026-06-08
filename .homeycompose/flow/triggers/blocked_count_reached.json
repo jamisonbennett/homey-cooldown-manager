@@ -1,23 +1,83 @@
 {
   "id": "blocked_count_reached",
   "title": {
-    "en": "[[key]] blocked [[count]] times in a row"
+    "en": "[[key]] blocked [[count]] times in a row",
+    "nl": "[[key]] is [[count]] keer achter elkaar geblokkeerd.",
+    "da": "[[key]] blokeret [[count]] gange i træk",
+    "de": "[[key]] wurde [[count]] Mal hintereinander blockiert.",
+    "es": "[[key]] bloqueado [[count]] veces seguidas",
+    "fr": "[[key]] bloqué [[count]] fois de suite",
+    "it": "[[key]] bloccato [[count]] volte di fila",
+    "no": "[[key]] blokkert [[count]] ganger på rad",
+    "sv": "[[key]] blockerades [[count]] gånger i rad",
+    "pl": "[[key]] zablokowany [[count]] razy z rzędu",
+    "ru": "[[key]] заблокирован [[count]] раз подряд",
+    "ko": "[[key]]가 연속으로 [[count]]번 차단되었습니다.",
+    "ar": "[[key]] تم حظره [[count]] مرة على التوالي"
   },
   "titleFormatted": {
-    "en": "[[key]] blocked [[count]] times in a row"
+    "en": "[[key]] blocked [[count]] times in a row",
+    "nl": "[[key]] is [[count]] keer achter elkaar geblokkeerd.",
+    "da": "[[key]] blokeret [[count]] gange i træk",
+    "de": "[[key]] wurde [[count]] Mal hintereinander blockiert",
+    "es": "[[key]] bloqueado [[count]] veces seguidas",
+    "fr": "[[key]] bloqué [[count]] fois de suite",
+    "it": "[[key]] bloccato [[count]] volte di fila",
+    "no": "[[key]] blokkert [[count]] ganger på rad",
+    "sv": "[[key]] blockerades [[count]] gånger i rad",
+    "pl": "[[key]] zablokowany [[count]] razy z rzędu",
+    "ru": "[[key]] заблокирован [[count]] раз подряд",
+    "ko": "[[key]]가 연속으로 [[count]]번 차단되었습니다.",
+    "ar": "[[key]] تم حظره [[count]] مرة على التوالي"
   },
   "hint": {
-    "en": "Runs when the Allow condition blocks exactly the chosen number of times in a row since the last allowed run. Passes the current block count as a Flow tag."
+    "en": "Runs when the Allow condition blocks exactly the chosen number of times in a row since the last allowed run. Passes the current block count as a Flow tag.",
+    "nl": "Wordt uitgevoerd wanneer de Toestaan-voorwaarde precies het gekozen aantal keren achter elkaar blokkeert sinds de laatste toegestane uitvoering. Geeft het huidige aantal blokkeringen door als een Flow-tag.",
+    "da": "Kører, når Tillad-betingelsen blokerer præcis det valgte antal gange i træk siden sidste tilladte kørsel. Sender det aktuelle bloktælling som et Flow-tag.",
+    "de": "Wird ausgeführt, wenn die Erlauben-Bedingung genau die gewählte Anzahl an aufeinanderfolgenden Malen blockiert hat, seitdem der letzte erlaubte Durchlauf stattgefunden hat. Übermittelt die aktuelle Blockanzahl als Flow-Tag.",
+    "es": "Se ejecuta cuando la condición de Permitir bloquea exactamente el número de veces elegido consecutivamente desde la última ejecución permitida. Pasa el conteo actual de bloqueos como una etiqueta de Flow.",
+    "fr": "S'exécute lorsque la condition d'autorisation bloque exactement le nombre de fois choisi consécutivement depuis la dernière exécution autorisée. Transmet le nombre actuel de blocages en tant que balise Flow.",
+    "it": "Viene eseguito quando la condizione di Permesso blocca esattamente il numero scelto di volte consecutive dall'ultima esecuzione consentita. Passa il conteggio attuale dei blocchi come un tag di Flusso.",
+    "no": "Kjører når Tillat-betingelsen blokkerer nøyaktig det valgte antallet ganger på rad siden forrige tillatte kjøring. Sender den nåværende blokkeringstelleren som en Flow-tag.",
+    "sv": "Körs när Tillåt-villkoret blockeras exakt det valda antalet gånger i rad sedan den senaste tillåtna körningen. Skickar det aktuella blockantalet som en Flow-tagg.",
+    "pl": "Uruchamia się, gdy warunek Zezwól blokuje dokładnie wybraną liczbę razy z rzędu od ostatniego dozwolonego uruchomienia. Przekazuje bieżącą liczbę blokad jako znacznik Flow.",
+    "ru": "Запускается, когда условие разрешения блокируется ровно выбранное количество раз подряд с момента последнего разрешенного запуска. Передает текущее количество блокировок как тег потока.",
+    "ko": "마지막으로 허용된 실행 이후, 허용 조건이 정확히 선택된 횟수만큼 연속으로 차단될 때 실행됩니다. 현재 차단 횟수를 플로우 태그로 전달합니다.",
+    "ar": "يعمل عندما تمنع حالة السماح بالضبط العدد المختار من المرات على التوالي منذ آخر تشغيل مسموح به. يمرر عدد الكتل الحالي كعلامة تدفق."
   },
   "tokens": [
     {
       "name": "block_count",
       "type": "number",
       "title": {
-        "en": "Block count"
+        "en": "Block count",
+        "nl": "Bloktelling",
+        "da": "Blokantal",
+        "de": "Blockanzahl",
+        "es": "Conteo de bloques",
+        "fr": "Nombre de blocs",
+        "it": "Conteggio blocchi",
+        "no": "Blokktelling",
+        "sv": "Blockräkning",
+        "pl": "Liczba blokad",
+        "ru": "Количество блокировок",
+        "ko": "블록 수",
+        "ar": "عدد الكتل"
       },
       "example": {
-        "en": "3"
+        "en": "3",
+        "nl": "3",
+        "da": "3",
+        "de": "3",
+        "es": "3",
+        "fr": "3",
+        "it": "3",
+        "no": "3",
+        "sv": "3",
+        "pl": "3",
+        "ru": "3",
+        "ko": "3",
+        "ar": "٣"
       }
     }
   ],
@@ -26,20 +86,68 @@
       "type": "autocomplete",
       "name": "key",
       "title": {
-        "en": "Key"
+        "en": "Key",
+        "nl": "Sleutel",
+        "da": "Nøgle",
+        "de": "Schlüssel",
+        "es": "Clave",
+        "fr": "Clé",
+        "it": "Chiave",
+        "no": "Nøkkel",
+        "sv": "Nyckel",
+        "pl": "Klucz",
+        "ru": "Ключ",
+        "ko": "키",
+        "ar": "مفتاح"
       },
       "placeholder": {
-        "en": "Select or create key"
+        "en": "Select or create key",
+        "nl": "Selecteer of maak een sleutel aan",
+        "da": "Vælg eller opret nøgle",
+        "de": "Schlüssel auswählen oder erstellen",
+        "es": "Seleccionar o crear clave",
+        "fr": "Sélectionner ou créer une clé",
+        "it": "Seleziona o crea chiave",
+        "no": "Velg eller opprett nøkkel",
+        "sv": "Välj eller skapa nyckel",
+        "pl": "Wybierz lub utwórz klucz",
+        "ru": "Выберите или создайте ключ",
+        "ko": "키 선택 또는 생성",
+        "ar": "اختر أو أنشئ مفتاحًا"
       }
     },
     {
       "type": "number",
       "name": "count",
       "title": {
-        "en": "Times blocked"
+        "en": "Times blocked",
+        "nl": "Aantal keren geblokkeerd",
+        "da": "Tidspunkter blokeret",
+        "de": "Blockierte Zeiten",
+        "es": "Veces bloqueado",
+        "fr": "Temps bloqués",
+        "it": "Volte bloccate",
+        "no": "Antall ganger blokkert",
+        "sv": "Antal blockeringar",
+        "pl": "Czasy zablokowane",
+        "ru": "Количество блокировок",
+        "ko": "차단된 횟수",
+        "ar": "الأوقات المحظورة"
       },
       "placeholder": {
-        "en": "3"
+        "en": "3",
+        "nl": "3",
+        "da": "3",
+        "de": "3",
+        "es": "3",
+        "fr": "3",
+        "it": "3",
+        "no": "3",
+        "sv": "3",
+        "pl": "3",
+        "ru": "3",
+        "ko": "3",
+        "ar": "٣"
       },
       "min": 1,
       "max": 999999999,

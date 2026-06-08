@@ -9,10 +9,34 @@
     "local"
   ],
   "name": {
-    "en": "Cooldown Manager"
+    "en": "Cooldown Manager",
+    "nl": "Cooldown Manager",
+    "da": "Cooldown Manager",
+    "de": "Cooldown-Manager",
+    "es": "Cooldown Manager",
+    "fr": "Gestionnaire de refroidissement",
+    "it": "Gestore di Raffreddamento",
+    "no": "Cooldown Manager",
+    "sv": "Cooldown Manager",
+    "pl": "Cooldown Manager",
+    "ru": "Менеджер перерывов",
+    "ko": "쿨다운 매니저",
+    "ar": "مدير فترة التهدئة"
   },
   "description": {
-    "en": "Keep Flows from triggering too often with reusable cooldowns, multi-run limits, block-count alerts, and manual override cards."
+    "en": "Keep Flows from triggering too often with reusable cooldowns, multi-run limits, block-count alerts, and manual override cards.",
+    "nl": "Voorkom dat Flows te vaak worden geactiveerd met herbruikbare cooldowns, multi-run limieten, blokkeer-tel waarschuwingen en handmatige override kaarten.",
+    "da": "Hold Flows fra at udløse for ofte med genanvendelige cooldowns, multi-run begrænsninger, blok-tællingsalarmer og manuelle tilsidesættelseskort.",
+    "de": "Verhindere, dass Flows zu oft ausgelöst werden, mit wiederverwendbaren Abkühlzeiten, Multi-Run-Limits, Blockzählungswarnungen und manuellen Überschreibungskarten.",
+    "es": "Evita que los Flows se activen con demasiada frecuencia utilizando cooldowns reutilizables, límites de ejecuciones múltiples, alertas de conteo de bloqueos y tarjetas de anulación manual.",
+    "fr": "Empêchez les Flows de se déclencher trop souvent grâce à des délais de réutilisation, des limites de multi-exécution, des alertes de comptage de blocage et des cartes de dérogation manuelle.",
+    "it": "Impedisci che i Flows si attivino troppo spesso con cooldown riutilizzabili, limiti di esecuzione multipla, avvisi di conteggio blocchi e carte di override manuale.",
+    "no": "Hold Flows fra å utløses for ofte med gjenbrukbare nedkjølingsperioder, begrensninger på flere kjøringer, varsler for blokkeringer, og manuelle overstyringskort.",
+    "sv": "Håll Flows från att triggas för ofta med återanvändbara cooldowns, multi-run begränsningar, block-räknarvarningar och manuella åsidosättningskort.",
+    "pl": "Zabezpiecz Flows przed zbyt częstym uruchamianiem dzięki wielokrotnie używanym cooldownom, limitom wielokrotnego uruchamiania, alertom liczby blokad i kartom ręcznego nadpisywania.",
+    "ru": "Предотвращайте слишком частые срабатывания Flows с помощью многоразовых периодов ожидания, ограничений на количество запусков, оповещений о количестве блокировок и карт ручного обхода.",
+    "ko": "재사용 가능한 쿨다운, 다중 실행 제한, 블록 수 알림, 수동 오버라이드 카드를 사용하여 플로우가 너무 자주 트리거되지 않도록 하세요.",
+    "ar": "احتفظ بتدفقاتك من التشغيل بشكل متكرر باستخدام فترات التهدئة القابلة لإعادة الاستخدام، وحدود التشغيل المتعددة، وتنبيهات عدد الحظر، وبطاقات التجاوز اليدوي."
   },
   "category": [
     "tools"
@@ -48,23 +72,83 @@
       {
         "id": "blocked_count_at_least",
         "title": {
-          "en": "[[key]] blocked [[count]] or more times in a row"
+          "en": "[[key]] blocked [[count]] or more times in a row",
+          "nl": "[[key]] is [[count]] keer of meer achter elkaar geblokkeerd.",
+          "da": "[[key]] blokeret [[count]] eller flere gange i træk",
+          "de": "[[key]] wurde [[count]]-mal oder öfter hintereinander blockiert.",
+          "es": "[[key]] bloqueado [[count]] o más veces seguidas",
+          "fr": "[[key]] bloqué [[count]] fois ou plus d'affilée",
+          "it": "[[key]] bloccato [[count]] o più volte di seguito",
+          "no": "[[key]] blokkert [[count]] eller flere ganger på rad",
+          "sv": "[[key]] blockerades [[count]] eller fler gånger i rad",
+          "pl": "[[key]] zablokowany [[count]] lub więcej razy z rzędu",
+          "ru": "[[key]] заблокирован [[count]] или более раз подряд",
+          "ko": "[[key]]가 연속으로 [[count]]번 이상 차단되었습니다.",
+          "ar": "[[key]] تم حظره [[count]] مرة أو أكثر على التوالي"
         },
         "titleFormatted": {
-          "en": "[[key]] blocked [[count]] or more times in a row"
+          "en": "[[key]] blocked [[count]] or more times in a row",
+          "nl": "[[key]] is [[count]] keer of meer achter elkaar geblokkeerd.",
+          "da": "[[key]] blokeret [[count]] eller flere gange i træk",
+          "de": "[[key]] wurde [[count]] Mal oder öfter hintereinander blockiert.",
+          "es": "[[key]] bloqueado [[count]] o más veces seguidas",
+          "fr": "[[key]] bloqué [[count]] fois ou plus d'affilée",
+          "it": "[[key]] bloccato [[count]] o più volte di seguito",
+          "no": "[[key]] blokkert [[count]] eller flere ganger på rad",
+          "sv": "[[key]] blockerades [[count]] eller fler gånger i rad",
+          "pl": "[[key]] zablokowany [[count]] lub więcej razy z rzędu",
+          "ru": "[[key]] заблокирован [[count]] или более раз подряд",
+          "ko": "[[key]]가 연속으로 [[count]]번 이상 차단되었습니다.",
+          "ar": "[[key]] تم حظره [[count]] مرة أو أكثر على التوالي"
         },
         "hint": {
-          "en": "Runs when the Allow condition has blocked at least the chosen number of times in a row since the last allowed run. Passes the current block count as a Flow tag."
+          "en": "Runs when the Allow condition has blocked at least the chosen number of times in a row since the last allowed run. Passes the current block count as a Flow tag.",
+          "nl": "Wordt uitgevoerd wanneer de Toestaan-voorwaarde ten minste het gekozen aantal keren op rij heeft geblokkeerd sinds de laatste toegestane uitvoering. Geeft het huidige aantal blokkeringen door als een Flow-tag.",
+          "da": "Kører, når Tillad-betingelsen har blokeret mindst det valgte antal gange i træk siden sidste tilladte kørsel. Sender det aktuelle antal blokeringer som et Flow-tag.",
+          "de": "Wird ausgeführt, wenn die Erlaubnisbedingung seit dem letzten erlaubten Durchlauf mindestens die gewählte Anzahl an aufeinanderfolgenden Malen blockiert hat. Übermittelt die aktuelle Blockanzahl als Flow-Tag.",
+          "es": "Se ejecuta cuando la condición de Permitir ha bloqueado al menos el número de veces elegido consecutivamente desde la última ejecución permitida. Pasa el conteo actual de bloqueos como una etiqueta de Flow.",
+          "fr": "S'exécute lorsque la condition d'autorisation a bloqué au moins le nombre de fois choisi d'affilée depuis la dernière exécution autorisée. Transmet le nombre actuel de blocages en tant que tag de Flow.",
+          "it": "Viene eseguito quando la condizione di Permesso ha bloccato almeno il numero scelto di volte consecutive dall'ultima esecuzione consentita. Passa il conteggio attuale dei blocchi come tag di Flusso.",
+          "no": "Kjører når Tillat-betingelsen har blokkert minst det valgte antallet ganger på rad siden forrige tillatte kjøring. Sender den nåværende blokkeringstelleren som en Flow-tag.",
+          "sv": "Körs när Tillåt-villkoret har blockerat minst det valda antalet gånger i rad sedan den senaste tillåtna körningen. Skickar det aktuella blockantalet som en Flow-tagg.",
+          "pl": "Uruchamia się, gdy warunek Zezwól zablokował co najmniej wybraną liczbę razy z rzędu od ostatniego dozwolonego uruchomienia. Przekazuje bieżącą liczbę blokad jako tag Flow.",
+          "ru": "Запускается, когда условие разрешения было заблокировано как минимум выбранное количество раз подряд с момента последнего разрешенного запуска. Передает текущее количество блокировок в виде тега Flow.",
+          "ko": "허용 조건이 마지막으로 허용된 실행 이후 연속으로 선택한 횟수 이상 차단되었을 때 실행됩니다. 현재 차단 횟수를 플로우 태그로 전달합니다.",
+          "ar": "يعمل عندما تكون حالة السماح قد منعت على الأقل العدد المختار من المرات على التوالي منذ آخر تشغيل مسموح به. يمرر عدد الحظر الحالي كعلامة تدفق."
         },
         "tokens": [
           {
             "name": "block_count",
             "type": "number",
             "title": {
-              "en": "Block count"
+              "en": "Block count",
+              "nl": "Bloktelling",
+              "da": "Blokantal",
+              "de": "Blockanzahl",
+              "es": "Conteo de bloques",
+              "fr": "Nombre de blocs",
+              "it": "Conteggio blocchi",
+              "no": "Blokktelling",
+              "sv": "Blockantal",
+              "pl": "Liczba blokad",
+              "ru": "Количество блокировок",
+              "ko": "블록 수",
+              "ar": "عدد الكتل"
             },
             "example": {
-              "en": "50"
+              "en": "50",
+              "nl": "vijftig",
+              "da": "50",
+              "de": "50",
+              "es": "50",
+              "fr": "50",
+              "it": "50",
+              "no": "50",
+              "sv": "50",
+              "pl": "50",
+              "ru": "50",
+              "ko": "50",
+              "ar": "٥٠"
             }
           }
         ],
@@ -73,20 +157,68 @@
             "type": "autocomplete",
             "name": "key",
             "title": {
-              "en": "Key"
+              "en": "Key",
+              "nl": "Sleutel",
+              "da": "Nøgle",
+              "de": "Schlüssel",
+              "es": "Clave",
+              "fr": "Clé",
+              "it": "Chiave",
+              "no": "Nøkkel",
+              "sv": "Nyckel",
+              "pl": "Klucz",
+              "ru": "Ключ",
+              "ko": "키",
+              "ar": "مفتاح"
             },
             "placeholder": {
-              "en": "Select or create key"
+              "en": "Select or create key",
+              "nl": "Selecteer of maak een sleutel aan",
+              "da": "Vælg eller opret nøgle",
+              "de": "Schlüssel auswählen oder erstellen",
+              "es": "Seleccionar o crear clave",
+              "fr": "Sélectionner ou créer une clé",
+              "it": "Seleziona o crea chiave",
+              "no": "Velg eller opprett nøkkel",
+              "sv": "Välj eller skapa nyckel",
+              "pl": "Wybierz lub utwórz klucz",
+              "ru": "Выберите или создайте ключ",
+              "ko": "키 선택 또는 생성",
+              "ar": "اختر أو أنشئ مفتاحًا"
             }
           },
           {
             "type": "number",
             "name": "count",
             "title": {
-              "en": "At least times blocked"
+              "en": "At least times blocked",
+              "nl": "Minimaal aantal keren geblokkeerd",
+              "da": "Mindst gange blokeret",
+              "de": "Mindestens Zeiten blockiert",
+              "es": "Al menos veces bloqueado",
+              "fr": "Au moins fois bloqué",
+              "it": "Almeno volte bloccate",
+              "no": "Minst ganger blokkert",
+              "sv": "Minst antal gånger blockerad",
+              "pl": "Co najmniej razy zablokowane",
+              "ru": "Заблокировано как минимум раз",
+              "ko": "최소 차단된 시간",
+              "ar": "الأوقات المحظورة على الأقل"
             },
             "placeholder": {
-              "en": "50"
+              "en": "50",
+              "nl": "vijftig",
+              "da": "50",
+              "de": "50",
+              "es": "50",
+              "fr": "50",
+              "it": "50",
+              "no": "50",
+              "sv": "50",
+              "pl": "50",
+              "ru": "50",
+              "ko": "50",
+              "ar": "٥٠"
             },
             "min": 1,
             "max": 999999999,
@@ -97,23 +229,83 @@
       {
         "id": "blocked_count_reached",
         "title": {
-          "en": "[[key]] blocked [[count]] times in a row"
+          "en": "[[key]] blocked [[count]] times in a row",
+          "nl": "[[key]] is [[count]] keer achter elkaar geblokkeerd.",
+          "da": "[[key]] blokeret [[count]] gange i træk",
+          "de": "[[key]] wurde [[count]] Mal hintereinander blockiert.",
+          "es": "[[key]] bloqueado [[count]] veces seguidas",
+          "fr": "[[key]] bloqué [[count]] fois de suite",
+          "it": "[[key]] bloccato [[count]] volte di fila",
+          "no": "[[key]] blokkert [[count]] ganger på rad",
+          "sv": "[[key]] blockerades [[count]] gånger i rad",
+          "pl": "[[key]] zablokowany [[count]] razy z rzędu",
+          "ru": "[[key]] заблокирован [[count]] раз подряд",
+          "ko": "[[key]]가 연속으로 [[count]]번 차단되었습니다.",
+          "ar": "[[key]] تم حظره [[count]] مرة على التوالي"
         },
         "titleFormatted": {
-          "en": "[[key]] blocked [[count]] times in a row"
+          "en": "[[key]] blocked [[count]] times in a row",
+          "nl": "[[key]] is [[count]] keer achter elkaar geblokkeerd.",
+          "da": "[[key]] blokeret [[count]] gange i træk",
+          "de": "[[key]] wurde [[count]] Mal hintereinander blockiert",
+          "es": "[[key]] bloqueado [[count]] veces seguidas",
+          "fr": "[[key]] bloqué [[count]] fois de suite",
+          "it": "[[key]] bloccato [[count]] volte di fila",
+          "no": "[[key]] blokkert [[count]] ganger på rad",
+          "sv": "[[key]] blockerades [[count]] gånger i rad",
+          "pl": "[[key]] zablokowany [[count]] razy z rzędu",
+          "ru": "[[key]] заблокирован [[count]] раз подряд",
+          "ko": "[[key]]가 연속으로 [[count]]번 차단되었습니다.",
+          "ar": "[[key]] تم حظره [[count]] مرة على التوالي"
         },
         "hint": {
-          "en": "Runs when the Allow condition blocks exactly the chosen number of times in a row since the last allowed run. Passes the current block count as a Flow tag."
+          "en": "Runs when the Allow condition blocks exactly the chosen number of times in a row since the last allowed run. Passes the current block count as a Flow tag.",
+          "nl": "Wordt uitgevoerd wanneer de Toestaan-voorwaarde precies het gekozen aantal keren achter elkaar blokkeert sinds de laatste toegestane uitvoering. Geeft het huidige aantal blokkeringen door als een Flow-tag.",
+          "da": "Kører, når Tillad-betingelsen blokerer præcis det valgte antal gange i træk siden sidste tilladte kørsel. Sender det aktuelle bloktælling som et Flow-tag.",
+          "de": "Wird ausgeführt, wenn die Erlauben-Bedingung genau die gewählte Anzahl an aufeinanderfolgenden Malen blockiert hat, seitdem der letzte erlaubte Durchlauf stattgefunden hat. Übermittelt die aktuelle Blockanzahl als Flow-Tag.",
+          "es": "Se ejecuta cuando la condición de Permitir bloquea exactamente el número de veces elegido consecutivamente desde la última ejecución permitida. Pasa el conteo actual de bloqueos como una etiqueta de Flow.",
+          "fr": "S'exécute lorsque la condition d'autorisation bloque exactement le nombre de fois choisi consécutivement depuis la dernière exécution autorisée. Transmet le nombre actuel de blocages en tant que balise Flow.",
+          "it": "Viene eseguito quando la condizione di Permesso blocca esattamente il numero scelto di volte consecutive dall'ultima esecuzione consentita. Passa il conteggio attuale dei blocchi come un tag di Flusso.",
+          "no": "Kjører når Tillat-betingelsen blokkerer nøyaktig det valgte antallet ganger på rad siden forrige tillatte kjøring. Sender den nåværende blokkeringstelleren som en Flow-tag.",
+          "sv": "Körs när Tillåt-villkoret blockeras exakt det valda antalet gånger i rad sedan den senaste tillåtna körningen. Skickar det aktuella blockantalet som en Flow-tagg.",
+          "pl": "Uruchamia się, gdy warunek Zezwól blokuje dokładnie wybraną liczbę razy z rzędu od ostatniego dozwolonego uruchomienia. Przekazuje bieżącą liczbę blokad jako znacznik Flow.",
+          "ru": "Запускается, когда условие разрешения блокируется ровно выбранное количество раз подряд с момента последнего разрешенного запуска. Передает текущее количество блокировок как тег потока.",
+          "ko": "마지막으로 허용된 실행 이후, 허용 조건이 정확히 선택된 횟수만큼 연속으로 차단될 때 실행됩니다. 현재 차단 횟수를 플로우 태그로 전달합니다.",
+          "ar": "يعمل عندما تمنع حالة السماح بالضبط العدد المختار من المرات على التوالي منذ آخر تشغيل مسموح به. يمرر عدد الكتل الحالي كعلامة تدفق."
         },
         "tokens": [
           {
             "name": "block_count",
             "type": "number",
             "title": {
-              "en": "Block count"
+              "en": "Block count",
+              "nl": "Bloktelling",
+              "da": "Blokantal",
+              "de": "Blockanzahl",
+              "es": "Conteo de bloques",
+              "fr": "Nombre de blocs",
+              "it": "Conteggio blocchi",
+              "no": "Blokktelling",
+              "sv": "Blockräkning",
+              "pl": "Liczba blokad",
+              "ru": "Количество блокировок",
+              "ko": "블록 수",
+              "ar": "عدد الكتل"
             },
             "example": {
-              "en": "3"
+              "en": "3",
+              "nl": "3",
+              "da": "3",
+              "de": "3",
+              "es": "3",
+              "fr": "3",
+              "it": "3",
+              "no": "3",
+              "sv": "3",
+              "pl": "3",
+              "ru": "3",
+              "ko": "3",
+              "ar": "٣"
             }
           }
         ],
@@ -122,20 +314,68 @@
             "type": "autocomplete",
             "name": "key",
             "title": {
-              "en": "Key"
+              "en": "Key",
+              "nl": "Sleutel",
+              "da": "Nøgle",
+              "de": "Schlüssel",
+              "es": "Clave",
+              "fr": "Clé",
+              "it": "Chiave",
+              "no": "Nøkkel",
+              "sv": "Nyckel",
+              "pl": "Klucz",
+              "ru": "Ключ",
+              "ko": "키",
+              "ar": "مفتاح"
             },
             "placeholder": {
-              "en": "Select or create key"
+              "en": "Select or create key",
+              "nl": "Selecteer of maak een sleutel aan",
+              "da": "Vælg eller opret nøgle",
+              "de": "Schlüssel auswählen oder erstellen",
+              "es": "Seleccionar o crear clave",
+              "fr": "Sélectionner ou créer une clé",
+              "it": "Seleziona o crea chiave",
+              "no": "Velg eller opprett nøkkel",
+              "sv": "Välj eller skapa nyckel",
+              "pl": "Wybierz lub utwórz klucz",
+              "ru": "Выберите или создайте ключ",
+              "ko": "키 선택 또는 생성",
+              "ar": "اختر أو أنشئ مفتاحًا"
             }
           },
           {
             "type": "number",
             "name": "count",
             "title": {
-              "en": "Times blocked"
+              "en": "Times blocked",
+              "nl": "Aantal keren geblokkeerd",
+              "da": "Tidspunkter blokeret",
+              "de": "Blockierte Zeiten",
+              "es": "Veces bloqueado",
+              "fr": "Temps bloqués",
+              "it": "Volte bloccate",
+              "no": "Antall ganger blokkert",
+              "sv": "Antal blockeringar",
+              "pl": "Czasy zablokowane",
+              "ru": "Количество блокировок",
+              "ko": "차단된 횟수",
+              "ar": "الأوقات المحظورة"
             },
             "placeholder": {
-              "en": "3"
+              "en": "3",
+              "nl": "3",
+              "da": "3",
+              "de": "3",
+              "es": "3",
+              "fr": "3",
+              "it": "3",
+              "no": "3",
+              "sv": "3",
+              "pl": "3",
+              "ru": "3",
+              "ko": "3",
+              "ar": "٣"
             },
             "min": 1,
             "max": 999999999,
@@ -149,33 +389,117 @@
         "id": "allow_once",
         "highlight": true,
         "title": {
-          "en": "Allow [[key]] once every [[duration]] [[duration_unit]]"
+          "en": "Allow [[key]] once every [[duration]] [[duration_unit]]",
+          "nl": "Sta [[key]] toe eens per [[duration]] [[duration_unit]]",
+          "da": "Tillad [[key]] én gang hver [[duration]] [[duration_unit]]",
+          "de": "Erlaube [[key]] einmal alle [[duration]] [[duration_unit]]",
+          "es": "Permitir [[key]] una vez cada [[duration]] [[duration_unit]]",
+          "fr": "Autoriser [[key]] une fois toutes les [[duration]] [[duration_unit]]",
+          "it": "Consenti [[key]] una volta ogni [[duration]] [[duration_unit]]",
+          "no": "Tillat [[key]] en gang hver [[duration]] [[duration_unit]]",
+          "sv": "Tillåt [[key]] en gång var [[duration]] [[duration_unit]]",
+          "pl": "Zezwól na [[key]] raz na [[duration]] [[duration_unit]]",
+          "ru": "Разрешить [[key]] один раз в [[duration]] [[duration_unit]]",
+          "ko": "[[duration]] [[duration_unit]]마다 [[key]]을(를) 한 번 허용하세요.",
+          "ar": "السماح لـ [[key]] مرة كل [[duration]] [[duration_unit]]"
         },
         "titleFormatted": {
-          "en": "Allow [[key]] once every [[duration]] [[duration_unit]]"
+          "en": "Allow [[key]] once every [[duration]] [[duration_unit]]",
+          "nl": "Sta [[key]] toe eens per [[duration]] [[duration_unit]]",
+          "da": "Tillad [[key]] én gang hver [[duration]] [[duration_unit]]",
+          "de": "Erlaube [[key]] einmal alle [[duration]] [[duration_unit]]",
+          "es": "Permitir [[key]] una vez cada [[duration]] [[duration_unit]]",
+          "fr": "Autoriser [[key]] une fois toutes les [[duration]] [[duration_unit]]",
+          "it": "Consenti [[key]] una volta ogni [[duration]] [[duration_unit]]",
+          "no": "Tillat [[key]] en gang hver [[duration]] [[duration_unit]]",
+          "sv": "Tillåt [[key]] en gång var [[duration]] [[duration_unit]]",
+          "pl": "Zezwól na [[key]] raz na [[duration]] [[duration_unit]]",
+          "ru": "Разрешить [[key]] один раз в [[duration]] [[duration_unit]]",
+          "ko": "[[duration]] [[duration_unit]]마다 [[key]]을(를) 한 번 허용하세요.",
+          "ar": "السماح لـ [[key]] مرة كل [[duration]] [[duration_unit]]"
         },
         "hint": {
-          "en": "Checks whether the cooldown is active, atomically activates it if allowed, and returns true to continue the Flow or false to stop it."
+          "en": "Checks whether the cooldown is active, atomically activates it if allowed, and returns true to continue the Flow or false to stop it.",
+          "nl": "Controleert of de cooldown actief is, activeert deze indien toegestaan en geeft true terug om de Flow voort te zetten of false om deze te stoppen.",
+          "da": "Kontrollerer, om cooldownen er aktiv, aktiverer den atomisk, hvis det er tilladt, og returnerer sand for at fortsætte Flowet eller falsk for at stoppe det.",
+          "de": "Prüft, ob die Abkühlzeit aktiv ist, aktiviert sie atomar, wenn erlaubt, und gibt true zurück, um den Flow fortzusetzen, oder false, um ihn zu stoppen.",
+          "es": "Verifica si el tiempo de espera está activo, lo activa de manera atómica si está permitido, y devuelve verdadero para continuar el Flow o falso para detenerlo.",
+          "fr": "Vérifie si le délai de récupération est actif, l'active de manière atomique si c'est autorisé, et renvoie vrai pour continuer le Flow ou faux pour l'arrêter.",
+          "it": "Verifica se il cooldown è attivo, lo attiva automaticamente se consentito e restituisce true per continuare il Flow o false per fermarlo.",
+          "no": "Sjekker om nedkjølingen er aktiv, aktiverer den atomisk hvis det er tillatt, og returnerer true for å fortsette flyten eller false for å stoppe den.",
+          "sv": "Kontrollerar om nedkylningen är aktiv, aktiverar den atomiskt om det är tillåtet, och returnerar sant för att fortsätta Flödet eller falskt för att stoppa det.",
+          "pl": "Sprawdza, czy cooldown jest aktywny, atomowo go aktywuje, jeśli jest to dozwolone, i zwraca wartość true, aby kontynuować Flow, lub false, aby go zatrzymać.",
+          "ru": "Проверяет, активен ли период охлаждения, атомарно активирует его, если это разрешено, и возвращает true для продолжения потока или false для его остановки.",
+          "ko": "쿨다운이 활성화되어 있는지 확인하고, 허용되면 원자적으로 활성화하며, 플로우를 계속하기 위해 true를 반환하거나 중지하기 위해 false를 반환합니다.",
+          "ar": "يتحقق مما إذا كانت فترة التهدئة نشطة، ويفعلها تلقائيًا إذا كان مسموحًا بذلك، ويعيد \"صحيح\" لمتابعة التدفق أو \"خطأ\" لإيقافه."
         },
         "args": [
           {
             "type": "autocomplete",
             "name": "key",
             "title": {
-              "en": "Key"
+              "en": "Key",
+              "nl": "Sleutel",
+              "da": "Nøgle",
+              "de": "Schlüssel",
+              "es": "Clave",
+              "fr": "Clé",
+              "it": "Chiave",
+              "no": "Nøkkel",
+              "sv": "Nyckel",
+              "pl": "Klucz",
+              "ru": "Ключ",
+              "ko": "키",
+              "ar": "مفتاح"
             },
             "placeholder": {
-              "en": "Select or create key"
+              "en": "Select or create key",
+              "nl": "Selecteer of maak een sleutel aan",
+              "da": "Vælg eller opret nøgle",
+              "de": "Schlüssel auswählen oder erstellen",
+              "es": "Seleccionar o crear clave",
+              "fr": "Sélectionner ou créer une clé",
+              "it": "Seleziona o crea chiave",
+              "no": "Velg eller opprett nøkkel",
+              "sv": "Välj eller skapa nyckel",
+              "pl": "Wybierz lub utwórz klucz",
+              "ru": "Выберите или создайте ключ",
+              "ko": "키 선택 또는 생성",
+              "ar": "اختر أو أنشئ مفتاحًا"
             }
           },
           {
             "type": "number",
             "name": "duration",
             "title": {
-              "en": "Duration"
+              "en": "Duration",
+              "nl": "Duur",
+              "da": "Varighed",
+              "de": "Dauer",
+              "es": "Duración",
+              "fr": "Durée",
+              "it": "Durata",
+              "no": "Varighet",
+              "sv": "Varaktighet",
+              "pl": "Czas trwania",
+              "ru": "Продолжительность",
+              "ko": "기간",
+              "ar": "المدة الزمنية"
             },
             "placeholder": {
-              "en": "10"
+              "en": "10",
+              "nl": "10",
+              "da": "10",
+              "de": "10",
+              "es": "10",
+              "fr": "10",
+              "it": "10",
+              "no": "10",
+              "sv": "10",
+              "pl": "10",
+              "ru": "10",
+              "ko": "10",
+              "ar": "١٠"
             },
             "min": 1,
             "max": 999999999,
@@ -185,31 +509,91 @@
             "type": "dropdown",
             "name": "duration_unit",
             "title": {
-              "en": "Unit"
+              "en": "Unit",
+              "nl": "Eenheid",
+              "da": "Enhed",
+              "de": "Einheit",
+              "es": "Unidad",
+              "fr": "Unité",
+              "it": "Unità",
+              "no": "Enhet",
+              "sv": "Enhet",
+              "pl": "Jednostka",
+              "ru": "Единица",
+              "ko": "단위",
+              "ar": "وحدة"
             },
             "values": [
               {
                 "id": "seconds",
                 "label": {
-                  "en": "seconds"
+                  "en": "seconds",
+                  "nl": "seconden",
+                  "da": "sekunder",
+                  "de": "Sekunden",
+                  "es": "segundos",
+                  "fr": "secondes",
+                  "it": "secondi",
+                  "no": "sekunder",
+                  "sv": "sekunder",
+                  "pl": "sekundy",
+                  "ru": "секунды",
+                  "ko": "초",
+                  "ar": "ثوانٍ"
                 }
               },
               {
                 "id": "minutes",
                 "label": {
-                  "en": "minutes"
+                  "en": "minutes",
+                  "nl": "minuten",
+                  "da": "minutter",
+                  "de": "Minuten",
+                  "es": "minutos",
+                  "fr": "minutes",
+                  "it": "minuti",
+                  "no": "minutter",
+                  "sv": "minuter",
+                  "pl": "minuty",
+                  "ru": "минуты",
+                  "ko": "분",
+                  "ar": "دقائق"
                 }
               },
               {
                 "id": "hours",
                 "label": {
-                  "en": "hours"
+                  "en": "hours",
+                  "nl": "uren",
+                  "da": "timer",
+                  "de": "Stunden",
+                  "es": "horas",
+                  "fr": "heures",
+                  "it": "ore",
+                  "no": "timer",
+                  "sv": "timmar",
+                  "pl": "godziny",
+                  "ru": "часы",
+                  "ko": "시간",
+                  "ar": "ساعات"
                 }
               },
               {
                 "id": "days",
                 "label": {
-                  "en": "days"
+                  "en": "days",
+                  "nl": "dagen",
+                  "da": "dage",
+                  "de": "Tage",
+                  "es": "días",
+                  "fr": "jours",
+                  "it": "giorni",
+                  "no": "dager",
+                  "sv": "dagar",
+                  "pl": "dni",
+                  "ru": "дни",
+                  "ko": "일",
+                  "ar": "أيام"
                 }
               }
             ]
@@ -220,36 +604,132 @@
         "id": "allow_up_to",
         "highlight": true,
         "title": {
-          "en": "Allow [[key]] up to [[max_count]] times every [[duration]] [[duration_unit]]"
+          "en": "Allow [[key]] up to [[max_count]] times every [[duration]] [[duration_unit]]",
+          "nl": "Sta [[key]] tot [[max_count]] keer toe elke [[duration]] [[duration_unit]]",
+          "da": "Tillad [[key]] op til [[max_count]] gange hver [[duration]] [[duration_unit]]",
+          "de": "Erlaube [[key]] bis zu [[max_count]] Mal alle [[duration]] [[duration_unit]]",
+          "es": "Permitir [[key]] hasta [[max_count]] veces cada [[duration]] [[duration_unit]]",
+          "fr": "Autoriser [[key]] jusqu'à [[max_count]] fois toutes les [[duration]] [[duration_unit]]",
+          "it": "Consenti [[key]] fino a [[max_count]] volte ogni [[duration]] [[duration_unit]]",
+          "no": "Tillat [[key]] opptil [[max_count]] ganger hver [[duration]] [[duration_unit]]",
+          "sv": "Tillåt [[key]] upp till [[max_count]] gånger varje [[duration]] [[duration_unit]]",
+          "pl": "Zezwól na [[key]] do [[max_count]] razy co [[duration]] [[duration_unit]]",
+          "ru": "Разрешить [[key]] до [[max_count]] раз каждые [[duration]] [[duration_unit]]",
+          "ko": "[[duration]] [[duration_unit]]마다 [[key]]를 최대 [[max_count]]번 허용합니다.",
+          "ar": "السماح لـ [[key]] حتى [[max_count]] مرات كل [[duration]] [[duration_unit]]"
         },
         "titleFormatted": {
-          "en": "Allow [[key]] up to [[max_count]] times every [[duration]] [[duration_unit]]"
+          "en": "Allow [[key]] up to [[max_count]] times every [[duration]] [[duration_unit]]",
+          "nl": "Sta [[key]] tot [[max_count]] keer toe elke [[duration]] [[duration_unit]]",
+          "da": "Tillad [[key]] op til [[max_count]] gange hver [[duration]] [[duration_unit]]",
+          "de": "Erlaube [[key]] bis zu [[max_count]] Mal alle [[duration]] [[duration_unit]]",
+          "es": "Permitir [[key]] hasta [[max_count]] veces cada [[duration]] [[duration_unit]]",
+          "fr": "Autoriser [[key]] jusqu'à [[max_count]] fois toutes les [[duration]] [[duration_unit]]",
+          "it": "Consenti [[key]] fino a [[max_count]] volte ogni [[duration]] [[duration_unit]]",
+          "no": "Tillat [[key]] opptil [[max_count]] ganger hver [[duration]] [[duration_unit]]",
+          "sv": "Tillåt [[key]] upp till [[max_count]] gånger varje [[duration]] [[duration_unit]]",
+          "pl": "Zezwól na [[key]] do [[max_count]] razy co [[duration]] [[duration_unit]]",
+          "ru": "Разрешить [[key]] до [[max_count]] раз каждые [[duration]] [[duration_unit]]",
+          "ko": "[[duration]] [[duration_unit]]마다 [[key]]를 최대 [[max_count]]번 허용합니다.",
+          "ar": "السماح لـ [[key]] حتى [[max_count]] مرات كل [[duration]] [[duration_unit]]"
         },
         "hint": {
-          "en": "Checks whether the key can still run in the current interval, counts as one time if allowed, and returns true to continue the Flow or false to stop it."
+          "en": "Checks whether the key can still run in the current interval, counts as one time if allowed, and returns true to continue the Flow or false to stop it.",
+          "nl": "Controleert of de sleutel nog kan draaien in het huidige interval, telt als één keer als het is toegestaan, en geeft true terug om de Flow voort te zetten of false om deze te stoppen.",
+          "da": "Kontrollerer, om nøglen stadig kan køre i det nuværende interval, tæller som én gang, hvis det er tilladt, og returnerer sand for at fortsætte Flowet eller falsk for at stoppe det.",
+          "de": "Prüft, ob der Schlüssel im aktuellen Intervall noch ausgeführt werden kann, zählt als einmal, wenn erlaubt, und gibt true zurück, um den Flow fortzusetzen, oder false, um ihn zu stoppen.",
+          "es": "Verifica si la clave aún puede ejecutarse en el intervalo actual, cuenta como una vez si se permite, y devuelve verdadero para continuar el Flujo o falso para detenerlo.",
+          "fr": "Vérifie si la clé peut encore fonctionner dans l'intervalle actuel, compte comme une fois si autorisé, et renvoie vrai pour continuer le Flow ou faux pour l'arrêter.",
+          "it": "Verifica se la chiave può ancora essere eseguita nell'intervallo corrente, conta come una volta se consentito e restituisce vero per continuare il Flusso o falso per fermarlo.",
+          "no": "Sjekker om nøkkelen fortsatt kan kjøre i det nåværende intervallet, teller som én gang hvis tillatt, og returnerer sann for å fortsette flyten eller usann for å stoppe den.",
+          "sv": "Kontrollerar om nyckeln fortfarande kan köras i det aktuella intervallet, räknas som en gång om det är tillåtet, och returnerar sant för att fortsätta Flödet eller falskt för att stoppa det.",
+          "pl": "Sprawdza, czy klucz może nadal działać w bieżącym przedziale czasowym, liczy się jako jedno użycie, jeśli jest dozwolone, i zwraca wartość true, aby kontynuować Flow, lub false, aby go zatrzymać.",
+          "ru": "Проверяет, может ли ключ все еще работать в текущем интервале, засчитывается как одно использование, если разрешено, и возвращает true для продолжения потока или false для его остановки.",
+          "ko": "현재 간격에서 키가 여전히 실행될 수 있는지 확인하고, 허용되면 한 번으로 계산하며, Flow를 계속하기 위해 true를 반환하거나 중지하기 위해 false를 반환합니다.",
+          "ar": "يتحقق مما إذا كان المفتاح لا يزال يمكنه العمل في الفترة الحالية، ويُحسب كوقت واحد إذا كان مسموحًا، ويعيد \"صحيح\" لمتابعة التدفق أو \"خطأ\" لإيقافه."
         },
         "args": [
           {
             "type": "autocomplete",
             "name": "key",
             "title": {
-              "en": "Key"
+              "en": "Key",
+              "nl": "Sleutel",
+              "da": "Nøgle",
+              "de": "Schlüssel",
+              "es": "Clave",
+              "fr": "Clé",
+              "it": "Chiave",
+              "no": "Nøkkel",
+              "sv": "Nyckel",
+              "pl": "Klucz",
+              "ru": "Ключ",
+              "ko": "키",
+              "ar": "مفتاح"
             },
             "placeholder": {
-              "en": "Select or create key"
+              "en": "Select or create key",
+              "nl": "Selecteer of maak een sleutel aan",
+              "da": "Vælg eller opret nøgle",
+              "de": "Schlüssel auswählen oder erstellen",
+              "es": "Seleccionar o crear clave",
+              "fr": "Sélectionner ou créer une clé",
+              "it": "Seleziona o crea chiave",
+              "no": "Velg eller opprett nøkkel",
+              "sv": "Välj eller skapa nyckel",
+              "pl": "Wybierz lub utwórz klucz",
+              "ru": "Выберите или создайте ключ",
+              "ko": "키 선택 또는 생성",
+              "ar": "اختر أو أنشئ مفتاحًا"
             }
           },
           {
             "type": "number",
             "name": "max_count",
             "title": {
-              "en": "Max times"
+              "en": "Max times",
+              "nl": "Maximale keren",
+              "da": "Maksimale antal gange",
+              "de": "Maximale Zeiten",
+              "es": "Tiempos máximos",
+              "fr": "Temps max",
+              "it": "Tempo massimo",
+              "no": "Maks antall ganger",
+              "sv": "Max antal gånger",
+              "pl": "Maksymalna liczba razy",
+              "ru": "Максимальное количество раз",
+              "ko": "최대 횟수",
+              "ar": "الحد الأقصى للمرات"
             },
             "placeholder": {
-              "en": "3"
+              "en": "3",
+              "nl": "3",
+              "da": "3",
+              "de": "3",
+              "es": "3",
+              "fr": "3",
+              "it": "3",
+              "no": "3",
+              "sv": "3",
+              "pl": "3",
+              "ru": "3",
+              "ko": "3",
+              "ar": "٣"
             },
             "hint": {
-              "en": "Whole number of 1 or greater"
+              "en": "Whole number of 1 or greater",
+              "nl": "Heel getal van 1 of groter",
+              "da": "Heltal på 1 eller større",
+              "de": "Ganze Zahl von 1 oder größer",
+              "es": "Número entero de 1 o mayor",
+              "fr": "Nombre entier de 1 ou plus grand",
+              "it": "Numero intero pari o maggiore di 1",
+              "no": "Hele tall fra 1 eller større",
+              "sv": "Heltal på 1 eller större",
+              "pl": "Liczba całkowita równa 1 lub większa",
+              "ru": "Целое число 1 или больше",
+              "ko": "1 이상의 정수",
+              "ar": "عدد صحيح 1 أو أكبر"
             },
             "min": 1,
             "max": 999999999,
@@ -259,10 +739,34 @@
             "type": "number",
             "name": "duration",
             "title": {
-              "en": "Duration"
+              "en": "Duration",
+              "nl": "Duur",
+              "da": "Varighed",
+              "de": "Dauer",
+              "es": "Duración",
+              "fr": "Durée",
+              "it": "Durata",
+              "no": "Varighet",
+              "sv": "Varaktighet",
+              "pl": "Czas trwania",
+              "ru": "Продолжительность",
+              "ko": "기간",
+              "ar": "المدة الزمنية"
             },
             "placeholder": {
-              "en": "10"
+              "en": "10",
+              "nl": "10",
+              "da": "10",
+              "de": "10",
+              "es": "10",
+              "fr": "10",
+              "it": "10",
+              "no": "10",
+              "sv": "10",
+              "pl": "10",
+              "ru": "10",
+              "ko": "10",
+              "ar": "١٠"
             },
             "min": 1,
             "max": 999999999,
@@ -272,31 +776,91 @@
             "type": "dropdown",
             "name": "duration_unit",
             "title": {
-              "en": "Unit"
+              "en": "Unit",
+              "nl": "Eenheid",
+              "da": "Enhed",
+              "de": "Einheit",
+              "es": "Unidad",
+              "fr": "Unité",
+              "it": "Unità",
+              "no": "Enhet",
+              "sv": "Enhet",
+              "pl": "Jednostka",
+              "ru": "Единица",
+              "ko": "단위",
+              "ar": "وحدة"
             },
             "values": [
               {
                 "id": "seconds",
                 "label": {
-                  "en": "seconds"
+                  "en": "seconds",
+                  "nl": "seconden",
+                  "da": "sekunder",
+                  "de": "Sekunden",
+                  "es": "segundos",
+                  "fr": "secondes",
+                  "it": "secondi",
+                  "no": "sekunder",
+                  "sv": "sekunder",
+                  "pl": "sekundy",
+                  "ru": "секунды",
+                  "ko": "초",
+                  "ar": "ثوانٍ"
                 }
               },
               {
                 "id": "minutes",
                 "label": {
-                  "en": "minutes"
+                  "en": "minutes",
+                  "nl": "minuten",
+                  "da": "minutter",
+                  "de": "Minuten",
+                  "es": "minutos",
+                  "fr": "minutes",
+                  "it": "minuti",
+                  "no": "minutter",
+                  "sv": "minuter",
+                  "pl": "minuty",
+                  "ru": "минуты",
+                  "ko": "분",
+                  "ar": "دقائق"
                 }
               },
               {
                 "id": "hours",
                 "label": {
-                  "en": "hours"
+                  "en": "hours",
+                  "nl": "uren",
+                  "da": "timer",
+                  "de": "Stunden",
+                  "es": "horas",
+                  "fr": "heures",
+                  "it": "ore",
+                  "no": "timer",
+                  "sv": "timmar",
+                  "pl": "godziny",
+                  "ru": "часы",
+                  "ko": "시간",
+                  "ar": "ساعات"
                 }
               },
               {
                 "id": "days",
                 "label": {
-                  "en": "days"
+                  "en": "days",
+                  "nl": "dagen",
+                  "da": "dage",
+                  "de": "Tage",
+                  "es": "días",
+                  "fr": "jours",
+                  "it": "giorni",
+                  "no": "dager",
+                  "sv": "dagar",
+                  "pl": "dni",
+                  "ru": "дни",
+                  "ko": "일",
+                  "ar": "أيام"
                 }
               }
             ]
@@ -308,23 +872,83 @@
       {
         "id": "grant_token",
         "title": {
-          "en": "Restore one time for [[key]]"
+          "en": "Restore one time for [[key]]",
+          "nl": "Herstel één keer voor [[key]]",
+          "da": "Gendan én gang for [[key]]",
+          "de": "Einmalig wiederherstellen für [[key]]",
+          "es": "Restaurar una vez para [[key]]",
+          "fr": "Restaurer une fois pour [[key]]",
+          "it": "Ripristina una volta per [[key]]",
+          "no": "Gjenopprett én gang for [[key]]",
+          "sv": "Återställ en gång för [[key]]",
+          "pl": "Przywróć jednorazowo dla [[key]]",
+          "ru": "Восстановить один раз для [[key]]",
+          "ko": "[[key]]에 대해 한 번 복원하기",
+          "ar": "استعادة مرة واحدة لـ [[key]]"
         },
         "titleFormatted": {
-          "en": "Restore one time for [[key]]"
+          "en": "Restore one time for [[key]]",
+          "nl": "Herstel één keer voor [[key]]",
+          "da": "Gendan én gang for [[key]]",
+          "de": "Einmalig für [[key]] wiederherstellen",
+          "es": "Restaurar una vez para [[key]]",
+          "fr": "Restaurer une fois pour [[key]]",
+          "it": "Ripristina una volta per [[key]]",
+          "no": "Gjenopprett én gang for [[key]]",
+          "sv": "Återställ en gång för [[key]]",
+          "pl": "Przywróć jednorazowo dla [[key]]",
+          "ru": "Восстановить один раз для [[key]]",
+          "ko": "[[key]]에 대해 한 번 복원하기",
+          "ar": "استعادة مرة واحدة لـ [[key]]"
         },
         "hint": {
-          "en": "Makes one more run available for this key in the current interval."
+          "en": "Makes one more run available for this key in the current interval.",
+          "nl": "Maakt één extra run beschikbaar voor deze sleutel in het huidige interval.",
+          "da": "Gør én ekstra kørsel tilgængelig for denne nøgle i det nuværende interval.",
+          "de": "Macht einen weiteren Lauf für diesen Schlüssel im aktuellen Intervall verfügbar.",
+          "es": "Hace que una ejecución más esté disponible para esta clave en el intervalo actual.",
+          "fr": "Rend une exécution supplémentaire disponible pour cette clé dans l'intervalle actuel.",
+          "it": "Rende disponibile un'altra esecuzione per questa chiave nell'intervallo corrente.",
+          "no": "Gjør én ekstra kjøring tilgjengelig for denne nøkkelen i det nåværende intervallet.",
+          "sv": "Gör en extra körning tillgänglig för denna nyckel i det aktuella intervallet.",
+          "pl": "Umożliwia jeszcze jedno uruchomienie dla tego klucza w bieżącym przedziale czasowym.",
+          "ru": "Делает еще один запуск доступным для этого ключа в текущем интервале.",
+          "ko": "현재 간격에서 이 키에 대해 한 번 더 실행할 수 있습니다.",
+          "ar": "يجعل تشغيلًا إضافيًا متاحًا لهذه المفتاح في الفترة الحالية."
         },
         "args": [
           {
             "type": "autocomplete",
             "name": "key",
             "title": {
-              "en": "Key"
+              "en": "Key",
+              "nl": "Sleutel",
+              "da": "Nøgle",
+              "de": "Schlüssel",
+              "es": "Clave",
+              "fr": "Clé",
+              "it": "Chiave",
+              "no": "Nøkkel",
+              "sv": "Nyckel",
+              "pl": "Klucz",
+              "ru": "Ключ",
+              "ko": "키",
+              "ar": "مفتاح"
             },
             "placeholder": {
-              "en": "Select or create key"
+              "en": "Select or create key",
+              "nl": "Selecteer of maak een sleutel aan",
+              "da": "Vælg eller opret nøgle",
+              "de": "Schlüssel auswählen oder erstellen",
+              "es": "Seleccionar o crear clave",
+              "fr": "Sélectionner ou créer une clé",
+              "it": "Seleziona o crea chiave",
+              "no": "Velg eller opprett nøkkel",
+              "sv": "Välj eller skapa nyckel",
+              "pl": "Wybierz lub utwórz klucz",
+              "ru": "Выберите или создайте ключ",
+              "ko": "키 선택 또는 생성",
+              "ar": "اختر أو أنشئ مفتاحًا"
             }
           }
         ]
@@ -332,36 +956,132 @@
       {
         "id": "grant_tokens",
         "title": {
-          "en": "Restore [[token_count]] times for [[key]]"
+          "en": "Restore [[token_count]] times for [[key]]",
+          "nl": "Herstel [[token_count]] keer voor [[key]]",
+          "da": "Gendan [[token_count]] gange for [[key]]",
+          "de": "Wiederherstellen [[token_count]] Mal für [[key]]",
+          "es": "Restaurar [[token_count]] veces para [[key]]",
+          "fr": "Restaurer [[token_count]] fois pour [[key]]",
+          "it": "Ripristina [[token_count]] volte per [[key]]",
+          "no": "Gjenopprett [[token_count]] ganger for [[key]]",
+          "sv": "Återställ [[token_count]] gånger för [[key]]",
+          "pl": "Przywróć [[token_count]] razy dla [[key]]",
+          "ru": "Восстановить [[token_count]] раз для [[key]]",
+          "ko": "[[key]]에 대해 [[token_count]]회 복원하기",
+          "ar": "استعادة [[token_count]] مرات لـ [[key]]"
         },
         "titleFormatted": {
-          "en": "Restore [[token_count]] times for [[key]]"
+          "en": "Restore [[token_count]] times for [[key]]",
+          "nl": "Herstel [[token_count]] keer voor [[key]]",
+          "da": "Gendan [[token_count]] gange for [[key]]",
+          "de": "Wiederherstellen [[token_count]] Mal für [[key]]",
+          "es": "Restaurar [[token_count]] veces para [[key]]",
+          "fr": "Restaurer [[token_count]] fois pour [[key]]",
+          "it": "Ripristina [[token_count]] volte per [[key]]",
+          "no": "Gjenopprett [[token_count]] ganger for [[key]]",
+          "sv": "Återställ [[token_count]] gånger för [[key]]",
+          "pl": "Przywróć [[token_count]] razy dla [[key]]",
+          "ru": "Восстановить [[token_count]] раз для [[key]]",
+          "ko": "[[key]]에 대해 [[token_count]]번 복원하기",
+          "ar": "استعادة [[token_count]] مرات لـ [[key]]"
         },
         "hint": {
-          "en": "Makes that many more runs available for this key in the current interval."
+          "en": "Makes that many more runs available for this key in the current interval.",
+          "nl": "Maakt veel meer runs beschikbaar voor deze sleutel in het huidige interval.",
+          "da": "Gør så mange flere kørseler tilgængelige for denne nøgle i det nuværende interval.",
+          "de": "Macht in diesem Intervall viele weitere Ausführungen für diesen Schlüssel verfügbar.",
+          "es": "Hace que haya muchas más ejecuciones disponibles para esta clave en el intervalo actual.",
+          "fr": "Rend beaucoup plus de tentatives disponibles pour cette clé dans l'intervalle actuel.",
+          "it": "Rende disponibili molte più esecuzioni per questa chiave nell'intervallo corrente.",
+          "no": "Gjør at mange flere kjøringer er tilgjengelige for denne nøkkelen i det nåværende intervallet.",
+          "sv": "Gör så att fler körningar blir tillgängliga för denna nyckel under det aktuella intervallet.",
+          "pl": "Umożliwia wykonanie tylu dodatkowych uruchomień dla tego klucza w bieżącym przedziale czasowym.",
+          "ru": "Делает доступным больше запусков для этого ключа в текущем интервале.",
+          "ko": "현재 간격에서 이 키에 대해 더 많은 실행을 사용할 수 있게 합니다.",
+          "ar": "يجعل عددًا أكبر من العمليات متاحًا لهذا المفتاح في الفترة الحالية."
         },
         "args": [
           {
             "type": "autocomplete",
             "name": "key",
             "title": {
-              "en": "Key"
+              "en": "Key",
+              "nl": "Sleutel",
+              "da": "Nøgle",
+              "de": "Schlüssel",
+              "es": "Clave",
+              "fr": "Clé",
+              "it": "Chiave",
+              "no": "Nøkkel",
+              "sv": "Nyckel",
+              "pl": "Klucz",
+              "ru": "Ключ",
+              "ko": "키",
+              "ar": "مفتاح"
             },
             "placeholder": {
-              "en": "Select or create key"
+              "en": "Select or create key",
+              "nl": "Selecteer of maak een sleutel aan",
+              "da": "Vælg eller opret nøgle",
+              "de": "Schlüssel auswählen oder erstellen",
+              "es": "Seleccionar o crear clave",
+              "fr": "Sélectionner ou créer une clé",
+              "it": "Seleziona o crea chiave",
+              "no": "Velg eller opprett nøkkel",
+              "sv": "Välj eller skapa nyckel",
+              "pl": "Wybierz lub utwórz klucz",
+              "ru": "Выберите или создайте ключ",
+              "ko": "키 선택 또는 생성",
+              "ar": "اختر أو أنشئ مفتاحًا"
             }
           },
           {
             "type": "number",
             "name": "token_count",
             "title": {
-              "en": "Times"
+              "en": "Times",
+              "nl": "Tijden",
+              "da": "Tidspunkter",
+              "de": "Zeiten",
+              "es": "Tiempos",
+              "fr": "Horaires",
+              "it": "Orari",
+              "no": "Tider",
+              "sv": "Tider",
+              "pl": "Czasy",
+              "ru": "Время",
+              "ko": "시간",
+              "ar": "الأوقات"
             },
             "placeholder": {
-              "en": "1"
+              "en": "1",
+              "nl": "1",
+              "da": "1",
+              "de": "1",
+              "es": "1",
+              "fr": "1",
+              "it": "1",
+              "no": "1",
+              "sv": "1",
+              "pl": "1",
+              "ru": "1",
+              "ko": "1",
+              "ar": "١"
             },
             "hint": {
-              "en": "Whole number of 1 or greater"
+              "en": "Whole number of 1 or greater",
+              "nl": "Heel getal van 1 of groter",
+              "da": "Heltal på 1 eller større",
+              "de": "Ganze Zahl von 1 oder größer",
+              "es": "Número entero de 1 o mayor",
+              "fr": "Nombre entier de 1 ou plus grand",
+              "it": "Numero intero pari o maggiore di 1",
+              "no": "Heltall på 1 eller større",
+              "sv": "Heltal på 1 eller större",
+              "pl": "Całkowita liczba 1 lub większa",
+              "ru": "Целое число 1 или больше",
+              "ko": "1 이상의 정수",
+              "ar": "عدد صحيح 1 أو أكبر"
             },
             "min": 1,
             "max": 999999999,
@@ -372,23 +1092,83 @@
       {
         "id": "reset_cooldown",
         "title": {
-          "en": "Reset cooldown for [[key]]"
+          "en": "Reset cooldown for [[key]]",
+          "nl": "Cooldown resetten voor [[key]]",
+          "da": "Nulstil cooldown for [[key]]",
+          "de": "Cooldown für [[key]] zurücksetzen",
+          "es": "Restablecer el tiempo de espera para [[key]]",
+          "fr": "Réinitialiser le délai de récupération pour [[key]]",
+          "it": "Reimposta il cooldown per [[key]]",
+          "no": "Tilbakestill nedkjøling for [[key]]",
+          "sv": "Återställ nedkylning för [[key]]",
+          "pl": "Zresetuj czas odnowienia dla [[key]]",
+          "ru": "Сбросить время восстановления для [[key]]",
+          "ko": "[[key]]의 쿨다운 초기화",
+          "ar": "إعادة تعيين فترة التهدئة لـ [[key]]"
         },
         "titleFormatted": {
-          "en": "Reset cooldown for [[key]]"
+          "en": "Reset cooldown for [[key]]",
+          "nl": "Cooldown voor [[key]] opnieuw instellen",
+          "da": "Nulstil cooldown for [[key]]",
+          "de": "Cooldown für [[key]] zurücksetzen",
+          "es": "Restablecer el tiempo de espera para [[key]]",
+          "fr": "Réinitialiser le délai d'attente pour [[key]]",
+          "it": "Reimposta il cooldown per [[key]]",
+          "no": "Tilbakestill nedkjøling for [[key]]",
+          "sv": "Återställ nedkylning för [[key]]",
+          "pl": "Zresetuj czas odnowienia dla [[key]]",
+          "ru": "Сбросить время восстановления для [[key]]",
+          "ko": "[[key]]의 쿨다운 초기화",
+          "ar": "إعادة تعيين فترة التهدئة لـ [[key]]"
         },
         "hint": {
-          "en": "Clears the cooldown for the selected key so it can trigger again immediately."
+          "en": "Clears the cooldown for the selected key so it can trigger again immediately.",
+          "nl": "Verwijdert de cooldown voor de geselecteerde sleutel, zodat deze direct opnieuw kan worden geactiveerd.",
+          "da": "Nulstiller cooldown for den valgte nøgle, så den kan udløse igen med det samme.",
+          "de": "Hebt die Abklingzeit für den ausgewählten Schlüssel auf, damit er sofort wieder ausgelöst werden kann.",
+          "es": "Borra el tiempo de espera para la clave seleccionada, de modo que pueda activarse de nuevo de inmediato.",
+          "fr": "Réinitialise le délai d'attente pour la clé sélectionnée afin qu'elle puisse se déclencher à nouveau immédiatement.",
+          "it": "Cancella il cooldown per la chiave selezionata in modo che possa attivarsi di nuovo immediatamente.",
+          "no": "Fjerner nedkjøling for den valgte nøkkelen slik at den kan utløses igjen umiddelbart.",
+          "sv": "Rensar nedkylningen för den valda nyckeln så att den kan utlösas igen omedelbart.",
+          "pl": "Usuwa czas odnowienia dla wybranego klucza, dzięki czemu może zostać ponownie uruchomiony natychmiast.",
+          "ru": "Сбрасывает время ожидания для выбранного ключа, чтобы он мог сработать снова немедленно.",
+          "ko": "선택한 키의 쿨다운을 해제하여 즉시 다시 트리거할 수 있습니다.",
+          "ar": "يقوم بإزالة فترة التهدئة للمفتاح المحدد حتى يمكن تشغيله مرة أخرى فورًا."
         },
         "args": [
           {
             "type": "autocomplete",
             "name": "key",
             "title": {
-              "en": "Key"
+              "en": "Key",
+              "nl": "Sleutel",
+              "da": "Nøgle",
+              "de": "Schlüssel",
+              "es": "Clave",
+              "fr": "Clé",
+              "it": "Chiave",
+              "no": "Nøkkel",
+              "sv": "Nyckel",
+              "pl": "Klucz",
+              "ru": "Ключ",
+              "ko": "키",
+              "ar": "مفتاح"
             },
             "placeholder": {
-              "en": "Select or create key"
+              "en": "Select or create key",
+              "nl": "Selecteer of maak een sleutel aan",
+              "da": "Vælg eller opret nøgle",
+              "de": "Schlüssel auswählen oder erstellen",
+              "es": "Seleccionar o crear clave",
+              "fr": "Sélectionner ou créer une clé",
+              "it": "Seleziona o crea chiave",
+              "no": "Velg eller opprett nøkkel",
+              "sv": "Välj eller skapa nyckel",
+              "pl": "Wybierz lub utwórz klucz",
+              "ru": "Выберите или создайте ключ",
+              "ko": "키 선택 또는 생성",
+              "ar": "اختر أو أنشئ مفتاحًا"
             }
           }
         ]
@@ -396,23 +1176,83 @@
       {
         "id": "reset_token_count",
         "title": {
-          "en": "Reset times used for [[key]]"
+          "en": "Reset times used for [[key]]",
+          "nl": "Reset tijden gebruikt voor [[key]]",
+          "da": "Nulstil tider brugt til [[key]]",
+          "de": "Zurücksetzen der verwendeten Zeiten für [[key]]",
+          "es": "Restablecer los tiempos utilizados para [[key]]",
+          "fr": "Réinitialiser les temps utilisés pour [[key]]",
+          "it": "Reimposta i tempi utilizzati per [[key]]",
+          "no": "Nullstill tider brukt for [[key]]",
+          "sv": "Återställ tider som används för [[key]]",
+          "pl": "Zresetuj użyte czasy dla [[key]]",
+          "ru": "Сбросить использованные времена для [[key]]",
+          "ko": "[[key]]에 사용된 시간 재설정",
+          "ar": "إعادة تعيين الأوقات المستخدمة لـ [[key]]"
         },
         "titleFormatted": {
-          "en": "Reset times used for [[key]]"
+          "en": "Reset times used for [[key]]",
+          "nl": "Reset tijden gebruikt voor [[key]]",
+          "da": "Nulstil tider brugt til [[key]]",
+          "de": "Zurücksetzen der verwendeten Zeiten für [[key]]",
+          "es": "Restablecer los tiempos utilizados para [[key]]",
+          "fr": "Réinitialiser les temps utilisés pour [[key]]",
+          "it": "Reimposta i tempi utilizzati per [[key]]",
+          "no": "Nullstill tider brukt for [[key]]",
+          "sv": "Återställ tider som används för [[key]]",
+          "pl": "Zresetuj użyte czasy dla [[key]]",
+          "ru": "Сбросить использованные времена для [[key]]",
+          "ko": "[[key]]에 사용된 시간 재설정",
+          "ar": "إعادة تعيين الأوقات المستخدمة لـ [[key]]"
         },
         "hint": {
-          "en": "Clears how many times this key has been used, so the full max times is available again in the current interval."
+          "en": "Clears how many times this key has been used, so the full max times is available again in the current interval.",
+          "nl": "Maakt het aantal keren dat deze sleutel is gebruikt weer leeg, zodat het volledige maximale aantal keren opnieuw beschikbaar is in het huidige interval.",
+          "da": "Nulstiller, hvor mange gange denne nøgle er blevet brugt, så det fulde maksimale antal gange er tilgængeligt igen i den nuværende periode.",
+          "de": "Setzt die Anzahl der Verwendungen dieses Schlüssels zurück, sodass die maximale Anzahl an Verwendungen im aktuellen Intervall wieder verfügbar ist.",
+          "es": "Borra cuántas veces se ha usado esta clave, para que el número máximo de usos esté disponible nuevamente en el intervalo actual.",
+          "fr": "Réinitialise le nombre de fois où cette clé a été utilisée, afin que le nombre maximal complet soit à nouveau disponible dans l'intervalle actuel.",
+          "it": "Cancella quante volte è stata utilizzata questa chiave, in modo che il numero massimo di utilizzi sia nuovamente disponibile nell'intervallo corrente.",
+          "no": "Nullstiller hvor mange ganger denne nøkkelen har blitt brukt, slik at det maksimale antallet ganger er tilgjengelig igjen i den nåværende perioden.",
+          "sv": "Rensar hur många gånger den här nyckeln har använts, så att det fulla maxantalet är tillgängligt igen under den nuvarande perioden.",
+          "pl": "Czyści liczbę użyć tego klucza, dzięki czemu pełna maksymalna liczba użyć jest ponownie dostępna w bieżącym przedziale.",
+          "ru": "Очищает количество использований этого ключа, чтобы максимальное количество использований снова было доступно в текущем интервале.",
+          "ko": "이 키가 사용된 횟수를 초기화하여 현재 간격에서 최대 사용 횟수를 다시 사용할 수 있도록 합니다.",
+          "ar": "يمسح عدد المرات التي تم فيها استخدام هذا المفتاح، بحيث يكون الحد الأقصى الكامل متاحًا مرة أخرى في الفترة الحالية."
         },
         "args": [
           {
             "type": "autocomplete",
             "name": "key",
             "title": {
-              "en": "Key"
+              "en": "Key",
+              "nl": "Sleutel",
+              "da": "Nøgle",
+              "de": "Schlüssel",
+              "es": "Clave",
+              "fr": "Clé",
+              "it": "Chiave",
+              "no": "Nøkkel",
+              "sv": "Nyckel",
+              "pl": "Klucz",
+              "ru": "Ключ",
+              "ko": "키",
+              "ar": "مفتاح"
             },
             "placeholder": {
-              "en": "Select or create key"
+              "en": "Select or create key",
+              "nl": "Selecteer of maak een sleutel aan",
+              "da": "Vælg eller opret nøgle",
+              "de": "Schlüssel auswählen oder erstellen",
+              "es": "Seleccionar o crear clave",
+              "fr": "Sélectionner ou créer une clé",
+              "it": "Seleziona o crea chiave",
+              "no": "Velg eller opprett nøkkel",
+              "sv": "Välj eller skapa nyckel",
+              "pl": "Wybierz lub utwórz klucz",
+              "ru": "Выберите или создайте ключ",
+              "ko": "키 선택 또는 생성",
+              "ar": "اختر أو أنشئ مفتاحًا"
             }
           }
         ]
@@ -420,23 +1260,83 @@
       {
         "id": "suspend_cooldown",
         "title": {
-          "en": "Suspend cooldown for [[key]]"
+          "en": "Suspend cooldown for [[key]]",
+          "nl": "Onderbreek cooldown voor [[key]]",
+          "da": "Suspender nedkøling for [[key]]",
+          "de": "Cooldown für [[key]] aussetzen",
+          "es": "Suspender el enfriamiento para [[key]]",
+          "fr": "Suspendre le cooldown pour [[key]]",
+          "it": "Sospendi il cooldown per [[key]]",
+          "no": "Suspendér nedkjøling for [[key]]",
+          "sv": "Pausa nedkylning för [[key]]",
+          "pl": "Zawieś cooldown dla [[key]]",
+          "ru": "Приостановить время восстановления для [[key]]",
+          "ko": "[[key]]의 쿨다운 일시 중지",
+          "ar": "إيقاف فترة التهدئة لـ [[key]]"
         },
         "titleFormatted": {
-          "en": "Suspend cooldown for [[key]]"
+          "en": "Suspend cooldown for [[key]]",
+          "nl": "Onderbreek cooldown voor [[key]]",
+          "da": "Suspender nedkøling for [[key]]",
+          "de": "Cooldown für [[key]] aussetzen",
+          "es": "Suspender el enfriamiento para [[key]]",
+          "fr": "Suspendre le cooldown pour [[key]]",
+          "it": "Sospendi il cooldown per [[key]]",
+          "no": "Suspendér nedkjøling for [[key]]",
+          "sv": "Pausa nedkylning för [[key]]",
+          "pl": "Zawieś okres schładzania dla [[key]]",
+          "ru": "Приостановить период ожидания для [[key]]",
+          "ko": "[[key]]의 쿨다운 일시 중지",
+          "ar": "إيقاف فترة التهدئة لـ [[key]]"
         },
         "hint": {
-          "en": "Registers the cooldown as if it just ran, blocking further triggers until the duration defined in the Allow condition has elapsed. Also blocks Allow up to keys until reset."
+          "en": "Registers the cooldown as if it just ran, blocking further triggers until the duration defined in the Allow condition has elapsed. Also blocks Allow up to keys until reset.",
+          "nl": "Registreert de cooldown alsof deze net is uitgevoerd, waardoor verdere triggers worden geblokkeerd totdat de duur die in de Toestaan-voorwaarde is gedefinieerd, is verstreken. Blokkeert ook Toestaan tot sleutels totdat deze opnieuw is ingesteld.",
+          "da": "Registrerer cooldownen, som om den lige er blevet kørt, og blokerer yderligere udløsninger, indtil den varighed, der er defineret i Tillad-betingelsen, er udløbet. Blokerer også Tillad op til nøgler, indtil der nulstilles.",
+          "de": "Registriert die Abkühlzeit, als ob sie gerade ausgeführt wurde, und blockiert weitere Auslöser, bis die in der Erlauben-Bedingung definierte Dauer abgelaufen ist. Blockiert auch Erlauben bis Schlüssel, bis zurückgesetzt wird.",
+          "es": "Registra el tiempo de espera como si acabara de ejecutarse, bloqueando más activaciones hasta que transcurra la duración definida en la condición de Permitir. También bloquea las claves de Permitir hasta que se restablezca.",
+          "fr": "Enregistre le temps de récupération comme s'il venait de s'exécuter, bloquant ainsi d'autres déclenchements jusqu'à ce que la durée définie dans la condition d'autorisation soit écoulée. Bloque également les clés d'autorisation jusqu'à réinitialisation.",
+          "it": "Registra il cooldown come se fosse appena stato eseguito, bloccando ulteriori attivazioni fino a quando non è trascorso il tempo definito nella condizione di Permesso. Blocca anche i tasti Permesso fino al reset.",
+          "no": "Registrerer nedkjølingen som om den nettopp ble kjørt, og blokkerer ytterligere utløsere til varigheten definert i Tillat-betingelsen har utløpt. Blokkerer også Tillat opptil-nøkler til tilbakestilling.",
+          "sv": "Registrerar nedkylningen som om den just kördes, vilket blockerar ytterligare utlösare tills den tid som definierats i Tillåt-villkoret har gått. Blockerar också Tillåt upp till nycklar tills återställning.",
+          "pl": "Rejestruje cooldown, jakby właśnie się uruchomił, blokując dalsze wyzwalacze do momentu, gdy upłynie czas określony w warunku Allow. Blokuje również klucze Allow up do momentu resetu.",
+          "ru": "Регистрирует период ожидания, как будто он только что начался, блокируя дальнейшие срабатывания до тех пор, пока не истечет время, определенное в условии Allow. Также блокирует ключи Allow до сброса.",
+          "ko": "쿨다운이 방금 실행된 것처럼 등록되어, 허용 조건에 정의된 기간이 경과할 때까지 추가 트리거를 차단합니다. 또한 초기화될 때까지 허용 키도 차단됩니다.",
+          "ar": "يسجل فترة التهدئة كما لو أنها بدأت للتو، مما يمنع أي تفعيل آخر حتى تنقضي المدة المحددة في شرط السماح. كما يمنع السماح حتى المفاتيح حتى يتم إعادة التعيين."
         },
         "args": [
           {
             "type": "autocomplete",
             "name": "key",
             "title": {
-              "en": "Key"
+              "en": "Key",
+              "nl": "Sleutel",
+              "da": "Nøgle",
+              "de": "Schlüssel",
+              "es": "Clave",
+              "fr": "Clé",
+              "it": "Chiave",
+              "no": "Nøkkel",
+              "sv": "Nyckel",
+              "pl": "Klucz",
+              "ru": "Ключ",
+              "ko": "키",
+              "ar": "مفتاح"
             },
             "placeholder": {
-              "en": "Select or create key"
+              "en": "Select or create key",
+              "nl": "Selecteer of maak een sleutel aan",
+              "da": "Vælg eller opret nøgle",
+              "de": "Schlüssel auswählen oder erstellen",
+              "es": "Selecciona o crea una clave",
+              "fr": "Sélectionner ou créer une clé",
+              "it": "Seleziona o crea chiave",
+              "no": "Velg eller opprett nøkkel",
+              "sv": "Välj eller skapa nyckel",
+              "pl": "Wybierz lub utwórz klucz",
+              "ru": "Выберите или создайте ключ",
+              "ko": "키 선택 또는 생성",
+              "ar": "اختر أو أنشئ مفتاحًا"
             }
           }
         ]

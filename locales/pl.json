@@ -1,0 +1,189 @@
+{
+  "flow": {
+    "conditions": {
+      "allow_once": {
+        "title": "Zezwól [[key]] raz na każde [[duration]] [[duration_unit]]",
+        "titleFormatted": "Zezwól [[key]] raz na każde [[duration]] [[duration_unit]]",
+        "hint": "Sprawdza, czy limit czasu jest aktywny, automatycznie go aktywuje, jeśli to dozwolone, i zwraca prawdę, aby kontynuować Flow lub fałsz, aby go zatrzymać.",
+        "args": {
+          "key": {
+            "title": "Klucz",
+            "placeholder": "Wybierz lub utwórz klucz"
+          },
+          "duration": {
+            "title": "Czas trwania",
+            "placeholder": "10"
+          },
+          "duration_unit": {
+            "title": "Jednostka"
+          }
+        }
+      },
+      "allow_up_to": {
+        "title": "Zezwól [[key]] do [[max_count]] razy na każde [[duration]] [[duration_unit]]",
+        "titleFormatted": "Zezwól [[key]] do [[max_count]] razy na każde [[duration]] [[duration_unit]]",
+        "hint": "Sprawdza, czy klucz nadal może działać w bieżącym interwale, liczy się jako jeden raz, jeśli dozwolone, i zwraca prawdę, aby kontynuować Flow lub fałsz, aby go zatrzymać.",
+        "args": {
+          "key": {
+            "title": "Klucz",
+            "placeholder": "Wybierz lub utwórz klucz"
+          },
+          "max_count": {
+            "title": "Maksymalna liczba",
+            "placeholder": "3",
+            "hint": "Całkowita liczba 1 lub większa"
+          },
+          "duration": {
+            "title": "Czas trwania",
+            "placeholder": "10"
+          },
+          "duration_unit": {
+            "title": "Jednostka"
+          }
+        }
+      }
+    },
+    "triggers": {
+      "blocked_count_reached": {
+        "title": "[[key]] zablokowano [[count]] razy z rzędu",
+        "titleFormatted": "[[key]] zablokowano [[count]] razy z rzędu",
+        "hint": "Uruchamia się, gdy warunek Zezwolenia zablokuje dokładnie wybraną liczbę razy z rzędu od ostatniego dozwolonego uruchomienia. Przekazuje bieżącą liczbę blokad jako znacznik przepływu.",
+        "tokens": {
+          "block_count": {
+            "title": "Liczba blokad",
+            "example": "3"
+          }
+        },
+        "args": {
+          "key": {
+            "title": "Klucz",
+            "placeholder": "Wybierz lub utwórz klucz"
+          },
+          "count": {
+            "title": "Liczba blokad",
+            "placeholder": "3"
+          }
+        }
+      },
+      "blocked_count_at_least": {
+        "title": "[[key]] zablokowano [[count]] lub więcej razy z rzędu",
+        "titleFormatted": "[[key]] zablokowano [[count]] lub więcej razy z rzędu",
+        "hint": "Uruchamia się, gdy warunek Zezwolenia zablokował przynajmniej wybraną liczbę razy z rzędu od ostatniego dozwolonego uruchomienia. Przekazuje bieżącą liczbę blokad jako znacznik przepływu.",
+        "tokens": {
+          "block_count": {
+            "title": "Liczba blokad",
+            "example": "50"
+          }
+        },
+        "args": {
+          "key": {
+            "title": "Klucz",
+            "placeholder": "Wybierz lub utwórz klucz"
+          },
+          "count": {
+            "title": "Przynajmniej razy zablokowano",
+            "placeholder": "50"
+          }
+        }
+      }
+    },
+    "actions": {
+      "reset_cooldown": {
+        "title": "Zresetuj limit czasu dla [[key]]",
+        "titleFormatted": "Zresetuj limit czasu dla [[key]]",
+        "hint": "Czyści limit czasu dla wybranego klucza, aby można było go ponownie uruchomić natychmiast.",
+        "args": {
+          "key": {
+            "title": "Klucz",
+            "placeholder": "Wybierz lub utwórz klucz"
+          }
+        }
+      },
+      "suspend_cooldown": {
+        "title": "Zawieś limit czasu dla [[key]]",
+        "titleFormatted": "Zawieś limit czasu dla [[key]]",
+        "hint": "Rejestruje limit czasu tak, jakby właśnie się uruchomił, blokując dalsze uruchomienia do upływu czasu określonego w warunku Zezwolenia. Blokuje również klucze Zezwól do czasu ich zresetowania.",
+        "args": {
+          "key": {
+            "title": "Klucz",
+            "placeholder": "Wybierz lub utwórz klucz"
+          }
+        }
+      },
+      "reset_token_count": {
+        "title": "Zresetuj liczbę użyć dla [[key]]",
+        "titleFormatted": "Zresetuj liczbę użyć dla [[key]]",
+        "hint": "Czyści liczbę razy, kiedy ten klucz był użyty, aby pełna maksymalna liczba razy była ponownie dostępna w bieżącym interwale.",
+        "args": {
+          "key": {
+            "title": "Klucz",
+            "placeholder": "Wybierz lub utwórz klucz"
+          }
+        }
+      },
+      "grant_token": {
+        "title": "Przywróć jedno użycie dla [[key]]",
+        "titleFormatted": "Przywróć jedno użycie dla [[key]]",
+        "hint": "Umożliwia jedno dodatkowe uruchomienie tego klucza w bieżącym interwale.",
+        "args": {
+          "key": {
+            "title": "Klucz",
+            "placeholder": "Wybierz lub utwórz klucz"
+          }
+        }
+      },
+      "grant_tokens": {
+        "title": "Przywróć [[token_count]] użyć dla [[key]]",
+        "titleFormatted": "Przywróć [[token_count]] użyć dla [[key]]",
+        "hint": "Umożliwia tyle dodatkowych uruchomień tego klucza w bieżącym interwale.",
+        "args": {
+          "key": {
+            "title": "Klucz",
+            "placeholder": "Wybierz lub utwórz klucz"
+          },
+          "token_count": {
+            "title": "Razy",
+            "placeholder": "1",
+            "hint": "Całkowita liczba 1 lub większa"
+          }
+        }
+      }
+    }
+  },
+  "errors": {
+    "key_required": "Wymagany jest klucz limitu czasu.",
+    "duration_required": "Wymagany jest czas trwania limitu czasu.",
+    "duration_invalid": "Czas trwania limitu czasu musi być większy niż 0.",
+    "max_count_invalid": "Maksymalna liczba musi być całkowitą liczbą 1 lub większą.",
+    "token_count_invalid": "Liczba razy musi być całkowitą liczbą 1 lub większą."
+  },
+  "autocomplete": {
+    "create_key": "Utwórz nowy klucz",
+    "never_run": "Nigdy nie uruchomiono",
+    "last_run": "Ostatnie uruchomienie: __time__"
+  },
+  "settings": {
+    "empty": "Brak jeszcze kluczy limitu czasu. Dodaj klucz w karcie przepływu, aby go tutaj zobaczyć.",
+    "never_run": "Nigdy nie uruchomiono",
+    "errors_heading": "Problemy z konfiguracją",
+    "error_allow_key_conflicting_durations": "Klucz „__key__” jest używany w wielu kartach A z różnymi czasami trwania (__durations__). Używaj tego samego czasu trwania wszędzie dla klucza.",
+    "error_allow_key_invalid_duration": "Klucz \"__key__\" ma kartę A z brakującym lub nieprawidłowym czasem trwania. Czas trwania musi być całkowitą liczbą co najmniej 1 z prawidłową jednostką lub znacznikiem przepływu.",
+    "error_action_key_without_allow": "Klucz \"__key__\" jest używany w karcie Then, ale nie ma pasującej karty A. Te karty nie mają efektu.",
+    "error_trigger_key_without_allow": "Klucz \"__key__\" jest używany w karcie When, ale nie ma pasującej karty A. Ta karta nigdy się nie uruchomi.",
+    "error_allow_up_to_key_conflicting_limits": "Klucz \"__key__\" jest używany w wielu kartach A z różnymi limitami (__limits__). Używaj tej samej maksymalnej liczby i czasu trwania wszędzie dla klucza.",
+    "error_allow_up_to_key_invalid_limit": "Klucz \"__key__\" ma kartę A z brakującymi lub nieprawidłowymi maksymalną liczbą lub czasem trwania. Maksymalna liczba musi być całkowitą liczbą 1 lub większą, a czas trwania musi być całkowitą liczbą co najmniej 1 z prawidłową jednostką lub znacznikiem przepływu.",
+    "error_grant_tokens_key_invalid_token_count": "Klucz \"__key__\" ma kartę Then z brakującą lub nieprawidłową liczbą razy. Liczba razy musi być całkowitą liczbą 1 lub większą, lub znacznikiem przepływu.",
+    "error_allow_key_mixed_card_types": "Klucz \"__key__\" jest używany w kartach Zezwól raz i Zezwól do na kartach A. Używaj tylko jednego rodzaju karty na klucz, chyba że karta Zezwól do używa maksymalnej liczby dokładnie 1.",
+    "blocks_since_allow": "__count__ blokad od ostatniego pozwolenia",
+    "used_count": "__count__ razy używane w tym interwale",
+    "used_count_suspended": "Zawieszony",
+    "duration_invalid": "nieprawidłowy czas trwania",
+    "limit_invalid": "nieprawidłowy limit",
+    "duration_unit": {
+      "seconds": "sekundy",
+      "minutes": "minuty",
+      "hours": "godziny",
+      "days": "dni"
+    }
+  }
+}
