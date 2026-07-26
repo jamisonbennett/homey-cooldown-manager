@@ -1,6 +1,6 @@
 {
   "id": "us.jamisonbennett.apps.cooldown-manager",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "compatibility": ">=12.4.0",
   "sdk": 3,
   "runtime": "nodejs",
