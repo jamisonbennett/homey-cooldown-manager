@@ -19,7 +19,7 @@ function formatLocalDateTime(timestampMs, timezone, language) {
 
     try {
       return new Intl.DateTimeFormat(locale, options).format(date);
-    } catch (error) {
+    } catch {
       // Invalid language and/or timezone — try a safer combination.
     }
   }

@@ -1,8 +1,5 @@
 'use strict';
 
-/* eslint-disable camelcase -- mirrors Homey Flow card argument names */
-/* eslint-disable import/first -- jest.mock must run before importing app.ts */
-
 jest.mock('homey');
 
 import { COOLDOWN_SETTINGS_KEY } from './lib/cooldown';

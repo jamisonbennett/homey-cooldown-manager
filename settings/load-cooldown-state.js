@@ -1,7 +1,5 @@
 'use strict';
 
-// Runtime require targets compiled JS; eslint import resolver prefers the .d.ts source.
-// eslint-disable-next-line import/extensions
 const normalizeLastRunAt = require('../lib/last-run-at');
 
 const SUSPENDED_USED_COUNT = -1;

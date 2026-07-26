@@ -1,7 +1,5 @@
 'use strict';
 
-/* eslint-disable camelcase -- mirrors Homey Flow card argument names */
-
 import { durationToMs, type DurationUnit } from './duration';
 import isFlowTagReference from './flow-tag';
 import normalizeKey from './flow-key';

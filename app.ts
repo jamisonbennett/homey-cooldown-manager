@@ -200,7 +200,7 @@ class CooldownManagerApp extends Homey.App {
         return allowed;
       } catch (error) {
         if (error instanceof InvalidCooldownDurationError) {
-          throw new Error(this.homey.__('errors.duration_invalid'));
+          throw new Error(this.homey.__('errors.duration_invalid'), { cause: error });
         }
         throw error;
       }
@@ -227,7 +227,7 @@ class CooldownManagerApp extends Homey.App {
         return allowed;
       } catch (error) {
         if (error instanceof InvalidCooldownDurationError) {
-          throw new Error(this.homey.__('errors.max_count_invalid'));
+          throw new Error(this.homey.__('errors.max_count_invalid'), { cause: error });
         }
         throw error;
       }
